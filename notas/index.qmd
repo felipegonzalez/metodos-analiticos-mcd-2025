@@ -57,6 +57,6 @@ Para hacer las tareas y exámenes pueden usar cualquier lenguaje de programació
 que les convenga (R o Python, por ejemplo) - el único requisito esté basado en código y no
 point-and-click. Adicionalmente usaremos Stan:
 
-- [Stan: a state-of-the-art platform for statistical modeling and high-performance statistical computation](https://mc-stan.org/), que tiene interfaces en R, Python, Julia, etc.
+- [Stan: a state-of-the-art platform for statistical modeling and high-performance statistical computation](https://mc-stan.org/), que tiene interfaces en R, Python, etc.
 
 
