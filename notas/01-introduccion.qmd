@@ -258,7 +258,7 @@ de las relaciones particulares entre las variables.
 Los DAGs se construyen con causas, e implican asociaciones observables, pero no
 se construyen con asociaciones simplemente.
 El pensamiento causal es útil siempre que queremos responder preguntas
-acerca de un fenómeno de interés. En particular nos asiste en :
+acerca de un fenómeno de interés. En particular nos asiste en las siguientes tareas:
 
 #### Análisis descriptivo {-}
 
