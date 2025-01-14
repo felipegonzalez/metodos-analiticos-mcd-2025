@@ -84,6 +84,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./02-flujo-basico.html" rel="next">
 <link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -206,6 +207,18 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-flujo-basico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Flujo de trabajo básico: motivación</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-flujo-basico-2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Flujo de trabajo básico: refinando el modelo</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -259,7 +272,7 @@ window.Quarto = {
 <li><p>En vista del contexto del problema (1), ¿cómo construir modelos estadísticos para responder preguntas de interés?</p></li>
 <li><p>Práctica de construcción y desarrollo de modelos, junto con procedimientos para criticarlos y probarlos.</p></li>
 </ol>
-<p>Este proceso aplica tanto a estadística bayesiana como frecuentista, aunque en este curso, por su flexibilidad y unidad, consideraremos el enfoque bayesiano. Para la parte 1 y 2, consideraremos modelos gráficos causales, que expresan nuestro conocimiento acerca del problema de interés. Para la parte 3 propondremos un flujo de trabajo bayesiano que nos permita probar y entender el funcionamiento de nuestros modelos. Finalmente, para 2 y 3 propondremos distintas estrategias de modelación, como son modelos jerárquicos, regresión, como trabajar con datos faltantes entre otros.</p>
+<p>Este proceso aplica tanto a estadística bayesiana como frecuentista, aunque en este curso, por su flexibilidad y unidad, consideraremos el enfoque bayesiano. Para la parte 1 y 2, consideraremos modelos gráficos causales, que expresan nuestro conocimiento acerca del problema de interés. Para la parte 3 propondremos un flujo de trabajo bayesiano que nos permita probar y entender el funcionamiento de nuestros modelos. Finalmente, para 2 y 3 propondremos distintas estrategias de modelación, como son modelos jerárquicos, regresión, cómo trabajar con datos faltantes, entre otros.</p>
 <section id="diagramas-causales" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="diagramas-causales"><span class="header-section-number">1.1</span> Diagramas causales</h2>
 <p>En primer lugar, observamos (<span class="citation" data-cites="rethinking">McElreath (<a href="#ref-rethinking" role="doc-biblioref">2020</a>)</span>):</p>
@@ -273,7 +286,7 @@ Causas y mecanismos
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Las razones de cómo hacemos análisis estadístico (que procedimiento o algoritmo seleccionamos, por ejemplo) en un problema dado <strong>no están en los datos observados</strong>, las <strong>causas</strong> de los datos.</p>
+<p>Las razones del análisis estadístico (que procedimiento o algoritmo seleccionamos, por ejemplo) en un en un problema dado <strong>no está en los datos observados</strong>, sino en las <strong>causas</strong> de los datos.</p>
 </div>
 </div>
 <p>Las <strong>causas</strong> de los datos no pueden extrarse de los datos solamente. Muchas veces nos referimos a las causas de los datos como el <em>proceso generador de los datos</em>: esto incluye aspectos del fenómeno que nos interesa (ciencia o proceso de negocios, etc.), así como el proceso de observación (muestras, valores no observados, etc.).</p>
@@ -310,53 +323,53 @@ Causas y mecanismos
 </thead>
 <tbody>
 <tr class="odd">
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">chicos</td>
+<td style="text-align: left;">mejora</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">chicos</td>
+<td style="text-align: left;">mejora</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">grandes</td>
+<td style="text-align: left;">mejora</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">A</td>
 <td style="text-align: left;">grandes</td>
+<td style="text-align: left;">mejora</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">chicos</td>
+<td style="text-align: left;">mejora</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">chicos</td>
+<td style="text-align: left;">mejora</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">chicos</td>
 <td style="text-align: left;">sin_mejora</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">B</td>
 <td style="text-align: left;">chicos</td>
-<td style="text-align: left;">sin_mejora</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">A</td>
-<td style="text-align: left;">chicos</td>
-<td style="text-align: left;">mejora</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">A</td>
-<td style="text-align: left;">grandes</td>
 <td style="text-align: left;">mejora</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">A</td>
 <td style="text-align: left;">grandes</td>
-<td style="text-align: left;">sin_mejora</td>
+<td style="text-align: left;">mejora</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">B</td>
 <td style="text-align: left;">chicos</td>
-<td style="text-align: left;">mejora</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">B</td>
-<td style="text-align: left;">chicos</td>
-<td style="text-align: left;">mejora</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">A</td>
-<td style="text-align: left;">grandes</td>
-<td style="text-align: left;">mejora</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">A</td>
-<td style="text-align: left;">chicos</td>
-<td style="text-align: left;">mejora</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">B</td>
-<td style="text-align: left;">grandes</td>
 <td style="text-align: left;">mejora</td>
 </tr>
 </tbody>
@@ -487,11 +500,12 @@ Causas y mecanismos
 
 </div>
 </div>
-<p>Esta tabla descriptiva es una reescritura de los datos, y no hemos resumido nada todavía. Pero es apropiada para empezar a contestar la pregunta:</p>
+<p>Esta tabla descriptiva es una reescritura de los datos, y no hemos resumido nada todavía. Pero es apropiada para empezar a contestar la pregunta (que es científica o causal):</p>
 <ul>
 <li>¿Qué indican estos datos acerca de qué tratamiento es mejor? ¿Acerca del tamaño de cálculos grandes o chicos?</li>
 </ul>
-<p>Supongamos que otro analista decide comparar los pacientes que recibieron cada tratamiento, ignorando la variable de tamaño:</p>
+<p>Podemos suponer que un analista considera de la tabla de arriba y llega a la siguiente conclusión: el tratamiento A es mejor, porque es mejor en los dos grupos de pacientes (con piedras chicas o grandes).</p>
+<p>Ahora supongamos que otro analista decide comparar los pacientes que recibieron cada tratamiento, ignorando la variable de tamaño:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>calculos <span class="sc">|&gt;</span> <span class="fu">group_by</span>(tratamiento) <span class="sc">|&gt;</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarise</span>(<span class="at">prop_mejora =</span> <span class="fu">mean</span>(resultado <span class="sc">==</span> <span class="st">"mejora"</span>) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">2</span>)) <span class="sc">|&gt;</span> </span>
@@ -520,7 +534,8 @@ Causas y mecanismos
 
 </div>
 </div>
-<p>y parece ser que el tratamiento <span class="math inline">\(B\)</span> es mejor que el <span class="math inline">\(A\)</span>. Esta es una paradoja (un ejemplo de la <a href="https://es.wikipedia.org/wiki/Paradoja_de_Simpson">paradoja de Simpson</a>) . Si un médico no sabe que tipo de cálculos tiene el paciente, ¿entonces debería recetar <span class="math inline">\(B\)</span>? ¿Si sabe debería recetar <span class="math inline">\(A\)</span>? Esta discusión parece no tener mucho sentido.</p>
+<p>y parece ser que el tratamiento <span class="math inline">\(B\)</span> es mejor que el <span class="math inline">\(A\)</span>.</p>
+<p>El contraste entre los resultados de los dos analistas es una paradoja (un ejemplo de la <a href="https://es.wikipedia.org/wiki/Paradoja_de_Simpson">paradoja de Simpson</a>) . Si un médico no sabe que tipo de cálculos tiene el paciente, ¿entonces debería recetar <span class="math inline">\(B\)</span>? ¿Si sabe debería recetar <span class="math inline">\(A\)</span>? Esta discusión parece no tener mucho sentido.</p>
 <p>Podemos investigar por qué está pasando esto considerando la siguiente tabla, que solo examina cómo se asignó el tratamiento dependiendo del tipo de cálculos de cada paciente:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>calculos <span class="sc">|&gt;</span> <span class="fu">group_by</span>(tratamiento, tamaño) <span class="sc">|&gt;</span> <span class="fu">count</span>() <span class="sc">|&gt;</span> </span>
@@ -601,11 +616,11 @@ Nota
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>, <span class="at">width =</span> <span class="dv">200</span>, <span class="at">height =</span> <span class="dv">50</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="htmlwidget-b1e6d9d5d91583d22445" style="width:100%;height:162px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b1e6d9d5d91583d22445">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n  node [shape=plaintext]\n    T \n    M \n    C\n  edge [minlen = 3]\n    T -> M\n    C -> T\n    C -> M\n{ rank = same; M; T }\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0e0bfd1d6384c0ccb70d" style="width:100%;height:162px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0e0bfd1d6384c0ccb70d">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n  node [shape=plaintext]\n    T \n    M \n    C\n  edge [minlen = 3]\n    T -> M\n    C -> T\n    C -> M\n{ rank = same; M; T }\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-<p>Es decir, el tamaño de los cálculos es una causa común de tratamiento (T) y resultado (M). Veremos más adelante que la decisión de condicionar a el tipo de cálculos proviene de un análisis relativamente simple de este diagrama causal, independientemente de los métodos que usemos para estimar las proporciones de interés (en este ejemplo, examinar las tablas cruzadas es equivalente a hacer estimaciones de máxima verosimlitud).</p>
+<p>Es decir, el tamaño de los cálculos es una causa común de tratamiento (T) y resultado (M). Veremos más adelante que la decisión de condicionar ( que a veces se menciona como <em>estratificar</em> el análisis) al tipo de cálculos proviene de un análisis relativamente simple de este diagrama causal, independientemente de los métodos que usemos para estimar las proporciones de interés (en este ejemplo, examinar las tablas cruzadas es equivalente a hacer estimaciones de máxima verosimlitud).</p>
 </section>
 <section id="ejemplo-cálculos-renales-2" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="ejemplo-cálculos-renales-2">Ejemplo (cálculos renales 2)</h3>
@@ -719,8 +734,8 @@ Nota
 <span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>, <span class="at">width =</span> <span class="dv">200</span>, <span class="at">height =</span> <span class="dv">50</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="htmlwidget-9733268f6de6aec6a178" style="width:100%;height:162px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9733268f6de6aec6a178">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n  node [shape=plaintext]\n    P\n    T \n    M \n  edge [minlen = 3]\n    T -> P\n    P -> M\n    T -> M\n{ rank = same; M; T}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-931c71ae6f645a0604d0" style="width:100%;height:162px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-931c71ae6f645a0604d0">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n  node [shape=plaintext]\n    P\n    T \n    M \n  edge [minlen = 3]\n    T -> P\n    P -> M\n    T -> M\n{ rank = same; M; T}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Nótese que el análisis más apropiado no está en los datos: en ambos casos la tabla de datos es exactamente la misma. Los supuestos acerca del proceso que genera los datos sin embargo nos lleva a respuestas opuestas.</p>
@@ -735,7 +750,7 @@ Nota
 <li>Entender qué podemos entender o explicar, sin hacer supuestos adicionales acerca de las relaciones particulares entre las variables.</li>
 <li>Guiar el análisis para decidir que modelos o procedimientos usar para contestar preguntas de interés.</li>
 </ul>
-<p>Los DAGs se construyen con causas, e implican asociaciones observables, pero no se construyen con asociaciones simplemente. El pensamiento causal es útil siempre que queremos responder preguntas acerca de un fenómeno de interés. En particular nos asisten en :</p>
+<p>Los DAGs se construyen con causas, e implican asociaciones observables, pero no se construyen con asociaciones simplemente. El pensamiento causal es útil siempre que queremos responder preguntas acerca de un fenómeno de interés. En particular nos asiste en las siguientes tareas:</p>
 <section id="análisis-descriptivo" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="análisis-descriptivo">Análisis descriptivo</h4>
 <ol type="1">
@@ -1512,6 +1527,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./02-flujo-basico.html" class="pagination-link" aria-label="Flujo de trabajo básico: motivación">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Flujo de trabajo básico: motivación</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

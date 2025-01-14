@@ -1,0 +1,2009 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; Flujo de trabajo básico: motivación – Métodos analíticos</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./02-flujo-basico-2.html" rel="next">
+<link href="./01-introduccion.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-7f7ebbf50e4fdd60fd3b6acd289450dc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="site_libs/viz-1.8.2/viz.js"></script>
+<link href="site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="site_libs/grViz-binding-1.0.11/grViz.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-flujo-basico.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Flujo de trabajo básico: motivación</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Métodos analíticos</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Temario y referencias</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-introduccion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-flujo-basico.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Flujo de trabajo básico: motivación</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-flujo-basico-2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Flujo de trabajo básico: refinando el modelo</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#paso-1-modelo-generativo" id="toc-paso-1-modelo-generativo" class="nav-link active" data-scroll-target="#paso-1-modelo-generativo"><span class="header-section-number">2.1</span> Paso 1: Modelo generativo</a></li>
+  <li><a href="#paso-2-definir-estimando" id="toc-paso-2-definir-estimando" class="nav-link" data-scroll-target="#paso-2-definir-estimando"><span class="header-section-number">2.2</span> Paso 2: Definir estimando</a></li>
+  <li><a href="#paso-3-definir-un-proceso-estadístico" id="toc-paso-3-definir-un-proceso-estadístico" class="nav-link" data-scroll-target="#paso-3-definir-un-proceso-estadístico"><span class="header-section-number">2.3</span> Paso 3: definir un proceso estadístico</a>
+  <ul class="collapse">
+  <li><a href="#usando-información-adicional" id="toc-usando-información-adicional" class="nav-link" data-scroll-target="#usando-información-adicional">Usando información adicional</a></li>
+  <li><a href="#más-verificaciones-a-priori" id="toc-más-verificaciones-a-priori" class="nav-link" data-scroll-target="#más-verificaciones-a-priori">Más verificaciones a priori</a></li>
+  </ul></li>
+  <li><a href="#paso-4-probar-el-proceso-de-estimación" id="toc-paso-4-probar-el-proceso-de-estimación" class="nav-link" data-scroll-target="#paso-4-probar-el-proceso-de-estimación"><span class="header-section-number">2.4</span> Paso 4: Probar el proceso de estimación</a>
+  <ul class="collapse">
+  <li><a href="#introduciendo-un-bug" id="toc-introduciendo-un-bug" class="nav-link" data-scroll-target="#introduciendo-un-bug"><span class="header-section-number">2.4.1</span> Introduciendo un bug</a></li>
+  </ul></li>
+  <li><a href="#paso-5-analizar-los-datos-y-resumir-resultados." id="toc-paso-5-analizar-los-datos-y-resumir-resultados." class="nav-link" data-scroll-target="#paso-5-analizar-los-datos-y-resumir-resultados."><span class="header-section-number">2.5</span> Paso 5: Analizar los datos y resumir resultados.</a></li>
+  <li><a href="#paso-6-evaluar-el-modelo-y-cómputos" id="toc-paso-6-evaluar-el-modelo-y-cómputos" class="nav-link" data-scroll-target="#paso-6-evaluar-el-modelo-y-cómputos"><span class="header-section-number">2.6</span> Paso 6: Evaluar el modelo y cómputos</a></li>
+  <li><a href="#versión-continua" id="toc-versión-continua" class="nav-link" data-scroll-target="#versión-continua"><span class="header-section-number">2.7</span> Versión continua</a>
+  <ul class="collapse">
+  <li><a href="#ejercicio-actualizaciones-de-posterior" id="toc-ejercicio-actualizaciones-de-posterior" class="nav-link" data-scroll-target="#ejercicio-actualizaciones-de-posterior"><span class="header-section-number">2.7.1</span> Ejercicio: actualizaciones de posterior</a></li>
+  <li><a href="#más-de-verificaciones-apriori" id="toc-más-de-verificaciones-apriori" class="nav-link" data-scroll-target="#más-de-verificaciones-apriori">Más de verificaciones apriori</a></li>
+  <li><a href="#métodos-monte-carlo" id="toc-métodos-monte-carlo" class="nav-link" data-scroll-target="#métodos-monte-carlo"><span class="header-section-number">2.7.2</span> Métodos Monte Carlo</a></li>
+  </ul></li>
+  <li><a href="#observaciones-1" id="toc-observaciones-1" class="nav-link" data-scroll-target="#observaciones-1"><span class="header-section-number">2.8</span> Observaciones</a>
+  <ul class="collapse">
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">2.8.1</span> Resumen</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Flujo de trabajo básico: motivación</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>En esta sección introductoria, veremos una aplicación básica del flujo de trabajo que seguiremos. El objetivo en este ejemplo es estimar la proporción de personas que es seropositiva de una enfermedad en una población dada, usando una muestra de la población de interés a la que se le aplicó una prueba de seropositivdad.</p>
+<p>Recordamos que el flujo básico es:</p>
+<ol type="1">
+<li>Definir un modelo generativo para la muestra de datos.</li>
+<li>Definir la cantidad que queremos estimar en relación al fenómeno de interés.</li>
+<li>Definir un proceso estadístico para hacer una estimación.</li>
+<li>Probar el proceso 3 usando 1 y 2.</li>
+<li>(Usar datos) Analizar los datos, resumir resultados.</li>
+<li>Checar cómputos y desempeño del modelo.</li>
+</ol>
+<section id="paso-1-modelo-generativo" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="paso-1-modelo-generativo"><span class="header-section-number">2.1</span> Paso 1: Modelo generativo</h2>
+<p>Consideremos primero qué variables de interés tenemos: <span class="math inline">\(p\)</span>, la proporción de seropositivos en la población, <span class="math inline">\(N\)</span> que es el número de personas a las que les hicimos la prueba, y <span class="math inline">\(N_{+}\)</span> y <span class="math inline">\(N_{-}\)</span> que cuentan el número de positivos y seronegativos en la muestra. Supondremos que la prueba da resultados exactos. Denotaremos por <span class="math inline">\(\theta\)</span> a la proporción de seropositivos en la muestra.</p>
+<p>Comenzamos construyendo el diagrama que indica cómo influye cada variable en otra (nota: no son asociaciones, sino que indican qué variables “escuchan” a otras para determinar su valor). En este caso, <span class="math inline">\(N\)</span> y <span class="math inline">\(\theta\)</span> son variable que no depende de ninguna otra, mientras que <span class="math inline">\(N_{+}\)</span> y <span class="math inline">\(N_{-}\)</span> dependen de <span class="math inline">\(N\)</span> y <span class="math inline">\(\theta\)</span>. Como <span class="math inline">\(\theta\)</span> es una cantidad que no observamos directamente, mostramos su nodo como un círculo.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grViz</span>(<span class="st">"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">digraph {</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">  graph [ranksep = 0.3, rankdir = LR]</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">  node [shape=circle]</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">    theta [label = &lt;&amp;theta;&gt;]</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">  node [shape=plaintext]</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">    N</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">    Npos [label = &lt;N&lt;SUB&gt;+&lt;/SUB&gt;&gt;]</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">    Nneg [label = &lt;N&lt;SUB&gt;-&lt;/SUB&gt;&gt;]</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">    #sens</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">    #esp</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="st">  edge [minlen = 3]</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="st">    theta -&gt; Npos</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="st">    theta -&gt; Nneg</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="st">    N -&gt; Npos</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="st">    N -&gt; Nneg</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="st">    #esp -&gt; Pos</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="st">    #sens -&gt; Pos</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="st">    #esp -&gt; Neg</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="st">    #sens -&gt; Neg</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="st">{ rank = same; theta; N }</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="st">{ rank = same; Npos; Nneg}</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="st">#{ rank = max; sens; esp}</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>, <span class="at">width =</span> <span class="dv">300</span>, <span class="at">height =</span> <span class="dv">100</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="htmlwidget-51ec616ac7d389477e02" style="width:100%;height:216px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-51ec616ac7d389477e02">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    theta [label = <&theta;>]\n  node [shape=plaintext]\n    N\n    Npos [label = <N<SUB>+<\/SUB>>]\n    Nneg [label = <N<SUB>-<\/SUB>>]\n    #sens\n    #esp\n  edge [minlen = 3]\n    theta -> Npos\n    theta -> Nneg\n    N -> Npos\n    N -> Nneg\n    #esp -> Pos\n    #sens -> Pos\n    #esp -> Neg\n    #sens -> Neg\n{ rank = same; theta; N }\n{ rank = same; Npos; Nneg}\n#{ rank = max; sens; esp}\n\n  \n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>Que también podríamos simplificar (suponiendo la <span class="math inline">\(N\)</span> fija y conocida, pues <span class="math inline">\(N_+\)</span> y <span class="math inline">\(N\)</span> dan <span class="math inline">\(N_{-}\)</span>) como:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grViz</span>(<span class="st">"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="st">digraph {</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="st">  graph [ranksep = 0.3, rankdir = LR]</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="st">  node [shape=circle]</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="st">    theta [label = &lt;&amp;theta;&gt;]</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="st">  node [shape=plaintext]</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="st">    N</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="st">    Npos [label = &lt;N&lt;SUB&gt;+&lt;/SUB&gt;&gt;]</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="st">    #sens</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="st">    #esp</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="st">  edge [minlen = 3]</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="st">    theta -&gt; Npos</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="st">    N -&gt; Npos</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="st">    #esp -&gt; Pos</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="st">    #sens -&gt; Pos</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="st">    #esp -&gt; Neg</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="st">    #sens -&gt; Neg</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="st">{ rank = same; theta; N }</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="st">{ rank = same; Npos}</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="st">#{ rank = max; sens; esp}</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>, <span class="at">width =</span> <span class="dv">300</span>, <span class="at">height =</span> <span class="dv">100</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="htmlwidget-9628111c0695b9c10ebe" style="width:100%;height:216px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9628111c0695b9c10ebe">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    theta [label = <&theta;>]\n  node [shape=plaintext]\n    N\n    Npos [label = <N<SUB>+<\/SUB>>]\n    #sens\n    #esp\n  edge [minlen = 3]\n    theta -> Npos\n    N -> Npos\n    #esp -> Pos\n    #sens -> Pos\n    #esp -> Neg\n    #sens -> Neg\n{ rank = same; theta; N }\n{ rank = same; Npos}\n#{ rank = max; sens; esp}\n\n  \n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>Y ahora construimos el modelo generativo. Supondremos que la muestra de <span class="math inline">\(N\)</span> personas se toma de manera aleatoria de la población (una población grande, así que podemos ignorar el efectos de poblaciones finitas). Supondremos provisionalmente, además, que la prueba es perfecta, es decir, no hay falsos positivos o negativos.</p>
+<p>La siguiente función simula una muestra de <span class="math inline">\(N\)</span> personas, y regresa el número de Positivos y Negativos en la muestra.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sim_pos_neg <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">theta =</span> <span class="fl">0.01</span>, <span class="at">N =</span> <span class="dv">20</span>, <span class="at">sens =</span> <span class="dv">1</span>, <span class="at">esp =</span> <span class="dv">1</span>) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># verdaderos positivos que capturamos en la muestra</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  Pos_verdadero <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(N, <span class="dv">1</span>, theta)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  Neg_verdadero <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> Pos_verdadero</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># positivos observados en la muestra</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  Pos <span class="ot">&lt;-</span> Pos_verdadero</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  Neg <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> Pos</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Observaciones</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">Pos =</span> Pos, <span class="at">Neg =</span> Neg)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Podemos hacer algunas pruebas del modelo generativo en casos extremos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">8212</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sim_pos_neg</span>(<span class="at">theta =</span> <span class="fl">1.0</span>, <span class="at">N =</span> <span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 2
+     Pos   Neg
+   &lt;int&gt; &lt;dbl&gt;
+ 1     1     0
+ 2     1     0
+ 3     1     0
+ 4     1     0
+ 5     1     0
+ 6     1     0
+ 7     1     0
+ 8     1     0
+ 9     1     0
+10     1     0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sim_pos_neg</span>(<span class="at">theta =</span> <span class="fl">0.0</span>, <span class="at">N =</span> <span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 2
+     Pos   Neg
+   &lt;int&gt; &lt;dbl&gt;
+ 1     0     1
+ 2     0     1
+ 3     0     1
+ 4     0     1
+ 5     0     1
+ 6     0     1
+ 7     0     1
+ 8     0     1
+ 9     0     1
+10     0     1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sim_pos_neg</span>(<span class="at">theta =</span> <span class="fl">0.1</span>, <span class="at">N =</span> <span class="fl">1e7</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(Pos) <span class="sc">|&gt;</span> <span class="fu">mean</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">4</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1001</code></pre>
+</div>
+</div>
+<p>En la práctica podemos definir pruebas más exhaustivas si es necesario. En este caso, se trata principalmente de <em>pruebas unitarias</em> que se utilizan comunmente en desarrollo de software.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Pruebas unitarias
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La práctica estándar de pruebas unitarias consiste en probar unidades relativamente pequeñas de código (por ejemplo funciones) para verificar que funcionan correctamente.</p>
+<p>Esta estrategia debe utilizarse también, en la medida de los posible, en estadística.</p>
+</div>
+</div>
+</section>
+<section id="paso-2-definir-estimando" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="paso-2-definir-estimando"><span class="header-section-number">2.2</span> Paso 2: Definir estimando</h2>
+<p>Ahora podemos definir en términos de nuestro modelo el valor que queremos estimar. En este caso, coincide con un párametro del modelo <span class="math inline">\(\theta\)</span>, pero no necesariamente es así siempre: como veremos más adelante, puede ser una cantidad que se deriva de otras variables y parámetros del modelo.</p>
+</section>
+<section id="paso-3-definir-un-proceso-estadístico" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="paso-3-definir-un-proceso-estadístico"><span class="header-section-number">2.3</span> Paso 3: definir un proceso estadístico</h2>
+<p>Dada la información limitada que tenemos acerca de la población, esperamos tener cierta incertidumbre en nuestra estimación del valor de <span class="math inline">\(\theta\)</span>. En estadística bayesiana esta incertidumbre la expresamos mediante una distribución de probabilidades sobre posibles valores del <span class="math inline">\(\theta\)</span>. Si denotamos por <span class="math inline">\(D\)</span> a los datos observados, nuestro objetivo es calcular o aproximar</p>
+<p><span class="math display">\[p(\theta|D)\]</span> que es una distribución sobre los posibles valores de <span class="math inline">\(\theta\)</span>, una vez que tenemos información de la muestra, y que pone más masa de probabilidad sobre las conjeturas de <span class="math inline">\(\theta\)</span> que son más probables o creíbles. A esta distribución le llamamos la <strong>distribución posterior</strong> de <span class="math inline">\(\theta\)</span>.</p>
+<p>Con esta posterior podemos hacer afirmaciones probabilísticas de la forma:</p>
+<ul>
+<li>¿Cuál es la probabilidad de que <span class="math inline">\(\theta\)</span> sea menor a 1%? (Muy pocos seropositivos)</li>
+<li>¿Cuál es la probabildad de que <span class="math inline">\(\theta\)</span> sea mayor a 80%? (Población cerca de saturación)</li>
+</ul>
+<p>Estas cantidades se calculan, al menos teóricamente, integrando <span class="math inline">\(p(\theta|D)\)</span> sobre los valores de <span class="math inline">\(\theta\)</span> que nos interesan, por ejemplo,</p>
+<p><span class="math display">\[P(\theta &lt;= 0.01) = \int_0^{0.01} p(\theta|D) d\theta\]</span> Nota: la integral la interpretamos como suma en el caso discreto.</p>
+<p>Supongamos entonces una <span class="math inline">\(\theta\)</span> dada, y que observamos la muestra <span class="math inline">\(1,0,0,1,0\)</span>. La probabilidad de observar esta muestra es (suponiendo observaciones independientes):</p>
+<p><span class="math display">\[\theta(1-\theta)(1-\theta)\theta(1-\theta) = \theta^2(1-\theta)^3\]</span> Para algunos valores de <span class="math inline">\(\theta\)</span> (posibles conjeturas acerca del valor de <span class="math inline">\(\theta\)</span>) podemos escribir una tabla como sigue (Nota: discretizamos por el momento a un número finito de valores de <span class="math inline">\(\theta\)</span> para hacer el argumento más simple):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">11</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">conjetura_theta =</span> theta, <span class="at">verosimiltud =</span> theta<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> theta)<span class="sc">^</span><span class="dv">3</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Conjetura θ"</span>, <span class="st">"p(D|θ)"</span>), <span class="at">format =</span> <span class="st">"html"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Conjetura θ</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p(D|θ)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.00729</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">0.02048</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">0.03087</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">0.03456</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.03125</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">0.02304</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">0.01323</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">0.00512</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.9</td>
+<td style="text-align: right;">0.00081</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0.00000</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>En la tabla vemos que hay algunas conjeturas, o posibles valores de <span class="math inline">\(\theta\)</span>, que tienen probabilidad considerablemente más alta que otra. La notación</p>
+<p><span class="math display">\[p(D|\theta)\]</span> significa: la probabilidad de los datos <span class="math inline">\(D\)</span> dado el valor de <span class="math inline">\(\theta\)</span>. Nótese que esta distribución <strong>no</strong> es la posterior que describimos arriba, y no es una distribución de probabilidad sobre <span class="math inline">\(\theta\)</span> (las probabilidades no suman uno). Esta función se llama usualmente <strong>verosimilitud</strong> de los datos, e incorpora supuestos concretos del proceso generador de los datos.</p>
+<p>Usando reglas de probabilidad (en particular la regla de Bayes), observamos que</p>
+<p><span class="math display">\[p(\theta | D) = \frac{p(D|\theta)p(\theta)} { p(D)}.\]</span> Como <span class="math inline">\(p(\theta|D)\)</span> debe dar una distribución de probabilidad (suma o integra a 1), entonces <span class="math inline">\(p(D)\)</span> debe ser una constante de normalización para el numerador de la derecha, es decir, basta escribir</p>
+<p><span class="math display">\[p(\theta | D) \propto p(D|\theta)p(\theta) \]</span> Ahora es donde encontramos que tenemos que tener <span class="math inline">\(p(\theta)\)</span> para poder calcular la cantidad que nos interesa, que es la distribución posterior <span class="math inline">\(p(\theta|D)\)</span>. <span class="math inline">\(p(\theta)\)</span>, la <strong>distribución a priori</strong> o <strong>distribución inicial</strong> es simplemente una afirmación de dónde puede estar <span class="math inline">\(\theta\)</span>, antes de observar ningún dato.</p>
+<p>Por el momento, podríamos poner <span class="math inline">\(p(\theta)\)</span> constante, de manera que es parte de la constante de normalización, y sólo tendríamos que normalizar como sigue:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">11</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>prob_post <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">conjetura =</span> theta, <span class="at">probablidad =</span> theta<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> theta)<span class="sc">^</span><span class="dv">3</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prob_posterior =</span> probablidad <span class="sc">/</span> <span class="fu">sum</span>(probablidad)) </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>prob_post <span class="sc">|&gt;</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">booktabs =</span> <span class="cn">TRUE</span>, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Conjetura θ"</span>, <span class="st">"p(D|θ)"</span>,<span class="st">"p(θ|D)"</span>), </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">format =</span> <span class="st">"html"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_paper</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="lightable-paper caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Conjetura θ</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p(D|θ)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p(θ|D)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.00000</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.00729</td>
+<td style="text-align: right;">0.0437444</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">0.02048</td>
+<td style="text-align: right;">0.1228923</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">0.03087</td>
+<td style="text-align: right;">0.1852385</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">0.03456</td>
+<td style="text-align: right;">0.2073807</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.03125</td>
+<td style="text-align: right;">0.1875188</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">0.02304</td>
+<td style="text-align: right;">0.1382538</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">0.01323</td>
+<td style="text-align: right;">0.0793879</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">0.00512</td>
+<td style="text-align: right;">0.0307231</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.9</td>
+<td style="text-align: right;">0.00081</td>
+<td style="text-align: right;">0.0048605</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0.00000</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>Con esto, expresamos nuestro conocimiento acerca de <span class="math inline">\(\theta\)</span>, después de observar los datos, con una <em>distribución posterior de probabilidad sobre las posibles conjecturas</em>. Este es el resultado principal de inferencia bayesiana, y es la base para tomar decisiones relativas a <span class="math inline">\(\theta\)</span>.</p>
+<section id="usando-información-adicional" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="usando-información-adicional">Usando información adicional</h3>
+<p>Supongamos que tenemos información adicional acerca de <span class="math inline">\(\theta\)</span>, por ejemplo, que en un experimento similar anterior alguien tomó una muestra de dos personas, y encontraron dos negativos. Tenemos entonces como creencias inciales:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">11</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>prob_priori <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">conjetura =</span> theta) <span class="sc">|&gt;</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prob_priori =</span> (<span class="dv">1</span> <span class="sc">-</span> theta) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> theta)) <span class="sc">|&gt;</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prob_priori =</span> prob_priori <span class="sc">/</span> <span class="fu">sum</span>(prob_priori)) </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>prob_priori <span class="sc">|&gt;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Conjetura θ"</span>, <span class="st">"p(θ)"</span>), <span class="at">format =</span> <span class="st">"html"</span>) <span class="sc">|&gt;</span> <span class="fu">kable_paper</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="lightable-paper caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Conjetura θ</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p(θ)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.2597403</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.2103896</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">0.1662338</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">0.1272727</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">0.0935065</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.0649351</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">0.0415584</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">0.0233766</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">0.0103896</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.9</td>
+<td style="text-align: right;">0.0025974</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>Por ejemplo, al probabilidad inicial de que <span class="math inline">\(\theta\)</span> sea muy grande es cercana a cero, pues observamos dos negativos y ningún positivo. Ahora regresamos a considerar nuestra fórmula</p>
+<p><span class="math display">\[p(\theta | D) \propto p(D|\theta)p(\theta), \]</span></p>
+<p>En este caso, la apriori o inicial tiene un efecto sobre la posterior. Reconsideramos entonces la posterior de nuestra muestra de 5 personas, y calculamos el producto de <span class="math inline">\(P(D|\theta)\)</span> por <span class="math inline">\(p(\theta)\)</span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>prob_post <span class="ot">&lt;-</span> prob_priori <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">verosimilitud =</span> theta<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> theta)<span class="sc">^</span><span class="dv">3</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prod =</span> verosimilitud <span class="sc">*</span> prob_priori)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>prob_post <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Conjetura θ"</span>, <span class="st">"p(θ)"</span>, <span class="st">"p(D|θ)"</span>, <span class="st">"p(D|θ)p(θ)"</span>), </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">format =</span> <span class="st">"html"</span>) <span class="sc">|&gt;</span> <span class="fu">kable_paper</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="lightable-paper caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Conjetura θ</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p(θ)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p(D|θ)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p(D|θ)p(θ)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.2597403</td>
+<td style="text-align: right;">0.00000</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.2103896</td>
+<td style="text-align: right;">0.00729</td>
+<td style="text-align: right;">0.0015337</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">0.1662338</td>
+<td style="text-align: right;">0.02048</td>
+<td style="text-align: right;">0.0034045</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">0.1272727</td>
+<td style="text-align: right;">0.03087</td>
+<td style="text-align: right;">0.0039289</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">0.0935065</td>
+<td style="text-align: right;">0.03456</td>
+<td style="text-align: right;">0.0032316</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.0649351</td>
+<td style="text-align: right;">0.03125</td>
+<td style="text-align: right;">0.0020292</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">0.0415584</td>
+<td style="text-align: right;">0.02304</td>
+<td style="text-align: right;">0.0009575</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">0.0233766</td>
+<td style="text-align: right;">0.01323</td>
+<td style="text-align: right;">0.0003093</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">0.0103896</td>
+<td style="text-align: right;">0.00512</td>
+<td style="text-align: right;">0.0000532</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.9</td>
+<td style="text-align: right;">0.0025974</td>
+<td style="text-align: right;">0.00081</td>
+<td style="text-align: right;">0.0000021</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.00000</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>Y finalmente, normalizamos para encontrar la probabilidad posterior:</p>
+<div class="cell" data-as-is="true">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>prob_post <span class="ot">&lt;-</span> prob_post <span class="sc">|&gt;</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prob_posterior =</span> prod <span class="sc">/</span> <span class="fu">sum</span>(prod))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>prob_post<span class="sc">|&gt;</span> </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Conjetura θ"</span>, <span class="st">"p(θ)"</span>, <span class="st">"p(D|θ)"</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"p(D|θ)p(θ)"</span>, <span class="st">"p(θ|D)"</span>), <span class="at">format =</span> <span class="st">"html"</span>) <span class="sc">|&gt;</span> <span class="fu">kable_paper</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="lightable-paper caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Conjetura θ</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p(θ)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p(D|θ)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p(D|θ)p(θ)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p(θ|D)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.2597403</td>
+<td style="text-align: right;">0.00000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.2103896</td>
+<td style="text-align: right;">0.00729</td>
+<td style="text-align: right;">0.0015337</td>
+<td style="text-align: right;">0.0992712</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">0.1662338</td>
+<td style="text-align: right;">0.02048</td>
+<td style="text-align: right;">0.0034045</td>
+<td style="text-align: right;">0.2203539</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">0.1272727</td>
+<td style="text-align: right;">0.03087</td>
+<td style="text-align: right;">0.0039289</td>
+<td style="text-align: right;">0.2542983</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">0.0935065</td>
+<td style="text-align: right;">0.03456</td>
+<td style="text-align: right;">0.0032316</td>
+<td style="text-align: right;">0.2091640</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.0649351</td>
+<td style="text-align: right;">0.03125</td>
+<td style="text-align: right;">0.0020292</td>
+<td style="text-align: right;">0.1313412</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">0.0415584</td>
+<td style="text-align: right;">0.02304</td>
+<td style="text-align: right;">0.0009575</td>
+<td style="text-align: right;">0.0619745</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">0.0233766</td>
+<td style="text-align: right;">0.01323</td>
+<td style="text-align: right;">0.0003093</td>
+<td style="text-align: right;">0.0200177</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">0.0103896</td>
+<td style="text-align: right;">0.00512</td>
+<td style="text-align: right;">0.0000532</td>
+<td style="text-align: right;">0.0034430</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.9</td>
+<td style="text-align: right;">0.0025974</td>
+<td style="text-align: right;">0.00081</td>
+<td style="text-align: right;">0.0000021</td>
+<td style="text-align: right;">0.0001362</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.00000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>La última columna nos da el resultado final de la inferencia bayesiana. Podemos resumir algunas de sus características, por ejemplo:</p>
+<ul>
+<li>Es muy poco probable que la seropositividad sea mayor o igual a 0.7</li>
+<li>Un intervalo de 90% de probabilidad para la seropositividad es <span class="math inline">\([0.1, 0.5]\)</span></li>
+</ul>
+<p>La gráfica de la posterior es:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>prob_post <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> conjetura, <span class="at">y =</span> prob_posterior)) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"theta"</span>, <span class="at">y =</span> <span class="st">"Prob posterior"</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-flujo-basico_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ahora podemos definir, para nuestro ejemplo discretizado, la función que calcula la posterior dados los pasos 1 y 2:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>calcular_posterior <span class="ot">&lt;-</span> <span class="cf">function</span>(muestra, prob_priori){</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># distribución inicial o a prior</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  theta <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">11</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  priori <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">theta =</span> theta, <span class="at">prob_priori =</span> (<span class="dv">1</span> <span class="sc">-</span> theta) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> theta)) <span class="sc">|&gt;</span> </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">prob_priori =</span> prob_priori <span class="sc">/</span> <span class="fu">sum</span>(prob_priori))</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># calcular la probabilidad posterior</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  N <span class="ot">&lt;-</span> <span class="fu">length</span>(muestra)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  Npos <span class="ot">&lt;-</span> <span class="fu">sum</span>(muestra)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  prob_post <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">theta =</span> theta) <span class="sc">|&gt;</span> </span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">left_join</span>(priori, <span class="at">by =</span> <span class="st">"theta"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">prob_posterior =</span> theta <span class="sc">^</span> Npos <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> theta)<span class="sc">^</span>(N <span class="sc">-</span> Npos) <span class="sc">*</span> prob_priori) <span class="sc">|&gt;</span> </span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">prob_posterior =</span> prob_posterior <span class="sc">/</span> <span class="fu">sum</span>(prob_posterior)) </span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  prob_post <span class="sc">|&gt;</span> <span class="fu">select</span>(theta, prob_posterior)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">calcular_posterior</span>(muestra, prob_priori) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 11 × 2
+   theta prob_posterior
+   &lt;dbl&gt;          &lt;dbl&gt;
+ 1   0         0       
+ 2   0.1       0.0993  
+ 3   0.2       0.220   
+ 4   0.3       0.254   
+ 5   0.4       0.209   
+ 6   0.5       0.131   
+ 7   0.6       0.0620  
+ 8   0.7       0.0200  
+ 9   0.8       0.00344 
+10   0.9       0.000136
+11   1         0       </code></pre>
+</div>
+</div>
+<p>Procedemos ahora a hacer algunas pruebas simples de nuestra función:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">calcular_posterior</span>(<span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">50</span>)) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">3</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 11 × 2
+   theta prob_posterior
+   &lt;dbl&gt;          &lt;dbl&gt;
+ 1   0            0.996
+ 2   0.1          0.004
+ 3   0.2          0    
+ 4   0.3          0    
+ 5   0.4          0    
+ 6   0.5          0    
+ 7   0.6          0    
+ 8   0.7          0    
+ 9   0.8          0    
+10   0.9          0    
+11   1            0    </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">calcular_posterior</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">50</span>)) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">3</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 11 × 2
+   theta prob_posterior
+   &lt;dbl&gt;          &lt;dbl&gt;
+ 1   0            0    
+ 2   0.1          0    
+ 3   0.2          0    
+ 4   0.3          0    
+ 5   0.4          0    
+ 6   0.5          0    
+ 7   0.6          0    
+ 8   0.7          0    
+ 9   0.8          0.011
+10   0.9          0.989
+11   1            0    </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">calcular_posterior</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">100</span>))) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">3</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 11 × 2
+   theta prob_posterior
+   &lt;dbl&gt;          &lt;dbl&gt;
+ 1   0            0    
+ 2   0.1          0    
+ 3   0.2          0    
+ 4   0.3          0    
+ 5   0.4          0.023
+ 6   0.5          0.966
+ 7   0.6          0.01 
+ 8   0.7          0    
+ 9   0.8          0    
+10   0.9          0    
+11   1            0    </code></pre>
+</div>
+</div>
+</section>
+<section id="más-verificaciones-a-priori" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="más-verificaciones-a-priori">Más verificaciones a priori</h3>
+<p>Otra verificación útil que podemos hacer es, una vez que hemos definido nuestro modelo generativo y un modelos estadístico asociado, generar bajo simulación datos que podríamos observar. Esto tiene como fin verificar que nuestro modelo generativo y nuestro modelo estadístico producen datos que están de acuerdo con el conocimiento experto (teoría científica o conocimiento de negocio).</p>
+<p>Así que simulamos datos del modelo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">231</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>simulacion_datos_tbl <span class="ot">&lt;-</span> <span class="fu">map_df</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">500</span>, </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">function</span>(rep){</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>      <span class="co"># simular valor inicial</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>      theta_sim <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">11</span>), </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">prob =</span> prob_priori<span class="sc">$</span>prob_priori, <span class="at">size =</span> <span class="dv">1</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>      datos_sim <span class="ot">&lt;-</span> <span class="fu">sim_pos_neg</span>(<span class="at">theta =</span> theta_sim, <span class="at">N =</span> <span class="dv">30</span>)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tibble</span>(<span class="at">rep =</span> rep, <span class="at">theta_sim =</span> theta_sim, datos_sim)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    })</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Podemos ver por ejemplo dónde esperamos ver el número de positivos a lo largo de distintas muestras, cuando <span class="math inline">\(N=30\)</span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>simulacion_datos_tbl <span class="sc">|&gt;</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(rep, theta_sim) <span class="sc">|&gt;</span> </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Npos =</span> <span class="fu">sum</span>(Pos), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Npos)) <span class="sc">+</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Número de positivos"</span>, <span class="at">y =</span> <span class="st">"Frecuencia (muestras)"</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-flujo-basico_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Observamos que con nuestros supuestos, hay una probabilidad alta de observar 0 positivos (alrededor de 0.30). Esto se debe en parte a la discretización que hicimos, y que nuestra apriori pone peso considerable en prevalencia igual a cero, lo que quizá no es muy realista, y probablemente deberíamos escoger al menos una discretización más fina.</p>
+<p>También, si consideramos los supuestos como correctos, esto puede indicar el riesgo de usar una muestra chica para estimar prevalencia si esta es muy baja: es probable que obtengamos 0 observaciones positivas.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Verificación predictiva a priori
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con este tipo de verificaciones podemos detectar las consecuencias de nuestros supuestos (incluyendo la elección de distribuciones a priori), así como otras decisiones de modelado (como la discretización).</p>
+<p>Conflictos con el conocimiento del área deben ser explorados para entenderlos y si es necesario corregir nuestros supuestos.</p>
+</div>
+</div>
+<p>Este tipo de verificaciones es muy flexible, y debe adaptarse a los aspectos del conocimiento del área que son importantes para los expertos. Podemos usar todos nuestros recursos analíticos (tablas, resúmenes, gráficas) para producir estos chequeos.</p>
+</section>
+</section>
+<section id="paso-4-probar-el-proceso-de-estimación" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="paso-4-probar-el-proceso-de-estimación"><span class="header-section-number">2.4</span> Paso 4: Probar el proceso de estimación</h2>
+<p>Antes de utilizar datos, verificamos cómo se comporta nuestro proceso de estimación de acuerdo a los supuestos de nuestro modelo generativo.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Verificación a priori
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Lo mínimo que esperamos de nuestro método es que, bajo nuestros propios supuestos acerca del proceso generador de datos y nuestro procedimiento de estimación definido, nuestra función de estimación no tenga problemas numéricos o de programación, y que las estimaciones que arroja son apropiadas para la cantidad que nos interesa estimar. El procedimiento a grandes rasgos es:</p>
+<ol type="1">
+<li>Establecer valores de los parámetros a estimar</li>
+<li>Simular datos observados (con una <span class="math inline">\(N\)</span> apropiada, dependiendo del tamaño de muestra que esperamos, aunque se puede explorar hacer más grande o más chico este valor).</li>
+<li>Calcular posterior de las cantidades de interés</li>
+<li>Compara los valores de 1) con la posterior de 3)</li>
+</ol>
+</div>
+</div>
+<p>Definir que las posteriores son apropiadas para la cantidad que nos interesa estimar es delicado, y más adelante veremos algunos criterios para evaluar este aspecto. Por lo pronto, haremos algunas pruebas simples que pueden diagnosticar errores graves:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># simular</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">9914</span>)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>datos_sim <span class="ot">&lt;-</span> <span class="fu">sim_pos_neg</span>(<span class="at">theta =</span> theta, <span class="at">N =</span> N)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>posterior <span class="ot">&lt;-</span> <span class="fu">calcular_posterior</span>(datos_sim<span class="sc">$</span>Pos)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(posterior, <span class="fu">aes</span>(<span class="at">x =</span> theta, <span class="at">y =</span> prob_posterior)) <span class="sc">+</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"theta"</span>, <span class="at">y =</span> <span class="st">"Prob posterior"</span>) <span class="sc">+</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> theta, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-flujo-basico_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>En este caso, la estimación parece correcta. Podemo repetir el proceso con distintos valores de <span class="math inline">\(\theta\)</span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">21</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>simulacion_rep <span class="ot">&lt;-</span> <span class="fu">map_df</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">function</span>(rep){</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>      <span class="co"># simular valor inicial</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>      theta_sim <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">11</span>), </span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">prob =</span> prob_priori<span class="sc">$</span>prob_priori, <span class="at">size =</span> <span class="dv">1</span>)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>      datos_sim <span class="ot">&lt;-</span> <span class="fu">sim_pos_neg</span>(<span class="at">theta =</span> theta_sim, <span class="at">N =</span> <span class="dv">30</span>)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>      posterior <span class="ot">&lt;-</span> <span class="fu">calcular_posterior</span>(datos_sim<span class="sc">$</span>Pos)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>      posterior <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">theta =</span> theta) <span class="sc">|&gt;</span> </span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">rep =</span> rep) <span class="sc">|&gt;</span> </span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">theta_sim =</span> theta_sim)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(simulacion_rep, <span class="fu">aes</span>(<span class="at">x =</span> theta, <span class="at">y =</span> prob_posterior)) <span class="sc">+</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"theta"</span>, <span class="at">y =</span> <span class="st">"Prob posterior"</span>) <span class="sc">+</span></span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> theta_sim), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>rep)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-flujo-basico_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Y vemos que en general nuestro método parece funcionar correctamente.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Observaciones
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Más adelante veremos cómo comparar valores a estimar con la posterior a través de varias simulaciones de manera más rigurosa. Por el momento, recuerda que <strong>incluso pruebas simples o limitadas son mejores que ninguna prueba</strong>.</p></li>
+<li><p>Típicamente los valores iniciales se toman de la distribución a priori, como hicimos arriba. Esta prueba es en general más apropiada, pues no nos interesan configuración de parámetros con probabilidad inicial extremadamente baja (imposibles según nuestros supuestos), pero también es posible tomar algunos valores fijos de interés.</p></li>
+<li><p>Veremos más de <em>chequeos o pruebas predictivas a priori</em>, que en general también sirven para entender la adecuación del modelo y supuestos en términos de como coinciden o no datos generados con la teoría.</p></li>
+</ul>
+</div>
+</div>
+<p>Este paso también es importante para entender si, bajo nuestros propios supuestos, es factible obtener información útil bajo el diseño que propongamos. Por ejemplo, alguien podría proponer un diseño de muestra que sólo tome 5 personas. Podemos probar cómo se comportan nuestras estimaciones:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>simulacion_rep <span class="ot">&lt;-</span> <span class="fu">map_df</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">function</span>(rep){</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>      theta_sim <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">11</span>), </span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">prob =</span> prob_priori<span class="sc">$</span>prob_priori, <span class="at">size =</span> <span class="dv">1</span>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>      datos_sim <span class="ot">&lt;-</span> <span class="fu">sim_pos_neg</span>(<span class="at">theta =</span> theta_sim, <span class="at">N =</span> <span class="dv">3</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>      posterior <span class="ot">&lt;-</span> <span class="fu">calcular_posterior</span>(datos_sim<span class="sc">$</span>Pos)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>      posterior <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">theta =</span> theta) <span class="sc">|&gt;</span> </span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">rep =</span> rep) <span class="sc">|&gt;</span> </span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">theta_sim =</span> theta_sim)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(simulacion_rep, <span class="fu">aes</span>(<span class="at">x =</span> theta, <span class="at">y =</span> prob_posterior)) <span class="sc">+</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"theta"</span>, <span class="at">y =</span> <span class="st">"Prob posterior"</span>) <span class="sc">+</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> theta_sim), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>rep)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-flujo-basico_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Nuestra respuesta en este caso es que quizá con 3 personas la información obtenida no será suficiente para tomar decisiones útiles: nótese que la posterior está muy poco concentrada alrededor del verdadero valor de <span class="math inline">\(\theta\)</span>.</p>
+<section id="introduciendo-un-bug" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="introduciendo-un-bug"><span class="header-section-number">2.4.1</span> Introduciendo un bug</h3>
+<p>Supongamos que tenemos un error en el cálculo de la posterior:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>calcular_posterior_bug <span class="ot">&lt;-</span> <span class="cf">function</span>(muestra, prob_priori){</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># distribución inicial o a prior</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  theta <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">11</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  priori <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">theta =</span> theta, <span class="at">prob_priori =</span> (<span class="dv">1</span> <span class="sc">-</span> theta) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> theta)) <span class="sc">|&gt;</span> </span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">prob_priori =</span> prob_priori <span class="sc">/</span> <span class="fu">sum</span>(prob_priori))</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># calcular la probabilidad posterior</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  N <span class="ot">&lt;-</span> <span class="fu">length</span>(muestra)</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  Npos <span class="ot">&lt;-</span> <span class="fu">sum</span>(muestra)</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  prob_post <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">theta =</span> theta) <span class="sc">|&gt;</span> </span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">left_join</span>(priori, <span class="at">by =</span> <span class="st">"theta"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># la siguiente línea tiene un error!</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">prob_posterior =</span> theta <span class="sc">^</span> Npos <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> theta)<span class="sc">^</span>((N <span class="sc">-</span> Npos <span class="sc">*</span> prob_priori))) <span class="sc">|&gt;</span> </span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">prob_posterior =</span> prob_posterior <span class="sc">/</span> <span class="fu">sum</span>(prob_posterior)) </span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>  prob_post <span class="sc">|&gt;</span> <span class="fu">select</span>(theta, prob_posterior)</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Nuestro chequeo apriori se ve entonces:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>simulacion_rep <span class="ot">&lt;-</span> <span class="fu">map_df</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">function</span>(rep){</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>      <span class="co"># simular valor inicial</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>      theta_sim <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">11</span>), </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">prob =</span> prob_priori<span class="sc">$</span>prob_priori, <span class="at">size =</span> <span class="dv">1</span>)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>      datos_sim <span class="ot">&lt;-</span> <span class="fu">sim_pos_neg</span>(<span class="at">theta =</span> theta_sim, <span class="at">N =</span> <span class="dv">30</span>)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>      posterior <span class="ot">&lt;-</span> <span class="fu">calcular_posterior_bug</span>(datos_sim<span class="sc">$</span>Pos)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>      posterior <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">theta =</span> theta) <span class="sc">|&gt;</span> </span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">rep =</span> rep) <span class="sc">|&gt;</span> </span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">theta_sim =</span> theta_sim)</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(simulacion_rep, <span class="fu">aes</span>(<span class="at">x =</span> theta, <span class="at">y =</span> prob_posterior)) <span class="sc">+</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"theta"</span>, <span class="at">y =</span> <span class="st">"Prob posterior"</span>) <span class="sc">+</span></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> theta_sim), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>rep)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-flujo-basico_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Donde vemos en varios casos que la “posterior” está lejos de ser consistente con los valores simulados de prueba para <span class="math inline">\(\theta\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Aspectos numéricos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Es importante notar que los cálculos que hicimos arriba ingoran un principio importante al hacer cálculos de productos de probabilidades: generalmente es mejor utilizar la <strong>escala logarítmica</strong> para hacer los cálculos, y sólo al final convertir a probabilidades. Esto es porque es fácil tener subflujos numéricos al multiplicar muchas probabilidades pequeñas.</p>
+</div>
+</div>
+<p>Aunque en este caso no es crítico, la siguiente función sigue esta práctica que en general es necesario seguir:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Evitar desbordes al sumar exponenciales</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>log_sum_exp <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  max_x <span class="ot">&lt;-</span> <span class="fu">max</span>(x)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  max_x <span class="sc">+</span> <span class="fu">log</span>(<span class="fu">sum</span>(<span class="fu">exp</span>(x <span class="sc">-</span> max_x)))</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>calcular_posterior <span class="ot">&lt;-</span> <span class="cf">function</span>(muestra, prob_priori){</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># evitar 0 o 1 exactos</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  theta <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">1e-12</span>, <span class="dv">1</span> <span class="sc">-</span> <span class="fl">1e-12</span>, <span class="at">length.out =</span> <span class="dv">11</span>)</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># no es necesario normalizar esta distribución apriori</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  log_priori <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">theta =</span> theta, <span class="at">log_prob_priori =</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> theta)) </span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># calcular la probabilidad posterior</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  N <span class="ot">&lt;-</span> <span class="fu">length</span>(muestra)</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>  Npos <span class="ot">&lt;-</span> <span class="fu">sum</span>(muestra)</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>  prob_post_tbl <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">theta =</span> theta) <span class="sc">|&gt;</span> </span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(log_priori, <span class="at">by =</span> <span class="st">"theta"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># log verosimilitud</span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">log_prob_posterior =</span> </span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>        Npos <span class="sc">*</span> <span class="fu">log</span>(theta) <span class="sc">+</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> theta) <span class="sc">*</span> (N <span class="sc">-</span> Npos)) <span class="sc">|&gt;</span> </span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sumar log apriori</span></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">log_prob_posterior =</span> log_prob_posterior <span class="sc">+</span> log_prob_priori) <span class="sc">|&gt;</span> </span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">log_prob_posterior_norm =</span> </span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>      log_prob_posterior <span class="sc">-</span> <span class="fu">log_sum_exp</span>(log_prob_posterior)) <span class="sc">|&gt;</span> </span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">prob_posterior =</span> <span class="fu">exp</span>(log_prob_posterior_norm))</span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>  prob_post_tbl <span class="sc">|&gt;</span> <span class="fu">select</span>(theta, prob_posterior)</span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Ejercicio: corre las pruebas para esta versión de la función como hicimos arriba. Este es un cambio correcto, y desde el punto de vista de desarrollo, si nuestra batería de pruebas es apropiado podemos hacerlo con más confianza.</p>
+</section>
+</section>
+<section id="paso-5-analizar-los-datos-y-resumir-resultados." class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="paso-5-analizar-los-datos-y-resumir-resultados."><span class="header-section-number">2.5</span> Paso 5: Analizar los datos y resumir resultados.</h2>
+<p>Con este trabajo hecho (ojo: para modelos grandes es un trabajo considerable, pero importante), podemos proceder a analizar los datos.</p>
+<p>Supongamos que se tomó una muestra de <span class="math inline">\(N=20\)</span> personas, con 17 negativos y 3 positivos. Calculamos la posterior:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># en nuestro modelo *no* importa el orden, verifica:</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>datos_tbl <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Pos =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">17</span>)))</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>posterior <span class="ot">&lt;-</span> <span class="fu">calcular_posterior</span>(<span class="at">muestra =</span> datos_tbl<span class="sc">$</span>Pos)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(posterior, <span class="fu">aes</span>(<span class="at">x =</span> theta, <span class="at">y =</span> prob_posterior)) <span class="sc">+</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"theta"</span>, <span class="at">y =</span> <span class="st">"Prob posterior"</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-flujo-basico_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Y hay varias maneras de resumir esta posterior. Por ejemplo, podemos calcular (ojo: veremos más detalles de esto más adelante):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Media</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>posterior <span class="sc">|&gt;</span> </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">theta =</span> theta) <span class="sc">|&gt;</span> </span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">sum</span>(theta <span class="sc">*</span> prob_posterior))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  media
+  &lt;dbl&gt;
+1 0.166</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Intervalo de alta probabilidad 90%</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>posterior <span class="sc">|&gt;</span> </span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">theta =</span> theta) <span class="sc">|&gt;</span> </span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(prob_posterior)) <span class="sc">|&gt;</span> </span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cumsum =</span> <span class="fu">cumsum</span>(prob_posterior)) <span class="sc">|&gt;</span> </span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(cumsum <span class="sc">&lt;=</span> <span class="fl">0.9</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(theta) <span class="sc">|&gt;</span> </span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">range</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1 0.2</code></pre>
+</div>
+</div>
+</section>
+<section id="paso-6-evaluar-el-modelo-y-cómputos" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="paso-6-evaluar-el-modelo-y-cómputos"><span class="header-section-number">2.6</span> Paso 6: Evaluar el modelo y cómputos</h2>
+<p>En este ejemplo, el modelo es muy simple, y los cómputos son sencillos. Para modelos más complejos es necesario checar que los cómputos sean correctos, y que el modelo ajusta razonablemente bien a los datos en los aspectos que nos interesan, de modo que <em>dejaremos esta discusión cuando veamos el flujo bayesiano más avanzado</em>.</p>
+</section>
+<section id="versión-continua" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="versión-continua"><span class="header-section-number">2.7</span> Versión continua</h2>
+<p>En el ejemplo anterior utilizamos una variable aleatoria discreta para modelar la seroprevalencia, pero esto generalmente no es conveniente. Ahora repetimos el ejercicio considerando más naturalmente que <span class="math inline">\(\theta\)</span> puede tomar cualquier valor en <span class="math inline">\([0,1]\)</span>.</p>
+<p>Para el paso 1 y 2 (definir modelo generativo y cantidad a estimar), utilizamos el mismo diagrama de arriba y la misma función que simula datos. Igual que antes, para cualquier muestra <span class="math inline">\(D\)</span> compuesta de 0 y 1’s (negativos y positivos), la probabilidad de observar la muestra <span class="math inline">\(D\)</span> dada una conjetura <span class="math inline">\(\theta\)</span> es:</p>
+<p><span class="math display">\[ p(D|\theta) = \theta^{N_+}(1-\theta)^{N_-}\]</span> Y recordamos que desde el punto de vista bayesiano, queremos resumir nuestra información obtenida con la distribución posterior <span class="math inline">\(p(\theta|D)\)</span>, e igual que antes tenemos que:</p>
+<p><span class="math display">\[p(\theta | D) \propto p(D|\theta)p(\theta).\]</span> Por el momento pondremos la densidad continua uniforme <span class="math inline">\(p(\theta) = 1\)</span> para <span class="math inline">\(\theta\in [0,1]\)</span> (densidad uniforme), entonces</p>
+<p><span class="math display">\[p(\theta|D) \propto \theta^{N_+}(1-\theta)^{N_-}\]</span></p>
+<p>En este caso, para normalizar tenemos que hacer la integral de la expresión de la derecha, y dividir por el resultado. En general, escribiremos</p>
+<p><span class="math display">\[B(a,b) = \int_{0}^1 \theta^{a-1}(1-\theta)^{b-1} d\theta\]</span> así que en nuestro caso, la posterior es:</p>
+<p><span class="math display">\[p(\theta|D) = \frac{1}{B(N_{+} + 1,N_{-}+1)} \theta^{N_+}(1-\theta)^{N_-}\]</span> Es posible demostrar con cálculo que <span class="math inline">\(B(a,b) = \frac{(a-1)!(b-1)!}{(a+b-1)!}\)</span>, pero eso no es importante ahora. Este tipo de densidades pertenecen a la <strong>familia beta</strong> con parámetros <span class="math inline">\((a,b)\)</span>, donde <span class="math inline">\(a&gt;0, b&gt;0\)</span>.</p>
+<p>Por ejemplo, si observamos 2 positivos y tres negativos, nuestra posterior es una beta con parámetros <span class="math inline">\((3,4)\)</span>, y se ve así:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>, <span class="fl">0.01</span>)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">theta =</span> theta, <span class="at">densidad =</span> <span class="fu">dbeta</span>(theta, <span class="dv">3</span>, <span class="dv">4</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> theta, <span class="at">y =</span> densidad)) <span class="sc">+</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"theta"</span>, <span class="at">y =</span> <span class="st">"Densidad posterior"</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-flujo-basico_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Notamos adicionalmente que es posible seleccionar otra distribución inicial que no sea la uniforme. En este caso particular es <em>conveniente</em> (aunque no siempre tiene sentido) usar una distribución beta, de manera que es fácil ver que si ponemos por ejemplo</p>
+<p><span class="math display">\[p(\theta) \propto \theta^{a-1}(1-\theta)^{b-1}\]</span></p>
+<p>entonces la posterior, por la fórmula de Bayes, es:</p>
+<p><span class="math display">\[p(\theta|D) \propto \theta^{N_+ +a -1 }(1-\theta)^{N_{-}+b-1}\]</span> que también es de la familia beta, pero con parámetros <span class="math inline">\((N_{+} +a, N_{-} +b)\)</span>.</p>
+<section id="ejercicio-actualizaciones-de-posterior" class="level3" data-number="2.7.1">
+<h3 data-number="2.7.1" class="anchored" data-anchor-id="ejercicio-actualizaciones-de-posterior"><span class="header-section-number">2.7.1</span> Ejercicio: actualizaciones de posterior</h3>
+<p>Podemos examinar la posterior para dados distintos datos. Supondremos que la distribución a priori es uniforme.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">92192</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>theta_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>, <span class="fl">0.001</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>datos_sim <span class="ot">&lt;-</span> <span class="fu">sim_pos_neg</span>(<span class="at">theta =</span> <span class="fl">0.25</span>, <span class="at">N =</span> <span class="dv">12</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">obs =</span> <span class="fu">ifelse</span>(Pos<span class="sc">==</span><span class="dv">1</span>, <span class="st">"P"</span>, <span class="st">"N"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>)</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="co"># graficar posteriores para cada n</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>datos_graf <span class="ot">&lt;-</span> datos_sim <span class="sc">|&gt;</span> </span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_pos =</span> <span class="fu">cumsum</span>(Pos), <span class="at">n_neg =</span> <span class="fu">cumsum</span>(Neg)) <span class="sc">|&gt;</span> </span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">muestra =</span> <span class="fu">accumulate</span>(obs, <span class="sc">~</span> <span class="fu">paste0</span>(.x, .y))) <span class="sc">|&gt;</span> </span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(n) <span class="sc">|&gt;</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dens_graf =</span> </span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(<span class="fu">tibble</span>(<span class="at">theta =</span> theta_seq, </span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">densidad =</span> <span class="fu">dbeta</span>(theta_seq, n_pos <span class="sc">+</span> <span class="dv">1</span>, n_neg <span class="sc">+</span> <span class="dv">1</span>)))) <span class="sc">|&gt;</span> </span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(dens_graf)</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos_graf, <span class="fu">aes</span>(<span class="at">x=</span>theta, <span class="at">y =</span> densidad, <span class="at">group =</span> n)) <span class="sc">+</span></span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> muestra) <span class="sc">+</span></span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">0</span>, <span class="at">intercept =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"gray"</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-flujo-basico_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ahora repetimos con una inicial beta <span class="math inline">\((0,2)\)</span> (que equivale a observar dos negativos y ningún positivo en una muestra de 3 personas), de modo que <span class="math inline">\(p(\theta) = 2(1-\theta)\)</span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">92192</span>)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>theta_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>, <span class="fl">0.001</span>)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>datos_sim <span class="ot">&lt;-</span> <span class="fu">sim_pos_neg</span>(<span class="at">theta =</span> <span class="fl">0.25</span>, <span class="at">N =</span> <span class="dv">12</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">obs =</span> <span class="fu">ifelse</span>(Pos<span class="sc">==</span><span class="dv">1</span>, <span class="st">"P"</span>, <span class="st">"N"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="co"># graficar posteriores para cada n</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>datos_graf <span class="ot">&lt;-</span> datos_sim <span class="sc">|&gt;</span> </span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_pos =</span> <span class="fu">cumsum</span>(Pos), <span class="at">n_neg =</span> <span class="fu">cumsum</span>(Neg)) <span class="sc">|&gt;</span> </span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">muestra =</span> <span class="fu">accumulate</span>(obs, <span class="sc">~</span> <span class="fu">paste0</span>(.x, .y))) <span class="sc">|&gt;</span> </span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(n) <span class="sc">|&gt;</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dens_graf =</span> </span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(<span class="fu">tibble</span>(<span class="at">theta =</span> theta_seq, </span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">densidad =</span> <span class="fu">dbeta</span>(theta_seq, n_pos <span class="sc">+</span> <span class="dv">1</span>, n_neg <span class="sc">+</span> <span class="dv">3</span>)))) <span class="sc">|&gt;</span> </span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(dens_graf)</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos_graf, <span class="fu">aes</span>(<span class="at">x=</span>theta, <span class="at">y =</span> densidad, <span class="at">group =</span> n)) <span class="sc">+</span></span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> muestra) <span class="sc">+</span></span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="sc">-</span><span class="dv">2</span>, <span class="at">intercept =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"gray"</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-flujo-basico_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+<p>En este punto, podríamos ir al siguiente paso, que es escribir una función para calcular la posterior. En realidad ya sabemos su función de densidad, pero cualquier resumen que hagamos de esta distribución requerirá de integrales (¿por qué? piensa en cómo calcular la probabilidad de ser menor que un valor, o cómo se calcula la media).</p>
+<p>Aunque en este ejemplo simple la posterior tiene una forma conocida y hay manera de calcular (analíticamente o con rutinas numéricas ya implementadas) esos resúmenes de interés (media, cuantiles, etc.), en general calcular integrales no es una estrategia que podamos llevar muy lejos.</p>
+</section>
+<section id="más-de-verificaciones-apriori" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="más-de-verificaciones-apriori">Más de verificaciones apriori</h3>
+<p>Antes de continuar, sin embargo, veremos cómo se veo el chequeo predictivo a priori que consideramos en la sección de arriba.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">231</span>)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>simulacion_datos_tbl <span class="ot">&lt;-</span> <span class="fu">map_df</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">500</span>, </span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">function</span>(rep){</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>      <span class="co"># apriori seleccionada</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>      theta_sim <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>)</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>      datos_sim <span class="ot">&lt;-</span> <span class="fu">sim_pos_neg</span>(<span class="at">theta =</span> theta_sim, <span class="at">N =</span> <span class="dv">30</span>)</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tibble</span>(<span class="at">rep =</span> rep, <span class="at">theta_sim =</span> theta_sim, datos_sim)</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>    })</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Podemos ver por ejemplo dónde esperamos ver el número de positivos a lo largo de distintas muestras, cuando <span class="math inline">\(N=30\)</span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>simulacion_datos_tbl <span class="sc">|&gt;</span> </span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(rep, theta_sim) <span class="sc">|&gt;</span> </span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Npos =</span> <span class="fu">sum</span>(Pos)) <span class="sc">|&gt;</span> </span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Npos)) <span class="sc">+</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Número de positivos"</span>, <span class="at">y =</span> <span class="st">"Frecuencia (muestras)"</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'rep'. You can override using the `.groups`
+argument.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-flujo-basico_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Este resultado es consecuencia de nuestros supuestos, antes de ver los datos, y resume que esperamos con mayor probabilidad un número bajo de positivos (en una muestra de N=30), y que es muy poco probable que observemos prevalencias muy altas. Dependiendo de la situación, este puede ser un resultado aceptable.</p>
+<p>Un resultado no aceptable para una enfermedad que sabemos que es relativamente rara (aunque tenemos incertidumbre), por ejemplo, podría ser el siguiente:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">231</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>simulacion_datos_tbl <span class="ot">&lt;-</span> <span class="fu">map_df</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">500</span>, </span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">function</span>(rep){</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>      <span class="co"># apriori seleccionada</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>      theta_sim <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(<span class="dv">1</span>, <span class="dv">30</span>, <span class="dv">3</span>)</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>      datos_sim <span class="ot">&lt;-</span> <span class="fu">sim_pos_neg</span>(<span class="at">theta =</span> theta_sim, <span class="at">N =</span> <span class="dv">30</span>)</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tibble</span>(<span class="at">rep =</span> rep, <span class="at">theta_sim =</span> theta_sim, datos_sim)</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>simulacion_datos_tbl <span class="sc">|&gt;</span> </span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(rep, theta_sim) <span class="sc">|&gt;</span> </span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Npos =</span> <span class="fu">sum</span>(Pos)) <span class="sc">|&gt;</span> </span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Npos)) <span class="sc">+</span></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Número de positivos"</span>, <span class="at">y =</span> <span class="st">"Frecuencia (muestras)"</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'rep'. You can override using the `.groups`
+argument.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-flujo-basico_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Este resultado no es aceptable cuando sabemos que es prácticamente imposible que la mayoría de la población está infectada. Debemos entonces regresar y ajustar nuestros supuestos: el problema en este caso es la elección de la distribución a priori para <span class="math inline">\(\theta\)</span>.</p>
+<p><strong>Observación</strong>: la crítica es sobre el conjunto completo de supuestos iniciales que hacemos acerca del problema. Cuando los diagnósticos no son aceptables desde el punto de vista teórico es necesario investigar dónde está el problema. Las distribuciones apriori que usamos, igual que cualquier supuesto, <strong>están sujetas a esta crítica</strong>. Nótese que esta crítica la estamos haciendo sin ver los datos que esperamos observar: es una crítica de supuestos.</p>
+</section>
+<section id="métodos-monte-carlo" class="level3" data-number="2.7.2">
+<h3 data-number="2.7.2" class="anchored" data-anchor-id="métodos-monte-carlo"><span class="header-section-number">2.7.2</span> Métodos Monte Carlo</h3>
+<p>Una vez que tenemos la densidad posterior podemos mostrarla o resumirla de varias maneras. Si tenemos una expresión analítica, esos resúmen típicamente <em>consisten de integrales</em>, por ejemplo:</p>
+<ul>
+<li>La media o mediana posterior</li>
+<li>Deciles o u otro tipo de percentiles de la posterior</li>
+<li>Intervalos de probabilidad posterior</li>
+</ul>
+<p>Este proceso puede ser no trivial incluso para densidades posteriores conocidas. La alternativa a integrar es <strong>simular</strong> de la posterior y calcular las cantidades de interés a partir de las simulaciones. En general, esto es más fácil que integrar. En nuestro ejemplo, en lugar de usar una función de <em>calcular_posterior</em>, construimos una que es <em>simular_posterior</em>.</p>
+<p>Esta función será simple porque simular de una beta es un problema estándar, y existen muchas implementaciones. Podríamos escribir, por ejemplo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>simular_posterior <span class="ot">&lt;-</span> <span class="cf">function</span>(muestra, n){</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">theta =</span> </span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rbeta</span>(n, <span class="fu">sum</span>(muestra) <span class="sc">+</span> <span class="dv">1</span>, <span class="fu">length</span>(muestra) <span class="sc">-</span> <span class="fu">sum</span>(muestra) <span class="sc">+</span> <span class="dv">1</span>))</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>muestra</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 0 0 1 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>sims_post <span class="ot">&lt;-</span> <span class="fu">simular_posterior</span>(muestra, <span class="dv">10000</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>sims_post <span class="sc">|&gt;</span> </span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> theta)) <span class="sc">+</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">50</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-flujo-basico_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Si queremos calcular la media, por ejemplo, hacemos</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a> sims_post <span class="sc">|&gt;</span> <span class="fu">pull</span>(theta) <span class="sc">|&gt;</span>  <span class="fu">mean</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.4280916</code></pre>
+</div>
+</div>
+<p>Si queremos la probabilidad de que la prevalencia esté por debajo de 20% hacemos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>sims_post <span class="sc">|&gt;</span> </span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">prob =</span> <span class="fu">mean</span>(theta <span class="sc">&lt;</span> <span class="fl">0.2</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+    prob
+   &lt;dbl&gt;
+1 0.0961</code></pre>
+</div>
+</div>
+<p>Muchas veces se presentan <strong>intervalos de probabilidad posterior</strong>, por ejemplo, podríamos reportar que con 90% de probabilidad la prevalencia está en el siguiente intervalo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>sims_post <span class="sc">|&gt;</span> </span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">inf =</span> <span class="fu">quantile</span>(theta, <span class="fl">0.05</span>),</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">sup =</span> <span class="fu">quantile</span>(theta, <span class="fl">0.95</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">inf =</span> <span class="fu">round</span>(inf, <span class="dv">2</span>),</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">sup =</span> <span class="fu">round</span>(sup, <span class="dv">2</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+    inf   sup
+  &lt;dbl&gt; &lt;dbl&gt;
+1  0.16  0.73</code></pre>
+</div>
+</div>
+<p><strong>Observación</strong>: No hay un intervalo mágico que debe reportarse (por ejemplo 95% de probabilidad es una costumbre o superstición). Hay varias maneras de construir intervalos de probabilidad. Dejaremos esta discusión para más adelante.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Métodos Monte Carlo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Los métodos Monte Carlo están basados en simulación de variables aleatorias. Las cantidades que nos interesan son integrales bajo una densidad de probabilidad. Si queremos calcular en general <span class="math display">\[I = \int f(x)p(x)dx,\]</span> simulamos una gran cantidad de observaciones <span class="math inline">\(x_1,\ldots, x_M\)</span> bajo <span class="math inline">\(p(x)\)</span>, y entonces (Ley de los grandes números):</p>
+<p><span class="math display">\[\frac{1}{M} \sum_{i=1}^{M} f(x_i) \to I\]</span> cuando <span class="math inline">\(M\to \infty\)</span>. De este modo, podemos aproximar con la precisión que requiramos la integral <span class="math inline">\(I\)</span>.</p>
+</div>
+</div>
+<p><strong>Nota 1</strong>: Sin más información del proceso de simulación, no es posible <em>demostrar</em> que una aproximación es “suficientemente” buena, no importa que tan grande sea <span class="math inline">\(M\)</span>. Más adelante veremos una batería de diagnósticos para al menos excluir los casos comunes en los que la aproximación es mala.</p>
+<p><strong>Nota 2</strong>: En nuestro caso, las integrales de interés usualmente son de la forma <span class="math display">\[I = \int f(\theta)p(\theta|D) d\theta,\]</span> donde <span class="math inline">\(D\)</span> es la información de la muestra, <span class="math inline">\(\theta\)</span> en general es un vector de parámetros del modelo, y <span class="math inline">\(f(\theta)\)</span> es una función de <span class="math inline">\(\theta\)</span> que nos interesa. Por ejemplo, para la media posterior de <span class="math inline">\(\theta\)</span>, usaríamos <span class="math inline">\(f(\theta) = \theta\)</span>. Podemos aproximar cualquier integral si tenemos simulaciones de la posterior:</p>
+<p><span class="math display">\[\theta_i \sim p(\theta|D) \implies \frac{1}{M} \sum_{i=1}^{M} f(\theta_i) \to I.\]</span></p>
+<hr>
+<p>Finalmente, checamos todo nuestra construcción de estimación como hicimos arriba, la diferencia es que ahora usamos simulaciones para entender el comportamiento de la posterior. En este caso, el proceso es como sigue:</p>
+<ol type="1">
+<li>Generamos un valor de la apriori <span class="math inline">\(\theta_{sim} \sim \text{Beta}(1,3)\)</span></li>
+<li>Simulamos datos de la muestra (<span class="math inline">\(N=25\)</span>) con el valor simulado de <span class="math inline">\(\theta\)</span></li>
+<li>Simulamos un número grande <span class="math inline">\(M\)</span> de valores de la posterior (aquí usaremos <span class="math inline">\(M=10000\)</span>)</li>
+<li>Repetimos 1-3</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">812</span>)</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>simulacion_rep <span class="ot">&lt;-</span> <span class="fu">map_df</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, </span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">function</span>(rep){</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>      <span class="co"># simular de la apriori</span></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>      theta_sim <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>)</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>      <span class="co"># simular datos según modelo</span></span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>      datos_sim <span class="ot">&lt;-</span> <span class="fu">sim_pos_neg</span>(<span class="at">theta =</span> theta_sim, <span class="at">N =</span> <span class="dv">25</span>)</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>      <span class="co"># simulaciones montecarlo para la posterior</span></span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>      posterior <span class="ot">&lt;-</span> <span class="fu">simular_posterior</span>(datos_sim<span class="sc">$</span>Pos, <span class="dv">10000</span>)</span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>      <span class="co"># junta todo</span></span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>      posterior <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">n_sim =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">rep =</span> rep) <span class="sc">|&gt;</span></span>
+<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">theta_sim =</span> theta_sim)</span>
+<span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a>simular_posterior <span class="ot">&lt;-</span> <span class="cf">function</span>(muestra, n){</span>
+<span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">theta =</span> </span>
+<span id="cb59-17"><a href="#cb59-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rbeta</span>(n, <span class="fu">sum</span>(muestra) <span class="sc">+</span> <span class="dv">1</span>, </span>
+<span id="cb59-18"><a href="#cb59-18" aria-hidden="true" tabindex="-1"></a>             <span class="fu">length</span>(muestra) <span class="sc">-</span> <span class="fu">sum</span>(muestra) <span class="sc">+</span> <span class="dv">3</span>))</span>
+<span id="cb59-19"><a href="#cb59-19" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Ahora usamos histogramas por ejemplo para mostrar cómo luce la posterior, y comparamos con los valores de la simulación:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(simulacion_rep, <span class="fu">aes</span>(<span class="at">x =</span> theta)) <span class="sc">+</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">50</span>) <span class="sc">+</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"theta"</span>, <span class="at">y =</span> <span class="st">"Prob posterior"</span>) <span class="sc">+</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> theta_sim), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>rep)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-flujo-basico_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="observaciones-1" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="observaciones-1"><span class="header-section-number">2.8</span> Observaciones</h2>
+<p>El proceso de arriba lo refinaremos considerablemente en el resto del curso.</p>
+<ul>
+<li>En primer lugar, los modelos generativos serán más complicados, y estarán basados en teoría más compleja (que expresamos con diagramas causales)</li>
+<li>Usaremos más herramientas y componentes para construir modelos estadísticos apropiados, ya sea que construyamos un modelo completo para todo el proceso de generación de datos, o que usemos modelos estándar como regresión para aproximar respuestas, cuando es apropiado</li>
+<li>Refinaremos el proceso de checar que el cómputo (checar Monte Carlo) y la inferencia (verificación apriori) es correcta bajo nuestros supuestos.</li>
+<li>Finalmente, veremos qué hacer después de hacer la estimación y que los puntos de arriba están resueltos, para tener confianza en nuestras conclusiones.</li>
+</ul>
+<section id="resumen" class="level3" data-number="2.8.1">
+<h3 data-number="2.8.1" class="anchored" data-anchor-id="resumen"><span class="header-section-number">2.8.1</span> Resumen</h3>
+<p>Aquí juntamos algunas observaciones que se derivan de lo que hemos visto (flujo de trabajo y estimación bayesiana):</p>
+<ol type="1">
+<li><p>Todo nuestro trabajo está fundamentado en entender qué es lo que queremos estimar dentro de un modelo generativo. Los diagramas causales nos ayudan a conectar el problema de interés con nuestros modelos, a construir modelos generativos y hacer explícitos nuestros supuestos.</p></li>
+<li><p>El proceso de estimación siempre es el mismo: nuestro estimador es la distribución posterior, que se construye a partir de la verosimilitud y la apriori (modelo generativo). Nuestro estimador es la posterior de las cantidades de interés, que pueden resumirse de distintas maneras. Cualquier cálculo derivado de otras cantidades de interés debe considerar toda la posterior (no solo la media o la moda, etc. posterior).</p></li>
+<li><p>Nuestro proceso incluye los chequeos predictivos a priori (basados en simulación de datos). Esto son cruciales para detectar problemas en nuestros supuestos (vs teoría) y que nuestro proceso sea internamente consistente. Esto también es una verificación de la información a priori.</p></li>
+<li><p>Generalmente es más conveniente y práctico hacer simulaciones que calcular analíticamente la posterior o sus integrales.</p></li>
+</ol>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./01-introduccion.html" class="pagination-link" aria-label="Introducción">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./02-flujo-basico-2.html" class="pagination-link" aria-label="Flujo de trabajo básico: refinando el modelo">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Flujo de trabajo básico: refinando el modelo</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
