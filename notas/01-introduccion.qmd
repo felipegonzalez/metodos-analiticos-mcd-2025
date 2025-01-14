@@ -29,8 +29,8 @@ enfoque bayesiano. Para la parte 1 y 2, consideraremos modelos gráficos causale
 que expresan nuestro conocimiento acerca del problema de interés. Para la parte 3
 propondremos un flujo de trabajo bayesiano que nos permita probar y entender el
 funcionamiento de nuestros modelos. Finalmente, para 2 y 3 propondremos distintas
-estrategias de modelación, como son modelos jerárquicos, regresión, como trabajar con 
-datos faltantes entre otros.
+estrategias de modelación, como son modelos jerárquicos, regresión, cómo trabajar con 
+datos faltantes, entre otros.
 
 
 
@@ -41,9 +41,9 @@ En primer lugar, observamos (@rethinking):
 ::: callout-note
 # Causas y mecanismos
 
-Las razones de cómo hacemos análisis estadístico (que procedimiento o algoritmo
-seleccionamos, por ejemplo) en un problema dado 
-**no están en los datos observados**, las **causas** de los datos. 
+Las razones del análisis estadístico (que procedimiento o algoritmo
+seleccionamos, por ejemplo) en un  en un problema dado 
+**no está en los datos observados**, sino en las **causas** de los datos. 
 
 :::
 
@@ -100,11 +100,15 @@ calculos_agregada |> pivot_wider(names_from = resultado, values_from = n) |>
    kable_paper(full_width = FALSE)
 ```
 
-Esta tabla descriptiva es una reescritura de los datos, y no hemos resumido nada todavía. Pero es apropiada para empezar a contestar la pregunta:
+Esta tabla descriptiva es una reescritura de los datos, y no hemos resumido nada todavía. Pero es apropiada para empezar a contestar la pregunta (que es científica o causal):
 
 -   ¿Qué indican estos datos acerca de qué tratamiento es mejor? ¿Acerca del tamaño de cálculos grandes o chicos?
 
-Supongamos que otro analista decide comparar los pacientes que recibieron cada tratamiento, ignorando la variable de tamaño:
+Podemos suponer que un analista considera de la tabla de arriba y llega  a la siguiente 
+conclusión: el tratamiento A es mejor, porque es mejor en los dos grupos de pacientes
+(con piedras chicas o grandes).
+
+Ahora supongamos que otro analista decide comparar los pacientes que recibieron cada tratamiento, ignorando la variable de tamaño:
 
 ```{r}
 calculos |> group_by(tratamiento) |> 
@@ -113,7 +117,9 @@ calculos |> group_by(tratamiento) |>
    kable_paper(full_width = FALSE)
 ```
 
-y parece ser que el tratamiento $B$ es mejor que el $A$. Esta es una paradoja (un ejemplo de la [paradoja de Simpson](https://es.wikipedia.org/wiki/Paradoja_de_Simpson)) . Si un médico no sabe que tipo de cálculos tiene el paciente, ¿entonces debería recetar $B$? ¿Si sabe debería recetar $A$? Esta discusión parece no tener mucho sentido.
+y parece ser que el tratamiento $B$ es mejor que el $A$. 
+
+El contraste entre los resultados de los dos analistas es una paradoja (un ejemplo de la [paradoja de Simpson](https://es.wikipedia.org/wiki/Paradoja_de_Simpson)) . Si un médico no sabe que tipo de cálculos tiene el paciente, ¿entonces debería recetar $B$? ¿Si sabe debería recetar $A$? Esta discusión parece no tener mucho sentido.
 
 Podemos investigar por qué está pasando esto considerando la siguiente tabla, que solo examina cómo se asignó el tratamiento dependiendo del tipo de cálculos de cada paciente:
 
@@ -163,7 +169,7 @@ digraph {
 
 Es decir, el tamaño de los cálculos es una causa común de tratamiento (T)
 y resultado (M). Veremos más adelante que la decisión 
-de condicionar a el tipo de cálculos proviene
+de condicionar ( que a veces se menciona como *estratificar* el análisis) al tipo de cálculos proviene
 de un análisis relativamente simple de este diagrama causal, independientemente
 de los métodos que usemos para estimar las proporciones de interés (en este
 ejemplo, examinar las tablas cruzadas es equivalente a hacer estimaciones
@@ -252,7 +258,7 @@ de las relaciones particulares entre las variables.
 Los DAGs se construyen con causas, e implican asociaciones observables, pero no
 se construyen con asociaciones simplemente.
 El pensamiento causal es útil siempre que queremos responder preguntas
-acerca de un fenómeno de interés. En particular nos asisten en :
+acerca de un fenómeno de interés. En particular nos asiste en :
 
 #### Análisis descriptivo {-}
 

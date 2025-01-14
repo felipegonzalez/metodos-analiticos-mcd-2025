@@ -39,7 +39,7 @@ Este curso sigue aproximadamente la primera referencia (Statistical Rethinking).
   - [Statistical Rethinking](https://xcelab.net/rm/statistical-rethinking/)
   - [Causal Inference in Statistics: a primer](https://www.wiley.com/en-us/Causal+Inference+in+Statistics:+A+Primer-p-9781119186847)
   - [Counterfactuals and Causal Inference: Methods and Principles for Social Research](https://www.cambridge.org/core/books/counterfactuals-and-causal-inference/5CC81E6DF63C5E5A8B88F79D45E1D1B7)
-  - [Bayesian workflow](https://arxiv.org/abs/2011.01808)] 
+  - [Bayesian workflow](https://arxiv.org/abs/2011.01808)
   - [Towards a principled Bayesian workflow](https://betanalpha.github.io/assets/case_studies/principled_bayesian_workflow.html)
 
 
