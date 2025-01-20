@@ -1,0 +1,98 @@
+---
+title: "Tarea 1"
+format:
+  html:
+    embed-resources: true
+---
+
+En esta tarea veremos 
+
+- Un ejemplo más de cómo los diagramas causales pueden
+guiarnos hacia el análisis correcto, y entender por qué pueden aparacer correlaciones
+no causales. 
+
+
+
+```{r}
+library(tidyverse)
+library(DiagrammeR)
+```
+
+
+# Pensamiento causal: Paradoja de Berkson
+
+Supongamos que en una universidad los alumnos pueden ser aceptados
+por habilidad atlética y habilidad académica. Cuando un analista de
+datos examina los datos, encuentra que hay una **correlación negativa**
+entre habilidad atlética y académica.
+
+Veremos cómo puede suceder esto sin que en realidad exista una relación
+negativa de estas dos habilidades en la población. Para este
+ejercicio supondremos que
+
+- Para que alguien sea aceptado, tiene su score deportivo debe ser mayor
+a 120 y/o su score académico debe ser mayor a 120.
+- No existe relación causal entre los dos tipos de aptitud (podemos también modificar este supuestos más adelante)
+
+El diagrama que ilustra esto es el siguiente.
+
+```{r}
+grViz("
+digraph {
+  graph [ranksep = 0.2]
+  node [shape=plaintext]
+    Academica
+    Deportes
+    Aceptacion
+  edge [minlen = 3]
+Academica -> Aceptacion
+Deportes -> Aceptacion
+}
+")
+```
+
+Adicionalmente, sabemos que los scores de los que aplican están estandarizados,
+y tienen distribución aproximadamente normal con media 100 y desviación
+estándar 10. Podemos construir entonces un modelo generativo como sigue:
+
+```{r}
+simular_alumnos <- function(n = 10){
+  academico <- rnorm(n, 100, 10)
+  deportes <- rnorm(n, 100, 10)
+  aceptacion <- ifelse(academico > 125 | deportes > 125, 1, 0)
+  tibble(academico, deportes, aceptacion)
+}
+```
+
+
+Confirma los resultados que obtuvo el analista anterior: hay una correlación
+negativa entre habilidades para los estudiantes aceptados: 
+
+```{r}
+alumnos_sim_tbl <- simular_alumnos(5000)
+aceptados_tbl <- alumnos_sim_tbl |> 
+  filter(aceptacion == 1)
+aceptados_tbl |> ggplot(aes(academico, deportes)) +
+  geom_point() +
+  geom_smooth(method = "lm", formula = y ~ x)
+```
+
+
+**Pregunta 1**: Según nuestros supuestos, discute
+por qué una explicación de esta correlación como "cuando alguien es bueno para
+los deportes le dedica más tiempo a deportes y descuida aspectos académicos,
+y viceversa" no necesariamente es válida. ¿El problema es estádistico (muestra chica, uso de correlación de spearman incorrecto, etc) o conceptual?
+
+
+**Pregunta 2**: Verifica que en la población general (tanto alumnos rechazados como aceptados) no existe tal correlación (según nuestros supuestos). Utiliza los mismos datos simulados 
+de arriba. 
+
+**Pregunta 3**: para entender cómo se relaciona habilidad académica y
+en deportes en las personas, ¿cuáles datos son más adecuados?
+
+- Necesitamos ver los datos de aceptados y no aceptados.
+- Podemos ver los datos de aceptados solamente.
+
+Este tipo de correlaciones distorsionadas al hacer análisis por subgrupos
+en un diagrama como el de arriba se llama también **sesgo de selección**.
+
