@@ -178,13 +178,15 @@ creíbles. A esta distribución le llamamos la **distribución posterior** de $\
 
 Con esta posterior podemos hacer afirmaciones probabilísticas de la forma:
 
-- ¿Cuál es la probabilidad de que $\theta$ sea menor a 1%? (Muy pocos seropositivos)
-- ¿Cuál es la probabildad de que $\theta$ sea mayor a 80%? (Población cerca de saturación)
+- ¿Cuál es la probabilidad de que $\theta$ sea menor a 1%, dado los datos
+que obtuvimos? (Muy pocos seropositivos)
+- ¿Cuál es la probabildad de que $\theta$ sea mayor a 80%, dado los datos
+que obtuvimos? (Población cerca de saturación)
 
 Estas cantidades se calculan, al menos teóricamente,
 integrando $p(\theta|D)$ sobre los valores de $\theta$ que nos interesan, por ejemplo,
 
-$$P(\theta <= 0.01) = \int_0^{0.01} p(\theta|D) d\theta$$
+$$P(\theta <= 0.01|D) = \int_0^{0.01} p(\theta|D) d\theta$$
 Nota: la integral la interpretamos como suma en el caso discreto.
 
 Supongamos entonces una $\theta$ dada, y que observamos la muestra
@@ -780,7 +782,7 @@ de ser menor que un valor, o cómo se calcula la media).
 Aunque en este ejemplo simple la posterior
 tiene una forma conocida y hay manera de calcular (analíticamente o con rutinas numéricas
 ya implementadas) esos resúmenes de interés
-(media, cuantiles, etc.), en general calcular integrales no es una estrategia
+(media, cuantiles, etc.), en general calcular directamente integrales no es una estrategia
 que podamos llevar muy lejos.
 
 

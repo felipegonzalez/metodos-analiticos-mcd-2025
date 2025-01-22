@@ -45,7 +45,7 @@ grViz("
 digraph {
   graph [ranksep = 0.3, rankdir = LR]
   node [shape=circle]
-    p
+    theta [label = <&theta;>]
     Npos
   node [shape=plaintext]
     N
@@ -55,7 +55,7 @@ digraph {
     #sens
     #esp
   edge [minlen = 3]
-    p -> Npos
+    theta -> Npos
     #p -> Nneg
     N -> Npos
     Npos -> Nobs
@@ -64,7 +64,7 @@ digraph {
     sens -> Nobs
     #esp -> Nneg
     #sens -> Nneg
-{ rank = same; p; N }
+{ rank = same; theta; N }
 { rank = same; Npos}
 { rank = max; sens; esp}
 }
@@ -310,7 +310,7 @@ grViz("
 digraph {
   graph [ranksep = 0.3, rankdir = LR]
   node [shape=circle]
-    theta
+    theta [label = <&theta;>]
     esp
     sens
     Npos [label = <N<SUB>+</SUB>>]
