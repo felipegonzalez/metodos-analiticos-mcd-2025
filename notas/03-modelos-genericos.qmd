@@ -280,7 +280,7 @@ sims_tbl |>
   labs(x = "Estatura (cm)", y = "Peso (kg)") +
   facet_wrap(~rep)
 ```
-**Observación*: Esto parece ser razonable, aunque algunas replicaciones son algo extremas
+**Observación**: Esto parece ser razonable, aunque algunas replicaciones son algo extremas
 (muy poca variabilidad de peso, una relación muy débil o. muy fuerte entre estatura y peso). Comenzaremos con este modelo y seguiremos explorando
 sus consecuencias.
 
