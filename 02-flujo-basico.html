@@ -74,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-7f7ebbf50e4fdd60fd3b6acd289450dc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-ba68f8efa55c0b20591f03ab3fdb3013.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -199,6 +199,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Flujo de trabajo básico: refinando el modelo</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-modelos-genericos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Componentes de modelación 1</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -303,8 +309,8 @@ window.Quarto = {
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>, <span class="at">width =</span> <span class="dv">300</span>, <span class="at">height =</span> <span class="dv">100</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="htmlwidget-cef5dc3a16c5eb56c9e8" style="width:100%;height:216px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-cef5dc3a16c5eb56c9e8">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    theta [label = <&theta;>]\n  node [shape=plaintext]\n    N\n    Npos [label = <N<SUB>+<\/SUB>>]\n    Nneg [label = <N<SUB>-<\/SUB>>]\n    #sens\n    #esp\n  edge [minlen = 3]\n    theta -> Npos\n    theta -> Nneg\n    N -> Npos\n    N -> Nneg\n    #esp -> Pos\n    #sens -> Pos\n    #esp -> Neg\n    #sens -> Neg\n{ rank = same; theta; N }\n{ rank = same; Npos; Nneg}\n#{ rank = max; sens; esp}\n\n  \n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-9db0806a2672d6d9bbdc" style="width:100%;height:216px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9db0806a2672d6d9bbdc">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    theta [label = <&theta;>]\n  node [shape=plaintext]\n    N\n    Npos [label = <N<SUB>+<\/SUB>>]\n    Nneg [label = <N<SUB>-<\/SUB>>]\n    #sens\n    #esp\n  edge [minlen = 3]\n    theta -> Npos\n    theta -> Nneg\n    N -> Npos\n    N -> Nneg\n    #esp -> Pos\n    #sens -> Pos\n    #esp -> Neg\n    #sens -> Neg\n{ rank = same; theta; N }\n{ rank = same; Npos; Nneg}\n#{ rank = max; sens; esp}\n\n  \n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Que también podríamos simplificar (suponiendo la <span class="math inline">\(N\)</span> fija y conocida, pues <span class="math inline">\(N_+\)</span> y <span class="math inline">\(N\)</span> dan <span class="math inline">\(N_{-}\)</span>) como:</p>
@@ -337,8 +343,8 @@ window.Quarto = {
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>, <span class="at">width =</span> <span class="dv">300</span>, <span class="at">height =</span> <span class="dv">100</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="htmlwidget-bd208896fb244e00bb00" style="width:100%;height:216px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-bd208896fb244e00bb00">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    theta [label = <&theta;>]\n  node [shape=plaintext]\n    N\n    Npos [label = <N<SUB>+<\/SUB>>]\n    #sens\n    #esp\n  edge [minlen = 3]\n    theta -> Npos\n    N -> Npos\n    #esp -> Pos\n    #sens -> Pos\n    #esp -> Neg\n    #sens -> Neg\n{ rank = same; theta; N }\n{ rank = same; Npos}\n#{ rank = max; sens; esp}\n\n  \n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-32cc64565e2f4c22111b" style="width:100%;height:216px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-32cc64565e2f4c22111b">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    theta [label = <&theta;>]\n  node [shape=plaintext]\n    N\n    Npos [label = <N<SUB>+<\/SUB>>]\n    #sens\n    #esp\n  edge [minlen = 3]\n    theta -> Npos\n    N -> Npos\n    #esp -> Pos\n    #sens -> Pos\n    #esp -> Neg\n    #sens -> Neg\n{ rank = same; theta; N }\n{ rank = same; Npos}\n#{ rank = max; sens; esp}\n\n  \n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Y ahora construimos el modelo generativo. Supondremos que la muestra de <span class="math inline">\(N\)</span> personas se toma de manera aleatoria de la población (una población grande, así que podemos ignorar el efectos de poblaciones finitas). Supondremos provisionalmente, además, que la prueba es perfecta, es decir, no hay falsos positivos o negativos.</p>
@@ -422,11 +428,11 @@ Pruebas unitarias
 <p><span class="math display">\[p(\theta|D)\]</span> que es una distribución sobre los posibles valores de <span class="math inline">\(\theta\)</span>, una vez que tenemos información de la muestra, y que pone más masa de probabilidad sobre las conjeturas de <span class="math inline">\(\theta\)</span> que son más probables o creíbles. A esta distribución le llamamos la <strong>distribución posterior</strong> de <span class="math inline">\(\theta\)</span>.</p>
 <p>Con esta posterior podemos hacer afirmaciones probabilísticas de la forma:</p>
 <ul>
-<li>¿Cuál es la probabilidad de que <span class="math inline">\(\theta\)</span> sea menor a 1%? (Muy pocos seropositivos)</li>
-<li>¿Cuál es la probabildad de que <span class="math inline">\(\theta\)</span> sea mayor a 80%? (Población cerca de saturación)</li>
+<li>¿Cuál es la probabilidad de que <span class="math inline">\(\theta\)</span> sea menor a 1%, dado los datos que obtuvimos? (Muy pocos seropositivos)</li>
+<li>¿Cuál es la probabildad de que <span class="math inline">\(\theta\)</span> sea mayor a 80%, dado los datos que obtuvimos? (Población cerca de saturación)</li>
 </ul>
 <p>Estas cantidades se calculan, al menos teóricamente, integrando <span class="math inline">\(p(\theta|D)\)</span> sobre los valores de <span class="math inline">\(\theta\)</span> que nos interesan, por ejemplo,</p>
-<p><span class="math display">\[P(\theta &lt;= 0.01) = \int_0^{0.01} p(\theta|D) d\theta\]</span> Nota: la integral la interpretamos como suma en el caso discreto.</p>
+<p><span class="math display">\[P(\theta &lt;= 0.01|D) = \int_0^{0.01} p(\theta|D) d\theta\]</span> Nota: la integral la interpretamos como suma en el caso discreto.</p>
 <p>Supongamos entonces una <span class="math inline">\(\theta\)</span> dada, y que observamos la muestra <span class="math inline">\(1,0,0,1,0\)</span>. La probabilidad de observar esta muestra es (suponiendo observaciones independientes):</p>
 <p><span class="math display">\[\theta(1-\theta)(1-\theta)\theta(1-\theta) = \theta^2(1-\theta)^3\]</span> Para algunos valores de <span class="math inline">\(\theta\)</span> (posibles conjeturas acerca del valor de <span class="math inline">\(\theta\)</span>) podemos escribir una tabla como sigue (Nota: discretizamos por el momento a un número finito de valores de <span class="math inline">\(\theta\)</span> para hacer el argumento más simple):</p>
 <div class="cell">
@@ -1350,7 +1356,7 @@ Aspectos numéricos
 </div>
 <hr>
 <p>En este punto, podríamos ir al siguiente paso, que es escribir una función para calcular la posterior. En realidad ya sabemos su función de densidad, pero cualquier resumen que hagamos de esta distribución requerirá de integrales (¿por qué? piensa en cómo calcular la probabilidad de ser menor que un valor, o cómo se calcula la media).</p>
-<p>Aunque en este ejemplo simple la posterior tiene una forma conocida y hay manera de calcular (analíticamente o con rutinas numéricas ya implementadas) esos resúmenes de interés (media, cuantiles, etc.), en general calcular integrales no es una estrategia que podamos llevar muy lejos.</p>
+<p>Aunque en este ejemplo simple la posterior tiene una forma conocida y hay manera de calcular (analíticamente o con rutinas numéricas ya implementadas) esos resúmenes de interés (media, cuantiles, etc.), en general calcular directamente integrales no es una estrategia que podamos llevar muy lejos.</p>
 </section>
 <section id="más-de-verificaciones-apriori" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="más-de-verificaciones-apriori">Más de verificaciones apriori</h3>
