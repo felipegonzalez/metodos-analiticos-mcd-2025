@@ -1,0 +1,288 @@
+---
+title: "Tarea 2"
+format: html
+---
+
+En esta tarea
+
+1. Repasamos el cálculo de la posterior y verificaciones a priori que vimos en el
+ejemplo de clase. 
+2. Vemos por qué es necesario hacer el cálculo de la posterior en la escala logarítmica.
+3. Discutimos por qué calcular directamente la posterior en una rejilla (grid) no es un método
+que podamos utilizar para modelos más generales.
+4. Motivamos la idea de que cualquier método eficiente para simular de la posterior resuelve nuestro
+problema de entender o resumir densidades posteriores.
+
+
+```{r}
+library(tidyverse)
+library(DiagrammeR)
+```
+
+
+# Modelación y pruebas a priori
+
+Considera el ejemplo en clase de seropositividad que vimos en clase.
+Según nuestro diagrama, propusimos una función de simulación como la
+que sigue:
+
+```{r}
+sim_pos_neg <- function(N = 20, sens = 1, esp = 1) {
+  # supuesto a priori acerca de la prevalencia
+  theta <- runif(1, 0, 1)
+  # verdaderos positivos que capturamos en la muestra
+  Pos_verdadero <- rbinom(N, 1, theta)
+  Neg_verdadero <- 1 - Pos_verdadero
+  # positivos observados en la muestra
+  Pos <- Pos_verdadero
+  Neg <- 1 - Pos
+  # Observaciones, también regresamos la theta real
+  # que se usó para simular:
+  tibble(Pos = Pos, Neg = Neg, theta = theta)
+}
+```
+
+
+En el ejemplo en clase calculamos la fórmula para la posterior directamente,
+y propusimos un proceso de estimación (ver notas) como sigue (donde utilizaremos
+una rejilla más fina):
+
+```{r}
+calcular_posterior_1 <- function(muestra){
+  # discretización
+  theta <- seq(0, 1, length.out = 101)
+  # distribución inicial o a prior
+  priori <- tibble(theta = theta, prob_priori = (1 - theta) * (1 - theta)) |> 
+    mutate(prob_priori = prob_priori / sum(prob_priori))
+  # calcular la probabilidad posterior
+  N <- length(muestra)
+  Npos <- sum(muestra)
+  prob_post <- tibble(theta = theta) |> 
+      left_join(priori, by = "theta") |> 
+      mutate(prob_posterior = theta ^ Npos * (1 - theta)^(N - Npos) * prob_priori) |> 
+    mutate(prob_posterior = prob_posterior / sum(prob_posterior)) 
+  prob_post |> select(theta, prob_posterior)
+}
+```
+
+La pregunta que queremos contestar es la siguiente: bajo nuestros
+supuestos del modelo generativo, nuestro proceso de estimación 
+es adecuado? Para esto es necesario hacer pruebas.
+
+Considera entonces una simulación de datos y la posterior obtenida:
+
+```{r}
+set.seed(1134)
+una_muestra <- sim_pos_neg(N = 100)
+theta_real <- una_muestra$theta[1]
+posterior <- calcular_posterior_1(una_muestra$Pos)
+ggplot(posterior, aes(x = theta, y = prob_posterior)) +
+  geom_col() +
+  geom_vline(xintercept = theta_real, col = "red")
+```
+
+**Pregunta 4**: Nota que la distribución posterior (probabilidad de
+cada conjetura de theta dada la muestra) no está concentrada en 
+verdadero valor de theta. ¿Esto indica un problema necesariamente?
+¿Qué dirías acerca de nuestro método de estimación dada esta gráfica?
+
+
+En realidad, es importante ver qué sucede con distintos valores del
+parámetro a estimar y distintas muestras posibles.
+
+
+Corre este código al menos unas 20 veces y checa el resultado:
+
+```{r}
+una_muestra <- sim_pos_neg(N = 100)
+theta_real <- una_muestra$theta[1]
+posterior <- calcular_posterior_1(una_muestra$Pos)
+ggplot(posterior, aes(x = theta, y = prob_posterior)) +
+  geom_col() +
+  geom_vline(xintercept = theta_real, col = "red")
+```
+
+**Pregunta 5**: De acuerdo a este ejercicio de simulación bajo nuestros supuestos,
+¿qué dirías acerca de nuestro proceso de estimación? ¿Nos informa correctamente
+acerca del valor de theta?
+
+**Pregunta 6**: Repite los dos ejercicios anteriores con una muestra mucho más
+chica, como N=3 por ejemplo. ¿Qué dirías de nuestras estimaciones en este caso?
+
+**Pregunta 7**  Si quisiéramos usar una muestra mucho
+más grande que N=100, ¿qué problemas encuentras? ¿qué defecto numérico tiene nuestro
+proceso de estimación? Considera el siguiente ejemplo:
+
+```{r}
+#por ejemplo
+una_muestra <- sim_pos_neg(N = 2000)
+theta_real <- una_muestra$theta[1]
+posterior <- calcular_posterior_1(una_muestra$Pos)
+ggplot(posterior, aes(x = theta, y = prob_posterior)) +
+  geom_col() +
+  geom_vline(xintercept = theta_real, col = "red")
+```
+
+
+
+## Mejora al cálculo de la posterior
+
+Como explicamos en clase, es mejor hacer el cálculo en escala logarítmica:
+
+```{r}
+# Evitar desbordes al sumar exponenciales
+log_sum_exp <- function(x){
+  max_x <- max(x)
+  max_x + log(sum(exp(x - max_x)))
+}
+calcular_posterior_2 <- function(muestra){
+  # evitar 0 o 1 exactos:
+  theta <- seq(1e-12, 1 - 1e-12, length.out = 101)
+  # no es necesario normalizar esta distribución apriori
+  log_priori <- tibble(theta = theta, log_prob_priori = 2 * log(1 - theta)) 
+  # calcular la probabilidad posterior
+  N <- length(muestra)
+  Npos <- sum(muestra)
+  prob_post_tbl <- tibble(theta = theta) |> 
+    left_join(log_priori, by = "theta") |> 
+    # log verosimilitud
+    mutate(log_prob_posterior = 
+        Npos * log(theta) + log(1 - theta) * (N - Npos)) |> 
+    # sumar log apriori
+    mutate(log_prob_posterior = log_prob_posterior + log_prob_priori) |> 
+    mutate(log_prob_posterior_norm = 
+      log_prob_posterior - log_sum_exp(log_prob_posterior)) |> 
+    mutate(prob_posterior = exp(log_prob_posterior_norm))
+  prob_post_tbl |> select(theta, prob_posterior)
+}
+```
+
+
+
+**Pregunta 8**: repite el cálculo (usando nuestra nueva función que calcula
+la log posterior) de la pregunta anterior que fallaba.
+¿Cómo son los resultados ahora?
+
+```{r}
+theta_real <- una_muestra$theta[1]
+posterior <- calcular_posterior_2(una_muestra$Pos)
+ggplot(posterior, aes(x = theta, y = prob_posterior)) +
+  geom_col() +
+  geom_vline(xintercept = theta_real, col = "red")
+```
+
+
+## Utilizando la posterior para inferencia
+
+En el ejemplo anterior, decidimos calcular directamente una aproximación
+de rejilla (grid approximation) para la posterior, incrementando el número
+de puntos de la rejilla para tener una mejor aproximación.
+
+Como explicamos en clase, muchas veces queremos calcular cantidades derivadas
+de posterior para hacer la estimación, por ejemplo:
+
+- La media posterior para estimar puntualmente el valor del parámetro
+- Cuantiles de la posterior para estimar por intervalos el valor del parámetro.
+
+**Pregunta 9**: Podemos por ejemplos calcular la
+media de la posterior de $\theta$ como sigue. Calcula también la desviación
+estándar de la posterior. Opcionalmente, puede pensar cómo calcular cuantiles también,
+que es relativamente simple.
+
+```{r}
+posterior |> summarise(mult = sum(theta * prob_posterior))
+```
+
+De modo que una aproximación de la posterior de esta naturaleza permite 
+el cálculo simple de integrales que de otra manera podrían ser analíticamente difícil.
+¿Por qué no usamos siempre este metodo simple?
+
+**Pregunta 10**: Explica por qué para modelos con más de unos cuantos parámetros
+esta aproximación de rejilla no es factible: por ejemplo, ¿cuántas evaluaciones
+de la posterior hay que hacer si tenemos 20 parámetros, y aproximamos con una
+rejllla de 50 valores por parámetro? ¿Esto se puede calcular en un tiempo razonable o
+almacenar en algún lugar? Puedes usar un chatbot para intentar contestar esta pregunta
+suponiendo que el internet tiene decenas de zettabytes de información.
+
+
+Sin embargo, podemos simular valor de la posterior para hacer estimaciones
+de las cantidades de interés, sin hacer referencia a los valores calculados de la
+posterior. Por ejemplo, consideremos la media posterior,
+donde tenemos que tomar un valor grande de simulaciones de la posterior
+y promediar los valores obtenidos:
+
+```{r}
+simular_posterior <- function(posterior, M = 2000){
+  # muestreamos la posterior
+  sims <- sample(posterior$theta, M, replace = TRUE, prob = posterior$prob_posterior)
+  tibble(theta = sims) |> mutate(m = row_number()) |>
+    select(m, theta)
+}
+sims_theta <- simular_posterior(posterior, 2000)
+```
+
+
+```{r}
+sims_theta |> summarise(media_post = mean(theta), sd_post = sd(theta))
+```
+**Pregunta 11**: Compara con los valores que obtuviste en la pregunta 9. Argumenta
+que con simulaciones de la posterior podemos aproximar cualquier cantidad de interés
+relacionada con la posterior.
+
+
+## Por qué es importante simular para hacer cálculos con la posterior
+
+Para que la simulación sea realmente efectiva, tenemos que evitar hacer el cálculo
+en una rejilla de la posterior, como hicimos al principio. Hay variamos maneras
+de evitar esto: métodos montecarlo tradicionales, por ejemplo, o métodos como
+Markov Chain Montecarlo. 
+
+Otro método es reconocer una forma analítica particular
+de la posterior y utilizar una rutina de simulación conocida. Por ejemplo,
+en nuestro caso podríamos reconocer que la posterior pertenece a la familia
+de distribuciones beta https://en.wikipedia.org/wiki/Beta_distribution
+(puedes revisar las notas para ver por qué este 
+es el caso, aunque los detalles **no son importantes ahora**):
+
+```{r}
+sim_posterior <- function(muestra, M = 2000){
+  n_pos <- sum(muestra$Pos)
+  n_neg <- sum(muestra$Neg)
+  # 1 y 3 provienen de que la inicial es beta(1,3):
+  # y de la forma de la verosimilitud
+  sims <- rbeta(M, n_pos + 1, n_neg + 3)
+  tibble(theta = sims) |> mutate(m = row_number()) |>
+    select(m, theta)
+}
+```
+
+
+```{r}
+sims_theta <- sim_posterior(una_muestra, 2000)
+sims_theta |> summarise(media_post = mean(theta), sd_post = sd(theta))
+```
+
+**Pregunta 12**: Compara esta aproximación con las que hicimos arriba usando
+una rejilla. En este caso, ¿tuvimos que calcular los valores de la posterior
+en una rejilla? Para modelos con varios parámetros (por ejemplo 20 o 30) podríamos
+entonces hacer cálculos de cantidades como medias posteriores, covarianzas posteriores,
+etc sin tener que calcular la posterior en un una rejilla?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
