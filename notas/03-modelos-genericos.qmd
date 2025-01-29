@@ -175,7 +175,7 @@ de modelación haciendo verificaciones a priori.
 # Distribuciones a priori
 
 La propuesta de distribuciones a priori depende de manera cercana
-de nuestras verificaciones a prior, como veremos más adelante. En general
+de nuestras verificaciones, como veremos más adelante. En general
 **no** existen distribuciones a priori "correctas", sino justificables
 desde el punto de vista del conocimiento del área.
 
@@ -212,7 +212,7 @@ considerable pero no excesivamente amplio para una persona de estatura 160cm.
 la constante de proporcionalidad $\beta$ debe ser positiva, y no muy
 lejana de un valor entre 0 y 2. La razón es que no tiene sentido 
 esperar que un aumento de 10 cm tenga un aumento esperado de peso
-de 20 kilos, por ejemplo. Podríamos poner una inicial como 
+de 30 kilos, por ejemplo. Podríamos poner una inicial como 
 $\beta\sim N^+(0, 1)$ (normal truncada en 0) por ejemplo. Esta distribución
 tiene los siguientes percentiles:
 
@@ -281,7 +281,7 @@ sims_tbl |>
   facet_wrap(~rep)
 ```
 **Observación**: Esto parece ser razonable, aunque algunas replicaciones son algo extremas
-(muy poca variabilidad de peso, una relación muy débil o. muy fuerte entre estatura y peso). Comenzaremos con este modelo y seguiremos explorando
+(muy poca variabilidad de peso, una relación muy débil o muy fuerte entre estatura y peso). Comenzaremos con este modelo y seguiremos explorando
 sus consecuencias.
 
 Nótese que en esta situación, un punto de vista que aparentemente
@@ -455,6 +455,8 @@ mod_peso_ajuste <- mod_peso$sample(
 La posterior de los parámetros de la recta se ve como siguen:
 
 ```{r}
+#| warning: false
+#| 
 sims_peso_post_tbl <- mod_peso_ajuste |> 
   as_draws_df() |> 
   select(.draw, alpha, beta, sigma) 
@@ -731,7 +733,8 @@ indica que hay dos tipos de preguntas que podemos hacer:
 no actúa a través de $H$.
 
 Aunque tenemos un solo modelo causal, *pueden construirse distintos
-modelos estadísticos para contestar cada pregunta*. El modelo causal
+modelos estadísticos para contestar cada pregunta*, y cada pregunta exigirá
+que se cumplan ciertas condicines en nuestro modelo gráfico. El modelo causal
 nos dice que si no tenemos causas comunes de $S$ y $H$ y $W$, entonces
 podemos estimar el efecto total de $S$ sobre $W$ (esto lo formalizaremos
 más adelante).
@@ -914,14 +917,21 @@ de sexo a peso, y no la que pasa por el camino que va a través de la estatura.
 Este tipo de análisis se llama a veces *análisis de mediación*. 
 
 La idea es *bloquear* el camino que va de sexo a estatura, y esto podemos
-hacer condicionando o estratificando por  los valores de $H$. Es decir, para
+hacer condicionando o estratificando por  los valores de $H$ 
+(bajo los supuestos de nuestro diagrama). Es decir, para
 cada valor de $H$, queremos calcular cuál es la diferencia entre una población
 de hombres y de mujeres (con la misma estatura $H$). Las diferencias que
 encontremos no puede deberse a estatura, pues esta valor es fijo.
 Al estratificar por $H$, decimos que el camino $S\to H\to W$ está bloqueado,
-y refinaremos esta idea más adelante.
+y refinaremos esta idea más adelante. 
 
-En términos de cantidad a estimar, quisiéramos, para cada estatura $H$,
+**Nota**: si consideráramos que hay una causa común para estatura y peso,
+veremos y explicaremos con detalle más adelante por qué esta 
+estrategia de condicionar bajo $H$ **no** funciona para calcular el efecto
+directo de sexo sobre peso.
+
+Bajos los supuestos de nuestro modelo original, 
+en términos de cantidad a estimar quisiéramos, para cada estatura $H$,
 calcular la diferencia de una población de hombres vs una de mujeres. La 
 diferencia es el efecto directo a la estatura $H$.
 
@@ -1029,7 +1039,7 @@ dif_tbl <- map_df(1:1000,
 dif_tbl |> 
 ggplot(aes(x = h, y = diferencia, group = rep)) +
   geom_line(alpha = 0.1) +
-  labs(x = "Contraste de peso hombres vs mujeres (kg)") +
+  labs(x = "Contraste de peso hombres vs mujeres (cm)") +
   geom_hline(yintercept = 0, colour = "red") 
 
 ```
@@ -1090,11 +1100,12 @@ digraph {
 En este caso, el modelo causal es como sigue: conocemos la distancia $D$
 al hoyo en cada tiro. El éxito ($Y=1$) o fracaso ($Y=0$) depende de la distancia,
 junto con la velocidad a la que sale la pelota (muy alto o muy bajo puede dar
-un tiro fallido), y el ángulo $\theta$ de salida. Adicionalmente, hay otros factors
+un tiro fallido), y el ángulo $\theta$ de salida. Adicionalmente, hay otros factores
 $U$ que pueden afectar la probabilidad de éxito. Nótese que no 
 escribiríamos, por ejemplo $Y \leftarrow D$, porque la distancia no cambia 
 causalmente con el resultado del tiro, aunque es cierto que si intervenimos
-en la distancia, esperaríamos obtener tasas de éxito diferentes. Igualmente, es necesario poner una flecha de $V$ a $D$ y $V$ a $Y$.
+en la distancia, esperaríamos obtener tasas de éxito diferentes. Igualmente, 
+podemos poner una flecha de $V$ a $D$ y $V$ a $Y$.
 
 Todas estas variables antecedentes de $Y$ interactúan para determinar
 el éxito de un tiro.
