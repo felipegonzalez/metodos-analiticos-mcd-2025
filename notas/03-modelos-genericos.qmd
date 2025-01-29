@@ -1105,7 +1105,8 @@ $U$ que pueden afectar la probabilidad de éxito. Nótese que no
 escribiríamos, por ejemplo $Y \leftarrow D$, porque la distancia no cambia 
 causalmente con el resultado del tiro, aunque es cierto que si intervenimos
 en la distancia, esperaríamos obtener tasas de éxito diferentes. Igualmente, 
-podemos poner una flecha de $V$ a $D$ y $V$ a $Y$.
+podemos poner una flecha de $V$ a $D$ y $V$ a $Y$: son factores no medidos que
+afectan la probabilidad de éxito, y que pueden variar por la distancia.
 
 Todas estas variables antecedentes de $Y$ interactúan para determinar
 el éxito de un tiro.
