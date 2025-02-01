@@ -1,0 +1,205 @@
+---
+title: "Tarea 3"
+format: 
+  html:
+    embed-resources: true
+---
+
+
+```{r}
+#| warning: false
+#| message: false
+# Cargamos las librerías necesarias
+library(tidyverse)
+library(cmdstanr)
+set_cmdstan_path("cmdstan-2.36.0/")
+```
+
+
+En esta tarea: 
+
+1) Examinaremos entradas y salidas de stan, y simulaciones de la posterior 
+de un modelo simple de Stan, 
+2) Veremos cómo hacer resumenes de manera 
+apropiada, y yor qué la correlación entre parámetros es importante cuando
+buscamos calcular cantidades derivadas.
+
+**Nota**: un objetivo es entender más del lenguaje de Stan,
+por el momento no te preocupes acerca de su funcionamiento interno. Concéntrate
+en que produce simulaciones de una posterior.
+
+## Un programa simple de Stan
+
+Considerando el desarrollo que vimos en clase, vamos a usar 
+el siguiente modelo (un poco distinto) 
+de Stan para estimar la prevalencia y entender cómo se relaciona
+nuestra estimación con las características de la prueba.
+
+
+```{r}
+mod_prevalencia <- cmdstan_model("prevalencia-sc.stan")
+print(mod_prevalencia)
+```
+
+**Pregunta 1**: Identifica en el programa de arriba: 1) Identifica los grandes
+bloques del programa, por ejemplo **model**, **parameters**, etc., 2) Qué datos deben
+proporcionarse al modelo y de qué tipo son (enteros, reales, arreglos, matrices,
+etc) 3) ¿Cuáles son los parámetros a estimar? 4) ¿Cuál es el modelo que
+estamos proponiendo para el número observado de positivos en la muestra? 5) ¿Dónde está la información
+a priori para los parámetros? Compara esta información con la descripción
+del modelo con ecuaciones y distribuciones:
+
+
+$$
+\begin{align}
+n &\sim \textrm{Binomial}(N, p_{+}),\, i=1\ldots, N\\
+p_{+} &= \theta s + (1-\theta)e \\
+corr_{pos} &\sim \textrm{Binomial}(n_{enf}, s) \\
+corr_{neg} &\sim \textrm{Binomial}(n_{sano}, e) \\
+\theta &\sim \textrm{Beta}(1, 10) \\
+s &\sim \textrm{Beta}(5, 1) \\
+e &\sim \textrm{Beta}(5, 1) \\
+\end{align}
+$$
+**Pregunta 2** ¿Cómo escribirías este modelo a nivel de caso observado (positivo o negativo)?
+Descríbelo con ecuaciones y/o en Stan. ¿Cuándo sería útil escribir el modelo de esta manera?
+
+**Pregunta 3** ¿Cómo explicarías la información a priori que está en este modelo? Discute
+maneras en qué podríamos criticar esta elección de información a priori.
+
+## Simulando de la posterior
+
+Como en clase, supongamos que tenemos los siguientes datos:
+
+```{r}
+#| warning: false
+#| message: false
+# Leemos datos de encuesta
+seropos_encuesta <- read_csv("data/resultados_encuesta.csv")
+head(seropos_encuesta)
+# Preparamos datos
+enfermos  <- seropos_encuesta |> filter(estado == "enfermo") |> 
+  pull(resultado)
+sanos <- seropos_encuesta |> filter(estado == "sano") |>
+  pull(resultado)
+n_enfermo <- length(enfermos)
+n_sano <- length(sanos)
+```
+
+Y muestreamos de la posterior dado estos datos:
+
+```{r}
+# Ponemos datos en una lista
+datos_lista <- list(N = 3300, n = 50, n_enfermo = n_enfermo, n_sano = n_sano,
+              enfermo_resultados = enfermos, sano_resultados = sanos)
+
+# Muestreamos de la posterior
+mod_ajuste <- mod_prevalencia$sample(
+  data = datos_lista,
+  chains = 4,
+  iter_sampling = 2000,
+  init = 0.1, 
+  seed = 83922,
+  refresh = 1000)
+```
+
+Usualmente, si tenemos problemas numéricos en la
+simulación cmdstanr nos dará algunas indicaciones (en rojo). En
+este caso los diagnósticos básicos no tienen problema.
+
+Ahora podemos obtener las simulaciones conjuntas de todos los parámetros:
+
+```{r}
+sims_tbl <- mod_ajuste$draws(format = "df")  |> 
+  as_tibble()
+head(sims_tbl)
+```
+
+En total tenemos 8000 simulaciones (verificalo) *.draw* es un número secuencial que enumera todas las simulaciones,
+(debe ser de 1 a  2000 * 4), *.chain* indica cada cadena o corrida con valores iniciales
+diferentes (va de 1 a 4), y *.iter* enumera las simulaciones en cada cadena (va de 1 a 2000). Finalmente *lp__** nos da la log probabilidad del modelo en cada simulación
+(una cantidad de diagnóstico).
+
+
+
+## Calculando resúmenes
+
+La salida principal son las simulaciones de la posterior
+para $\theta, sens$ y  $esp$. Podemos examinar 
+un resumen de la posterior de cada parámetro
+(es decir las *marginales* de la posterior) haciendo por ejemplo:
+
+
+```{r}
+mod_ajuste$summary(c("theta", "sens", "esp"))
+```
+
+**Pregunta 4**: Con la tabla de arriba muestra intervalos de 90% de probabilidad
+posterior para cada uno de los parámetros.
+
+
+
+Ahora consideramos un resumen que podría interesarnos: por ejemplo, 
+quisiéramos hacer inferencia acerca de la precisión de la prueba, es decir,
+si una nueva persona de esta población sale positiva en la prueba, ¿cuál es la probabilidad de que
+tenga la enfermedad? Por la regla de Bayes,
+
+
+$$prec = P(Enf|Pos) = \frac{\theta sens}{\theta sens + (1-\theta)(1-esp)}$$
+¿Cuál es la media posterior de esta cantidad? ¿Qué tanta incertidumbre tenemos acerca
+su valor?
+
+Para resumir esta cantidad usando las simulaciones, simplemente calculamos en
+cada simulación el valor de $prec$ para cada simulación (o para cada "conjetura de su valor"),
+y **después** calculamos el resumen de interés:
+
+```{r}
+sims_2_tbl <- sims_tbl |> 
+  # cálculo para cada conjetura
+  mutate(prec = (theta * sens ) / (theta*sens + (1-theta)*(1-esp)))
+sims_2_tbl |> select(.draw, theta, sens, esp, prec) |> head()
+```
+
+Y ahora podemos resumir sobre todas las simulaciones
+
+```{r}
+sims_2_tbl |> 
+  summarise(tpv_media = mean(prec))
+resumen_tbl
+```
+
+**Pregunta 5**: Esto no es lo mismo que calcular la media de cada parámetro y después usar la fórmula. Explica por qué es incorrecto el siguiente cálculo:
+
+```{r}
+resumen_incorrecto_tbl <- sims_tbl |> 
+  summarise(theta = mean(theta), sens = mean(sens), esp = mean(esp)) |>
+  mutate(prec = (theta * sens ) / (theta*sens + (1-theta)*(1-esp))) |> 
+  select(prec)
+resumen_incorrecto_tbl
+```
+
+**Nota**: en este caso la diferencia no es muy grande. Puedes probar con otras
+cantidades, por ejemplo con el cociente sens/(1-esp), que mide que tanto un positivo distingue a 
+alguien con la enfermedad de alguien sin la enfermedad.
+
+
+**Pregunta 7**: Calcula un intervalo de probabilidad 90% para la precisión usando
+las simulaciones. ¿Puedes explicar por qué este cálculo no sería trivial si solo sabemos
+resúmenes de theta, sens y esp? Puedes también hacer una gráfica de histograma
+para la posterior de la precisión de la prueba.
+
+
+**Pregunta 8**: Justifica la siguiente afirmación: en general, 
+cuando calculamos cantidades o hacemos preguntas 
+que involucran más de un parámetro, **es necesario usar la conjunta de la posterior**, y no se puede saber de la cantidad de interés a partir de resúmenes separados
+de cada parámetro.
+
+**Pregunta 9**: Grafica las simulaciones de prevalencia ($\theta) contra
+las de precisión. ¿Por qué esta gráfica implica que el estudio (en particular
+el tamaño de muestra) no estuvo muy bien
+concebido? Explica en palabras esta gráfica: ¿cómo se pueden explicar los
+casos positivos que salieron el estudio? ¿Por qué hay tanta incertidumbre en la 
+inferencia sobre la precisión?
+
+
+
