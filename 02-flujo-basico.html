@@ -74,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-ba68f8efa55c0b20591f03ab3fdb3013.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-52c887dacd14c4fbdb5f72117a9aea67.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -315,8 +315,8 @@ window.Quarto = {
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>, <span class="at">width =</span> <span class="dv">300</span>, <span class="at">height =</span> <span class="dv">100</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="htmlwidget-3040821ba42d7e097302" style="width:100%;height:216px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3040821ba42d7e097302">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    theta [label = <&theta;>]\n  node [shape=plaintext]\n    N\n    Npos [label = <N<SUB>+<\/SUB>>]\n    Nneg [label = <N<SUB>-<\/SUB>>]\n    #sens\n    #esp\n  edge [minlen = 3]\n    theta -> Npos\n    theta -> Nneg\n    N -> Npos\n    N -> Nneg\n    #esp -> Pos\n    #sens -> Pos\n    #esp -> Neg\n    #sens -> Neg\n{ rank = same; theta; N }\n{ rank = same; Npos; Nneg}\n#{ rank = max; sens; esp}\n\n  \n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-4c6e5cfebd69e13e1b51" style="width:100%;height:216px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4c6e5cfebd69e13e1b51">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    theta [label = <&theta;>]\n  node [shape=plaintext]\n    N\n    Npos [label = <N<SUB>+<\/SUB>>]\n    Nneg [label = <N<SUB>-<\/SUB>>]\n    #sens\n    #esp\n  edge [minlen = 3]\n    theta -> Npos\n    theta -> Nneg\n    N -> Npos\n    N -> Nneg\n    #esp -> Pos\n    #sens -> Pos\n    #esp -> Neg\n    #sens -> Neg\n{ rank = same; theta; N }\n{ rank = same; Npos; Nneg}\n#{ rank = max; sens; esp}\n\n  \n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Que también podríamos simplificar (suponiendo la <span class="math inline">\(N\)</span> fija y conocida, pues <span class="math inline">\(N_+\)</span> y <span class="math inline">\(N\)</span> dan <span class="math inline">\(N_{-}\)</span>) como:</p>
@@ -349,8 +349,8 @@ window.Quarto = {
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>, <span class="at">width =</span> <span class="dv">300</span>, <span class="at">height =</span> <span class="dv">100</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="htmlwidget-f2b10f7c16616ccb8fb5" style="width:100%;height:216px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f2b10f7c16616ccb8fb5">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    theta [label = <&theta;>]\n  node [shape=plaintext]\n    N\n    Npos [label = <N<SUB>+<\/SUB>>]\n    #sens\n    #esp\n  edge [minlen = 3]\n    theta -> Npos\n    N -> Npos\n    #esp -> Pos\n    #sens -> Pos\n    #esp -> Neg\n    #sens -> Neg\n{ rank = same; theta; N }\n{ rank = same; Npos}\n#{ rank = max; sens; esp}\n\n  \n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-78525675ba3dda0b5236" style="width:100%;height:216px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-78525675ba3dda0b5236">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    theta [label = <&theta;>]\n  node [shape=plaintext]\n    N\n    Npos [label = <N<SUB>+<\/SUB>>]\n    #sens\n    #esp\n  edge [minlen = 3]\n    theta -> Npos\n    N -> Npos\n    #esp -> Pos\n    #sens -> Pos\n    #esp -> Neg\n    #sens -> Neg\n{ rank = same; theta; N }\n{ rank = same; Npos}\n#{ rank = max; sens; esp}\n\n  \n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Y ahora construimos el modelo generativo. Supondremos que la muestra de <span class="math inline">\(N\)</span> personas se toma de manera aleatoria de la población (una población grande, así que podemos ignorar el efectos de poblaciones finitas). Supondremos provisionalmente, además, que la prueba es perfecta, es decir, no hay falsos positivos o negativos.</p>
