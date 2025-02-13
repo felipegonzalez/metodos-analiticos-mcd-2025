@@ -822,7 +822,7 @@ mod_2_fit$summary(c("alpha", "sigma"))
 ```
 
 Nótese que la diferencia de medias poblacionales es de alrededor
-de 15 cm, que es lo que esperábamos según el cálculo de arriba. Podemos replicar el cálculo que hicimos arriba directamente usando simulación:
+de 15 kg, que es lo que esperábamos según el cálculo de arriba. Podemos replicar el cálculo que hicimos arriba directamente usando simulación:
 
 1. Para cada simulación de la posterior calculamos una población
 hipotética de hombres y otras de mujeres (mismos parámetros) 
@@ -866,7 +866,7 @@ map_df(1:4000, ~ simular_diferencia_post(sims_post_tbl) |>
          mutate(rep = .x)) |>  
 ggplot(aes(x = diferencia)) +
   geom_histogram(bins = 50) +
-  labs(x = "Efecto de sexo en estatura hombres vs mujeres (cm)") +
+  labs(x = "Efecto de sexo en estatura hombres vs mujeres (kg)") +
   geom_vline(xintercept = mean(sim_hombres$W - sim_mujeres$W), 
              color = "red", linewidth = 1.5)
 
@@ -1039,7 +1039,8 @@ dif_tbl <- map_df(1:1000,
 dif_tbl |> 
 ggplot(aes(x = h, y = diferencia, group = rep)) +
   geom_line(alpha = 0.1) +
-  labs(x = "Contraste de peso hombres vs mujeres (cm)") +
+  labs(y = "Contraste de peso hombres vs mujeres (kg)") +
+  labs(x = "Estatura") +
   geom_hline(yintercept = 0, colour = "red") 
 
 ```
