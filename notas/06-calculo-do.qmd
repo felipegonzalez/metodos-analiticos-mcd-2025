@@ -576,7 +576,7 @@ el promedio sobre la conjunta, es decir, suponemos que
 el efecto causal es el mismo independientemente de los valores de 
 las variables de control. Sin embargo, este no siempre es el caso.
 
-**Nota 3** Sin nuestro modelo $p(y|t,z)$ es lineal, y nos interesa calcular
+**Nota 3** Si nuestro modelo $p(y|t,z)$ es lineal, y nos interesa calcular
 el efecto causal promedio de la variable $t$, no es necesario promediar por
 la conjunta de $p(z)$. Bajo estas condiciones, el efecto causal promedio está simplemente dado
 por el coeficiente de $t$ en el modelo lineal. Sin embargo, si este no es el caso,
