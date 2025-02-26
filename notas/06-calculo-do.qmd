@@ -47,7 +47,7 @@ variable $U$ puede ser observada o no.
 Este tipo de confusores ocurren muchas veces en datos observacionales (es decir, de
 un proceso o sistema que funcione sin intervención de los investigadores). Por ejemplo,
 si un estudio observa que aquellos que se aplicaron (voluntariamente) 
-un tratamiento $X$, tienen menor riesgo de hospitalización $Y$ por cierta enfermadad. 
+un tratamiento $X$, tienen menor riesgo de hospitalización $Y$ por cierta enfermedad. 
 Sin embargo, se observa también que aquellos que se aplicaron el tratamiento tienen
 menos riesgo de tener accidentes viales. Esto indica que la observación de la reducción de riesgo de hospitalización entre los que escogieron el tratamiento probablemente
 se debe al menos en parte a una variable confusora (por ejemplo, qué tipo de actividades
@@ -81,17 +81,19 @@ grViz("
 Nótese que:
 
 1. La variable $R$ no puede ser endógena (es decir, ninguna flecha del sistema
-puede incidir en ella), pues se utiliza un dado o algo totalmente no relacionado
+puede incidir en ella), pues se utiliza un dado o algo totalmente no relacionado al sistema
 para asignar el tratamiento. Por ejemplo, también podríamos asignar el tratamiento 
 otra manera determinística como si el día de nacimiento de la persona es par
 o impar.
 
-2. En este nuevo diseño, no puede existir una flecha de $U$ a $X$, pues nada en $X$ responde a cambios en
-$X$, qué solo depende del proceso de aleatorización $R$.
+2. En este nuevo diseño, por definición, la variación en $X$ no responde causalmente a **ninguna
+otra variable en el sistema que pueda influir también en $Y$** (como $U$ en el diagrama
+anterior).
 
-En este caso, no es necesario estratificar por ninguna variable y podemos proponer
-directamente un modelo estadístico para $Y$ en función de $X$ que nos permita
-estimar el efecto causal de $X$ sobre $Y$.
+3. Si construimos modelos estadísticos para esta diagrama, para saber el efecto
+causal sólo tenemos que ver cómo cambia la condicional $p(y|x)$ cuando cambiamos la $x$, 
+pues la variación *natural* o *observada* entre $x$ y $y$ corresponde a solamente a un camino
+causal.
 
 :::callout-tip
 # Experimentos
@@ -111,7 +113,7 @@ involucran personas:
 asignar aleatoriamente a personas a un tratamientos como fumar 20 cigarros al día, 
 o aleatorizar a niños a recibir educación o no.
 - **Aleatorización imposible o  imperfecta**: no es posible lograr un control total sobre la asignación del tratamiento, y la adherencia al tratamiento asignado 
-de las personas puede variar (por ejemplo, uso de tapabocas en escuelas). A lo más podemos considerar los efectos de una política que intenta tratar a una selección aleatoria de individuos (IIT, o intent-to-treat).
+de las personas puede variar (por ejemplo, uso de tapabocas en escuelas).
 
 Así que muchas preguntas causales no están sujetas a modificaciones del
 proceso generador de datos mediante aleatorización, y es necesario recurrir a 
@@ -260,10 +262,7 @@ y vemos, como esperaríamos, que no hay relación entre unidades de agua embotel
 y mosquitos.
 
 Desde el punto de vista de la gráfica, la manipulación donde fijamos
-manualmente $A$ sería:
-
-
-Cuando hacemos esto, quitamos las aristas que van hacia $A$,
+manualmente $A$ consiste en quitar las aristas que van hacia $A$,
 pues $A$ ya no está determinado por el proceso generador de datos. Tenemos
 entonces la nueva gráfica:
 
@@ -287,7 +286,7 @@ Como cambiamos la gráfica, su proceso generador es diferente al original
 de los datos observados. Sin embargo, en este ejemplo puedes ver por qué es
 claro que el cambio que hicimos (manipular $A$ en lugar de que esté determinado
 por su proceso generador original) no cambia el modelo de $Z$, de manera
-que podemos simular de nuestro nuevo proceso generador donde manipulamos $A$:
+que podemos simular de nuestro nuevo proceso generador donde manipulamos $A$.
 
 
 ## Cálculo-do de Pearl
@@ -878,7 +877,7 @@ Antes de verlas, un resumen rápido de las reglas es el siguiente:
 - La regla 1 nos dice que las distribuciones
 asociadas a intervenciones satisfacen también la equivalencia
 de $d$-separación e independencia condicional: si $Y$ y $Z$ están
-$d$-separadas dado en la gráfica manipulada, entonces $p(y | do(x), z) = p(y|do(x))$.
+$d$-separadas dado $X$ en la gráfica manipulada, entonces $p(y | do(x), z) = p(y|do(x))$.
 
 - La regla 2 es el criterio de la puerta trasera: si condicionamos
 a variables $W$ que bloquean toda puerta trasera de $X$ a $Y$, podemos cambiar $do(x)$ por $x$: $p(y | do(x), w) = p(y | x, w)$.
@@ -894,7 +893,7 @@ tres reglas del cálculo-do.
 
 
 **Nota**: esto no excluye que bajo ciertas hipótesis adicionales a las
-de nuestra gráfica causal (por ejemplo cómo se comportan las distribuciones particulares qeu componen el modelo), sea posible identificar efectos
+de nuestra gráfica causal (por ejemplo cómo se comportan las distribuciones particulares que componen el modelo), sea posible identificar efectos
 causales con otros medios que van más allá del cálculo-do.
 
 
