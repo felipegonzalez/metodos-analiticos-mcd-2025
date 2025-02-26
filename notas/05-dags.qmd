@@ -1237,7 +1237,7 @@ probabilísticos, el siguiente teorema no es sorpresa:
 En una DAG $G$:
 
 - Si dos variables están d-separadas por las variables $Z$, entonces $X$ y $Y$ son condicionalmente independientes dadas las variables en $Z$ para cualquier conjunta representada por $G$.
-- Si dos variables **no** están d-separadas por $Z$, entonces existen conjuntas representadas por $G$ tales que $X$ y $Y$ **no** tienen dependencia condicional dado $Z$.
+- Si dos variables **no** están d-separadas por $Z$, entonces existen conjuntas representadas por $G$ tales que $X$ y $Y$ tienen dependencia condicional dado $Z$.
 :::
 
 **Nota 1**: nótese que este teorema nos da una manera abstracta de razonar acerca
@@ -1298,7 +1298,7 @@ digraph {
 ```
 
 Consideremos la relación entre Z y Y. Primero vemos que hay dos
-caminos entre $Z$ y $Y$, que son $p_1:X\gets V \to S$ y $p_2: Z\to W \gets X \to Y$
+caminos entre $Z$ y $Y$, que son $p_1:X\gets V \to S \to Y$ y $p_2: Z\to W \gets X \to Y$
 
 
 - En primer lugar, ¿son independientes si no condicionamos a ninguna variable? 
