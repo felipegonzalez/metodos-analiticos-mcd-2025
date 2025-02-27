@@ -1,0 +1,127 @@
+---
+title: "Tarea 7"
+format: html
+editor: visual
+---
+
+
+En esta tarea examinamos las consecuencias estadísticas observables de
+datos generados que resultan de la estructura gráfica subyacente de los modelos.
+
+```{r}
+library(tidyverse)
+library(DiagrammeR)
+```
+
+## Ejercicio de Independencia condicional en modelos gráficos
+
+
+Suponemos estudiantes piden carta sde recomendación a un
+profesor con el cual sólo tuvo una clase. Los profesores no se acuerdan bien de los alumnos, pero pueden revisar cuál fue su calificación Cal en la clase. Supongamos
+que también sabemos la calificación que el alumno obtuvo en el examen GRE.
+Un diagrama que describe cómo se generan datos para este problema es el siguiente,
+donde
+
+Dif es el grado de dificultad de la clase, Cal es la calificación del alumno en la clase,
+H es una medida de la habilidad y horas invertidas en el estudio, y CR es la carta de recomendación:
+
+```{r}
+grafico <- grViz("
+digraph {
+  Dif -> Cal
+  H -> Cal
+  Cal -> CR
+  H -> GRE
+}")
+grafico
+```
+
+
+Usando este diagrama y análisis de caminos activos o no activos, 
+contesta las siguientes preguntas **al final podremos checar todo algorítmicamente**:
+
+1. ¿La dificultad Dif de la clase y la habilidad H del alumno son independientes?
+2. ¿La calificación en el examen GRE es independiente de la calificación Cal?
+3. ¿La carta de recomendación CR es independiente de la calificación en el examen GRE?
+
+Opcional: Explica si las respuestas a estas preguntas tienen sentido intuitivo en términos de la descripción del problema.
+
+Ahora contesta las siguientes (usando análisis de caminos activos y no activos):
+
+4. Condiconal a la calificación que el alumno obtuvo, ¿son independientes habilidad H y dificultad de la clase Dif?
+5. Condiconal a la calificación que el alumno obtuvo, ¿son independientes habilidad H y si obtuvo carta de recomendacón CR?
+
+Opcional: Explica si las respuestas a estas preguntas tienen sentido intuitivo en términos de la descripción del problema.
+
+**Pregunta 6** Supón que condicionamos a la calificación del estudiante Cal.
+¿Qué pares de variables son condicionalmente independientes dado Cal?
+
+**Pregunta 7** Supón que condicionamos a la habilidad del estudiante Cal.
+¿Qué pares de variables son condicionalmente independientes dado H?
+
+**Pregunta 8** Supón que condicionamos a la habilidad del estudiante Cal y la habilidad
+H. ¿Qué pares de variables son condicionalmente independientes dado H?
+
+Opcional: Puedes modificar la estructura de la gráfica y hacerte la misma pregunta. Por
+ejemplo, supón que los profesores recuerdan a los alumnos y tienen otra
+información además de la calificación del estudiante, o que en las clases
+difíciles también indican que los profesores de esas clases den una carta de recomendación
+
+
+## Usando algoritmos (dagitty)
+
+Ahora vamos a usar el paquete `dagitty` para hacer lo mismo. Dada
+la gráfica, podemos listar todas la independencias condicionales que existen.
+
+```{r}
+library(dagitty)
+graf <- dagitty("dag {
+  Dif -> Cal
+  H -> Cal
+  Cal -> CR
+  H -> GRE
+}")
+plot(graf)
+```
+
+```{r}
+indep_cond <- impliedConditionalIndependencies(graf)
+indep_cond
+```
+Nota sin embargo que este no es el total de independencias condicionales que existen, sino sólo las que corresponde a cada par de variables que no están conectadas por una arista (ver documentación), condicionadas al mínimo número de variables necesarias. Para tener todas (verifica algunas de ellas):
+
+
+
+```{r}
+indep_cond <- impliedConditionalIndependencies(graf, type = "all.pairs")
+indep_cond
+```
+
+**Pregunta opcional**: construye una función que simule datos bajo la
+estructura de este diagrama, por ejemplo, podrías comenzar con el código de abajo.
+Revisa si tus respuestas a las preguntas 1-5 son consistentes con estos datos.
+
+```{r}
+simula_datos <- function(n) {
+  # genera datos simulados
+  datos <- tibble(Dif = rnorm(n), H = rnorm(n), GRE = rnorm(n))
+  # Habilidad 1 es alta, 0 es media y -1 es baja
+  datos$H <- cut(datos$H, 
+    breaks = c(-Inf, -1.0, 1.0, Inf), labels = c(-1,  0, 1)) |>
+    as.character() |> as.numeric()
+  datos$Cal <- round(7 +  0.5*datos$H - 0.5*datos$Dif + rnorm(n))
+  datos$Cal <- pmax(0, pmin(10, datos$Cal))
+  datos$CR <- rbinom(n, 1, p = 1 / (1 + exp(datos$Cal/10 - 3)))
+  datos
+}
+```
+
+```{r}
+ejemplo_tab <- simula_datos(1000)
+ejemplo_tab
+```
+
+```{r}
+ggplot(ejemplo_tab, aes(x= Cal)) + geom_bar()
+```
+
