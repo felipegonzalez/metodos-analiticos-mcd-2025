@@ -125,6 +125,19 @@
       ],
       "Hash": "9da7c242d94a8419d045f6b3a64b9765"
     },
+    "V8": {
+      "Package": "V8",
+      "Version": "6.0.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "Rcpp",
+        "curl",
+        "jsonlite",
+        "utils"
+      ],
+      "Hash": "6603bfcbc7883a5fed41fb13042a3899"
+    },
     "abind": {
       "Package": "abind",
       "Version": "1.4-8",
@@ -167,6 +180,27 @@
       ],
       "Hash": "543776ae6848fde2f48ff3816d0628bc"
     },
+    "bayesplot": {
+      "Package": "bayesplot",
+      "Version": "1.11.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "dplyr",
+        "ggplot2",
+        "ggridges",
+        "glue",
+        "posterior",
+        "reshape2",
+        "rlang",
+        "stats",
+        "tibble",
+        "tidyselect",
+        "utils"
+      ],
+      "Hash": "c5cde76012ea08e94265ace1b53b77b9"
+    },
     "bit": {
       "Package": "bit",
       "Version": "4.5.0",
@@ -202,6 +236,18 @@
         "vctrs"
       ],
       "Hash": "40415719b5a479b87949f3aa0aee737c"
+    },
+    "boot": {
+      "Package": "boot",
+      "Version": "1.3-31",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "graphics",
+        "stats"
+      ],
+      "Hash": "de2a4646c18661d6a0a08ec67f40b7ed"
     },
     "broom": {
       "Package": "broom",
@@ -405,6 +451,25 @@
         "R"
       ],
       "Hash": "8dd23d308c751efdf675124aad4bf5d7"
+    },
+    "dagitty": {
+      "Package": "dagitty",
+      "Version": "0.3-4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "MASS",
+        "R",
+        "V8",
+        "boot",
+        "grDevices",
+        "graphics",
+        "jsonlite",
+        "methods",
+        "stats",
+        "utils"
+      ],
+      "Hash": "dfbd13468fb3d6747b4d9541a648df9d"
     },
     "data.table": {
       "Package": "data.table",
@@ -647,6 +712,20 @@
         "withr"
       ],
       "Hash": "44c6a2f8202d5b7e878ea274b1092426"
+    },
+    "ggridges": {
+      "Package": "ggridges",
+      "Version": "0.5.6",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "ggplot2",
+        "grid",
+        "scales",
+        "withr"
+      ],
+      "Hash": "66488692cb8621bc78df1b9b819497a6"
     },
     "glue": {
       "Package": "glue",
@@ -1151,6 +1230,17 @@
       ],
       "Hash": "01f28d4278f15c76cddbea05899c5d6f"
     },
+    "plyr": {
+      "Package": "plyr",
+      "Version": "1.8.9",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp"
+      ],
+      "Hash": "6b8177fd19982f0020743fadbfdbd933"
+    },
     "posterior": {
       "Package": "posterior",
       "Version": "1.6.0",
@@ -1343,6 +1433,19 @@
         "withr"
       ],
       "Hash": "97b1d5361a24d9fb588db7afe3e5bcbf"
+    },
+    "reshape2": {
+      "Package": "reshape2",
+      "Version": "1.4.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp",
+        "plyr",
+        "stringr"
+      ],
+      "Hash": "bb5996d0bd962d214a11140d77589917"
     },
     "rethinking": {
       "Package": "rethinking",
