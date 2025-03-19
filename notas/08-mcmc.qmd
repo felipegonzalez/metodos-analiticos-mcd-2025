@@ -228,13 +228,16 @@ ggplot(aes(n_sims, dif_abs, color = metodo)) +
 
 En este caso, considera qué es lo que sucede en cada uno de estos casos:
 
-1. El algoritmo que da saltos grandes muchas veces rechaza porque cae en un
-área de probilidad muy baja.
+1. El algoritmo que da saltos grandes muchas veces rechaza porque las propuestas caen 
+con demasiada frecuencia en área de probabilidad (objetivo) muy baja. Tasas muy altas
+de rechazo son ineficientes.
 2. El algoritmo que da saltos chicos puede tardar en explorar regiones
-de probabilidad relativamente alta con suficiente frecuencia (tarda un moverse de un lugar a otro), por su naturaleza de "caminata aleatoria". Pero sus tasas de aceptación son más altas.
+de probabilidad relativamente alta con suficiente frecuencia (tarda un moverse de un lugar a otro), por su naturaleza de "caminata aleatoria". Pero sus tasas de aceptación son más altas. 
+En este caso, es ineficiente porque la cadena tarda en explorar el espacio de parámetros.
 
 Este es el primer *trade-off* que existe en este algoritmo: tomar pasos grandes y balancear las probabilidades quizá rechazando muy frecuentemente (no es eficiente),
-o tomar pasos chicos y vagar más tiempo para visitar regiones de alta probabilidad, aunque con menos tasa de rechazo. Dependiendo de la distribución que queremos aproximar podemos inclinarnos más por una o por otra opción. En dimensiones altas generalmente ninguna combinación es muy buena.
+o tomar pasos chicos y vagar más tiempo para visitar regiones de alta probabilidad, aunque con menos tasa de rechazo. Dependiendo de la distribución que queremos aproximar podemos inclinarnos más por una o por otra opción. En dimensiones altas generalmente ninguna combinación es muy buena
+para Metropolis Hastings.
 
 ::: callout-note
 # Idea básica de MCMC
@@ -274,20 +277,26 @@ Comenzamos
 considerando distribuciones propuesta $q_0(x|y)$ que no necesariamente satisfacen 
 la ecuación de balance, y supondremos como en los ejemplos de arriba
 (verifícalo) que nuestras transiciones tienen probabilidades simétricas $q_0(y|x) = q_0(x|y)$. Entonces, cuando $p(y)/p(x) > 1$, queremos transicionar
-de $x$ a $y$ con más frecuencia que de $y$ a $x$. Comenzando en $x$, 
-si la propuesta de $q_0(y|x)$ es $y$, podríamos
-poner entonces que el sistema transicione con probabilidad 1 a $y$. Sin embargo, si empezamos en $y$ y la propuesta es $x$, ponemos que el sistema sólo transiciona de  $y$ a $x$  con probabilidad $p(x)/p(y)$. 
+de $x$ a $y$ con más frecuencia que de $y$ a $x$. 
+Tiene sentido entonces que, comenzando en $x$, 
+si la propuesta de $q_0(y|x)$ es $y$, pongamos que el sistema transicione con probabilidad 1 a $y$. Sin embargo, si empezamos en $y$ y la propuesta es $x$, ponemos que el sistema sólo transiciona de  $y$ a $x$  con probabilidad $p(x)/p(y)$ (esta el la descripción de Metropolis Hastings).
 
 De esta manera, obtenemos que bajo $q(y|x)$, $x$ transiciona a $y$ 
-con probabilidad $q_0(y|x) multiplicada por $\min\{1, p(y)/p(x)\}$. Entonces, el cociente
-$\frac{q(y|x)}{q(x|y)}$ (usando también la simetría de $q_0(y|x)$, es igual a $\frac{p(y)}{p(x)}$ si $p(y)<p(x)$.
+con probabilidad $q_0(y|x)$ multiplicada por $\min\{1, p(y)/p(x)\}$. Entonces, el cociente
+$\frac{q(y|x)}{q(x|y)}$ (usando también la simetría de $q_0(y|x)$, es igual a $\frac{p(y)}{p(x)}$ si $p(y)>p(x)$.
 Si $p(x)>p(y)$, entonces siguiendo el mismo argumento, y por simetría de $q_0(y|x)$, se
 cumple que el cociente de probabilidades es tambien igual a $\frac{p(y)}{p(x)}$. Esto demuestra
 que se cumple el balance detallado.
 
 De esta forma, balanceamos las transiciones de $q_0(y|x)$ modificando con el proceso
-de adaptación y rechazo, para que la cadena de Markov resultante tenga la distribución
-estacionario $p(x)$, que es la distribución objetivo.
+de aceptación y rechazo, para que la cadena de Markov resultante tenga la distribución
+estacionaria $p(x)$, que es la distribución objetivo. 
+
+Nótese adicionalmente que
+**basta con conocer $p(x)$ módulo una constante de proporcionalidad** para poder
+usar este algoritmo. Cuando lo usamos para simular posteriores esto es importante, pues
+podemos utilizar $p(\theta|D)\propto p(D|\theta)p(\theta)$ sin tener que calcular
+la integral $p(D)$ que normaliza el lado derecha de esta ecuación.
 
 
 
@@ -474,7 +483,10 @@ como un problema físico, donde introducimos aleatoridad solamente en cuanto
 a la "energía" de la pelota que va a explorar la posterior. Inicialmente
 impartimos un momento tomado al azar a la pelota, seguimos su trayectoria
 por un tiempo y el lugar a donde llega es nuestra nueva simulación. Esto 
-permite que podamos dar saltos más grandes, sin "despeñarnos" en regiones de probabilidad muy baja y así evitar rechazos. 
+permite que podamos dar saltos más grandes, sin "despeñarnos" en regiones de probabilidad muy baja y
+al menos teóricamente, evitar del todo los rechazos (veremos que en la implementación
+de todas formas necesitaremos implementar algunos rechazos para mejorar eficiencia).
+
 
 Adicionalmente, veremos que si definimos el sistema físico apropiadamente,
 es posible obtener ecuaciones de balance detallado, lo cual en teoría nos
@@ -538,7 +550,7 @@ espacio_fase |>
 **Ojo**: este no es le movimiento de una partícula en dimensión 2: es el movimiento de la partícula en el espacio fase $(p,q)$, y la variable
 de posición $q$ es de dimensión 1. Los ciclos de la gráfica muestran como
 conforme la partícula se mueve, energía potencial y cinética se intercambian
-a lo largo de su trayectoria en un "hilo".
+a lo largo de su trayectoria en un "hilo" o curva de nivel.
 
 
 ### Formulación Hamiltoniana 2: densidades de probabilidad {-}
@@ -579,7 +591,7 @@ por ejemplo, que se cumple el balance detallado.
 
 Supongamos que las transiciones que da este sistema son $q(y|x)$. Nótese
 que dado el momento simulado, tenemos el estado $(\rho, x)$, y 
-la transición $x\to\y$ es determinista,
+la transición $x\to y$ es determinista,
 gobernada por las ecuaciones de Hamilton. Escribimos la transición como
 $$(\rho, x) \to (\rho^*, y).$$
 Nótese que $\rho$ y $x$ determinan la transición, de modo que
@@ -767,7 +779,7 @@ anim_save(animation = anim_hmc, filename = "figuras/hmc-normal.gif",
 
 - Nótese que ahora podemos dar pasos más grandes a lo largo de los lugares
 donde concentra mayor probabilidad.
-- Esto implica dos cosas: evitamos el comportamiento de caminata aleatoria (pasos muy cortos), y también tasas de rechazo alto (cuando los pasos son muy grandes en HMC)
+- Esto implica dos cosas: evitamos el comportamiento de caminata aleatoria (pasos muy cortos), y también tasas de rechazo alto (cuando los pasos son muy grandes en MH)
 - El algoritmo utiliza información adicional: además de calcular la posterior, como en metropolis, es necesario calcular también el gradiente de la posterior.
 - Este algoritmo hace más trabajo para cada iteración (requiere la integración leapfrog), pero cada iteración es más informativa
 - Bien afinado, funciona para problemas de dimensión alta (cientos o miles de parámetros), donde geométricamente la densidad está concentrada en un espacio geométricamente chico. Existen todavía dificultades que discutiremos en otros modelos más adelante.
@@ -823,6 +835,18 @@ anim_save(animation = anim_comp, filename = "figuras/comparacion-normal.gif", he
 ```
 
 ![Comparación](figuras/comparacion-normal.gif) 
+
+::: callout-tip
+# Comparaciones de eficiencia
+Nótese que en general **no tiene sentido** comparar algoritmos usando el número
+de simulaciones que puede producir por unidad de tiempo. La comparación correcta
+involucra comparar cuánto *tiempo* requerimos para aproximar con cierto grado
+de precisión a la posterior (o más bien, resúmenes de la posterior). Algunos algoritmos
+son pueden ser rápidos porque producen rápidamente muchas simulaciones poco informativas,
+y otros son rápidos porque cada simulación que producen es muy informativa.
+Veremos más adelante el concepto de *muestra efectiva*.
+:::
+
 
 
 ### HMC en Stan {-}
@@ -1274,11 +1298,12 @@ como percentiles extremos (tail ESS, que estima el tamaño de muestra efectivo
 para los percentiles 5% y 95% ). En este caso, ambos son altos.
 
 Finalmente, podemos checar el error montecarlo, que es error de estimación usual
+(por ejemplo, para la estimación de la media de los parámetros según las cadenas):
 
 ```{r}
-ajuste_vinos_1$summary(c("Q", "sigma")) |> 
-  select(variable, mean, sd, q5, q95, rhat, contains("ess")) |>
-  mutate(across(c(mean, sd, q5, q95, rhat, ess_bulk, ess_tail), ~round(., 3))) |> 
+ajuste_vinos_1$summary(c("Q", "sigma"), "mean", "rhat", "ess_bulk", "mcse_mean") |> 
+  select(variable, mean,  rhat, contains("ess"), mcse_mean) |>
+  mutate(across(c(mean, rhat, ess_bulk, mcse_mean), ~round(., 3))) |> 
   filter(variable != "lp__") |> kable()
 ```
 
