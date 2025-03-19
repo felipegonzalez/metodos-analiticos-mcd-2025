@@ -514,10 +514,10 @@ window.Quarto = {
 </div>
 <p>En este caso, considera qué es lo que sucede en cada uno de estos casos:</p>
 <ol type="1">
-<li>El algoritmo que da saltos grandes muchas veces rechaza porque cae en un área de probilidad muy baja.</li>
-<li>El algoritmo que da saltos chicos puede tardar en explorar regiones de probabilidad relativamente alta con suficiente frecuencia (tarda un moverse de un lugar a otro), por su naturaleza de “caminata aleatoria”. Pero sus tasas de aceptación son más altas.</li>
+<li>El algoritmo que da saltos grandes muchas veces rechaza porque las propuestas caen con demasiada frecuencia en área de probabilidad (objetivo) muy baja. Tasas muy altas de rechazo son ineficientes.</li>
+<li>El algoritmo que da saltos chicos puede tardar en explorar regiones de probabilidad relativamente alta con suficiente frecuencia (tarda un moverse de un lugar a otro), por su naturaleza de “caminata aleatoria”. Pero sus tasas de aceptación son más altas. En este caso, es ineficiente porque la cadena tarda en explorar el espacio de parámetros.</li>
 </ol>
-<p>Este es el primer <em>trade-off</em> que existe en este algoritmo: tomar pasos grandes y balancear las probabilidades quizá rechazando muy frecuentemente (no es eficiente), o tomar pasos chicos y vagar más tiempo para visitar regiones de alta probabilidad, aunque con menos tasa de rechazo. Dependiendo de la distribución que queremos aproximar podemos inclinarnos más por una o por otra opción. En dimensiones altas generalmente ninguna combinación es muy buena.</p>
+<p>Este es el primer <em>trade-off</em> que existe en este algoritmo: tomar pasos grandes y balancear las probabilidades quizá rechazando muy frecuentemente (no es eficiente), o tomar pasos chicos y vagar más tiempo para visitar regiones de alta probabilidad, aunque con menos tasa de rechazo. Dependiendo de la distribución que queremos aproximar podemos inclinarnos más por una o por otra opción. En dimensiones altas generalmente ninguna combinación es muy buena para Metropolis Hastings.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -539,9 +539,10 @@ Idea básica de MCMC
 <p>Esto es fácil de demostrar pues <span class="math display">\[\sum_{y} q(x|y)p(y) = \sum_{y} q(y|x)p(x) = p(x) \sum_{y} q(y|x) = p(x).\]</span></p>
 <p>Bajo otros supuestos adicionales de ergodicidad (aperiodicidad y tiempos de recurrencia finitos, es decir, las transiciones <em>mezclan</em> bien los estados), entonces podemos simular la cadena de Markov por un tiempo suficientemente largo y con esto obtener una muestra de la distribución objetivo <span class="math inline">\(p\)</span>, es decir, la distribución estacionaria <span class="math inline">\(p(x)\)</span> también es la distribución de largo plazo para cualquier cadena que simulemos.</p>
 <p>¿Cómo podemos diseñar entonces las <span class="math inline">\(q(x|y)\)</span> correspondientes?</p>
-<p>Comenzamos considerando distribuciones propuesta <span class="math inline">\(q_0(x|y)\)</span> que no necesariamente satisfacen la ecuación de balance, y supondremos como en los ejemplos de arriba (verifícalo) que nuestras transiciones tienen probabilidades simétricas <span class="math inline">\(q_0(y|x) = q_0(x|y)\)</span>. Entonces, cuando <span class="math inline">\(p(y)/p(x) &gt; 1\)</span>, queremos transicionar de <span class="math inline">\(x\)</span> a <span class="math inline">\(y\)</span> con más frecuencia que de <span class="math inline">\(y\)</span> a <span class="math inline">\(x\)</span>. Comenzando en <span class="math inline">\(x\)</span>, si la propuesta de <span class="math inline">\(q_0(y|x)\)</span> es <span class="math inline">\(y\)</span>, podríamos poner entonces que el sistema transicione con probabilidad 1 a <span class="math inline">\(y\)</span>. Sin embargo, si empezamos en <span class="math inline">\(y\)</span> y la propuesta es <span class="math inline">\(x\)</span>, ponemos que el sistema sólo transiciona de <span class="math inline">\(y\)</span> a <span class="math inline">\(x\)</span> con probabilidad <span class="math inline">\(p(x)/p(y)\)</span>.</p>
-<p>De esta manera, obtenemos que bajo <span class="math inline">\(q(y|x)\)</span>, <span class="math inline">\(x\)</span> transiciona a <span class="math inline">\(y\)</span> con probabilidad $q_0(y|x) multiplicada por <span class="math inline">\(\min\{1, p(y)/p(x)\}\)</span>. Entonces, el cociente <span class="math inline">\(\frac{q(y|x)}{q(x|y)}\)</span> (usando también la simetría de <span class="math inline">\(q_0(y|x)\)</span>, es igual a <span class="math inline">\(\frac{p(y)}{p(x)}\)</span> si <span class="math inline">\(p(y)&lt;p(x)\)</span>. Si <span class="math inline">\(p(x)&gt;p(y)\)</span>, entonces siguiendo el mismo argumento, y por simetría de <span class="math inline">\(q_0(y|x)\)</span>, se cumple que el cociente de probabilidades es tambien igual a <span class="math inline">\(\frac{p(y)}{p(x)}\)</span>. Esto demuestra que se cumple el balance detallado.</p>
-<p>De esta forma, balanceamos las transiciones de <span class="math inline">\(q_0(y|x)\)</span> modificando con el proceso de adaptación y rechazo, para que la cadena de Markov resultante tenga la distribución estacionario <span class="math inline">\(p(x)\)</span>, que es la distribución objetivo.</p>
+<p>Comenzamos considerando distribuciones propuesta <span class="math inline">\(q_0(x|y)\)</span> que no necesariamente satisfacen la ecuación de balance, y supondremos como en los ejemplos de arriba (verifícalo) que nuestras transiciones tienen probabilidades simétricas <span class="math inline">\(q_0(y|x) = q_0(x|y)\)</span>. Entonces, cuando <span class="math inline">\(p(y)/p(x) &gt; 1\)</span>, queremos transicionar de <span class="math inline">\(x\)</span> a <span class="math inline">\(y\)</span> con más frecuencia que de <span class="math inline">\(y\)</span> a <span class="math inline">\(x\)</span>. Tiene sentido entonces que, comenzando en <span class="math inline">\(x\)</span>, si la propuesta de <span class="math inline">\(q_0(y|x)\)</span> es <span class="math inline">\(y\)</span>, pongamos que el sistema transicione con probabilidad 1 a <span class="math inline">\(y\)</span>. Sin embargo, si empezamos en <span class="math inline">\(y\)</span> y la propuesta es <span class="math inline">\(x\)</span>, ponemos que el sistema sólo transiciona de <span class="math inline">\(y\)</span> a <span class="math inline">\(x\)</span> con probabilidad <span class="math inline">\(p(x)/p(y)\)</span> (esta el la descripción de Metropolis Hastings).</p>
+<p>De esta manera, obtenemos que bajo <span class="math inline">\(q(y|x)\)</span>, <span class="math inline">\(x\)</span> transiciona a <span class="math inline">\(y\)</span> con probabilidad <span class="math inline">\(q_0(y|x)\)</span> multiplicada por <span class="math inline">\(\min\{1, p(y)/p(x)\}\)</span>. Entonces, el cociente <span class="math inline">\(\frac{q(y|x)}{q(x|y)}\)</span> (usando también la simetría de <span class="math inline">\(q_0(y|x)\)</span>, es igual a <span class="math inline">\(\frac{p(y)}{p(x)}\)</span> si <span class="math inline">\(p(y)&gt;p(x)\)</span>. Si <span class="math inline">\(p(x)&gt;p(y)\)</span>, entonces siguiendo el mismo argumento, y por simetría de <span class="math inline">\(q_0(y|x)\)</span>, se cumple que el cociente de probabilidades es tambien igual a <span class="math inline">\(\frac{p(y)}{p(x)}\)</span>. Esto demuestra que se cumple el balance detallado.</p>
+<p>De esta forma, balanceamos las transiciones de <span class="math inline">\(q_0(y|x)\)</span> modificando con el proceso de aceptación y rechazo, para que la cadena de Markov resultante tenga la distribución estacionaria <span class="math inline">\(p(x)\)</span>, que es la distribución objetivo.</p>
+<p>Nótese adicionalmente que <strong>basta con conocer <span class="math inline">\(p(x)\)</span> módulo una constante de proporcionalidad</strong> para poder usar este algoritmo. Cuando lo usamos para simular posteriores esto es importante, pues podemos utilizar <span class="math inline">\(p(\theta|D)\propto p(D|\theta)p(\theta)\)</span> sin tener que calcular la integral <span class="math inline">\(p(D)\)</span> que normaliza el lado derecha de esta ecuación.</p>
 </section>
 <section id="ejemplo-metropolis-bivariado" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="ejemplo-metropolis-bivariado">Ejemplo: Metropolis bivariado</h3>
@@ -716,7 +717,7 @@ Metropolis-Hastings
 <li>Hay direcciones de más curvatura de la posterior que otras: movimientos relativamente chicos en las direcciones de alta curvatura nos llevan a regiones de probabilidad demasiado baja, y entonces tendemos a rechazar. Pero hacer movimientos aún más chicos para evitar rechazos nos lleva a explorar muy lentamente el espacio de parámetros.</li>
 <li>Podríamos evitar esto si nuestros saltos siguieran la curvatura natural de la distribución, como una pelota que rueda por la superficie de la distribución objetivo (con signo negativo, de forma que regiones de probabilidad alta sean valles o regiones bajas).</li>
 </ul>
-<p>La idea de HMC es considerar el problema de muestrear de una distribución como un problema físico, donde introducimos aleatoridad solamente en cuanto a la “energía” de la pelota que va a explorar la posterior. Inicialmente impartimos un momento tomado al azar a la pelota, seguimos su trayectoria por un tiempo y el lugar a donde llega es nuestra nueva simulación. Esto permite que podamos dar saltos más grandes, sin “despeñarnos” en regiones de probabilidad muy baja y así evitar rechazos.</p>
+<p>La idea de HMC es considerar el problema de muestrear de una distribución como un problema físico, donde introducimos aleatoridad solamente en cuanto a la “energía” de la pelota que va a explorar la posterior. Inicialmente impartimos un momento tomado al azar a la pelota, seguimos su trayectoria por un tiempo y el lugar a donde llega es nuestra nueva simulación. Esto permite que podamos dar saltos más grandes, sin “despeñarnos” en regiones de probabilidad muy baja y al menos teóricamente, evitar del todo los rechazos (veremos que en la implementación de todas formas necesitaremos implementar algunos rechazos para mejorar eficiencia).</p>
 <p>Adicionalmente, veremos que si definimos el sistema físico apropiadamente, es posible obtener ecuaciones de balance detallado, lo cual en teoría nos garantiza una manera de transicionar que resultará a largo plazo en una muestra de la distribución objetivo.</p>
 <section id="formulación-hamiltoniana-1-introducción" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="formulación-hamiltoniana-1-introducción">Formulación Hamiltoniana 1: introducción</h3>
@@ -754,7 +755,7 @@ Metropolis-Hastings
 </div>
 </div>
 </div>
-<p><strong>Ojo</strong>: este no es le movimiento de una partícula en dimensión 2: es el movimiento de la partícula en el espacio fase <span class="math inline">\((p,q)\)</span>, y la variable de posición <span class="math inline">\(q\)</span> es de dimensión 1. Los ciclos de la gráfica muestran como conforme la partícula se mueve, energía potencial y cinética se intercambian a lo largo de su trayectoria en un “hilo”.</p>
+<p><strong>Ojo</strong>: este no es le movimiento de una partícula en dimensión 2: es el movimiento de la partícula en el espacio fase <span class="math inline">\((p,q)\)</span>, y la variable de posición <span class="math inline">\(q\)</span> es de dimensión 1. Los ciclos de la gráfica muestran como conforme la partícula se mueve, energía potencial y cinética se intercambian a lo largo de su trayectoria en un “hilo” o curva de nivel.</p>
 </section>
 <section id="formulación-hamiltoniana-2-densidades-de-probabilidad" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="formulación-hamiltoniana-2-densidades-de-probabilidad">Formulación Hamiltoniana 2: densidades de probabilidad</h3>
@@ -773,7 +774,7 @@ Metropolis-Hastings
 </section>
 <section id="balance-detallado-para-hmc" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="balance-detallado-para-hmc">Balance detallado para HMC</h3>
-<p>Supongamos que las transiciones que da este sistema son <span class="math inline">\(q(y|x)\)</span>. Nótese que dado el momento simulado, tenemos el estado <span class="math inline">\((\rho, x)\)</span>, y la transición <span class="math inline">\(x\to\y\)</span> es determinista, gobernada por las ecuaciones de Hamilton. Escribimos la transición como <span class="math display">\[(\rho, x) \to (\rho^*, y).\]</span> Nótese que <span class="math inline">\(\rho\)</span> y <span class="math inline">\(x\)</span> determinan la transición, de modo que</p>
+<p>Supongamos que las transiciones que da este sistema son <span class="math inline">\(q(y|x)\)</span>. Nótese que dado el momento simulado, tenemos el estado <span class="math inline">\((\rho, x)\)</span>, y la transición <span class="math inline">\(x\to y\)</span> es determinista, gobernada por las ecuaciones de Hamilton. Escribimos la transición como <span class="math display">\[(\rho, x) \to (\rho^*, y).\]</span> Nótese que <span class="math inline">\(\rho\)</span> y <span class="math inline">\(x\)</span> determinan la transición, de modo que</p>
 <p><span class="math display">\[p(x)q(y|x) = p(x)p(\rho) = \exp(-H(\rho, x)) = \exp(-H(\rho^*, y))\]</span> Que es cierto por conservación de la energía total y la transición sigue exactamente trayectorias del Hamiltoniano. Esta última cantidad, usando un argumento similar, es igual a</p>
 <p><span class="math display">\[p(y)p(\rho^*) = p(y)p(-\rho^*) = p(y) q(x|y)\]</span> La segunda igualdad se da porque <span class="math inline">\(p(\rho)\)</span> es Gaussiana (simétrica). Y finalmente, la última igualdad se da porque si necesitamos momento <span class="math inline">\(\rho\)</span> para llegar de <span class="math inline">\(x\)</span> a <span class="math inline">\((\rho^*, y)\)</span>, entonces necesitamos <span class="math inline">\(-\rho^*\)</span> (volteamos la velocidad ifnal) para llegar de <span class="math inline">\(y\)</span> a <span class="math inline">\((\rho, x)\)</span>, pues el sistema físico es reversible.</p>
 <p>Nótese que este argumento se rompe si por ejemplo si es imposible transicionar de un punto a otro (por ejemplo, cuando la distribución objetivo <span class="math inline">\(p\)</span> tiene dos regiones separadas de probabilidad positiva).</p>
@@ -939,7 +940,7 @@ Metropolis-Hastings
 <p><strong>Observaciones</strong>:</p>
 <ul>
 <li>Nótese que ahora podemos dar pasos más grandes a lo largo de los lugares donde concentra mayor probabilidad.</li>
-<li>Esto implica dos cosas: evitamos el comportamiento de caminata aleatoria (pasos muy cortos), y también tasas de rechazo alto (cuando los pasos son muy grandes en HMC)</li>
+<li>Esto implica dos cosas: evitamos el comportamiento de caminata aleatoria (pasos muy cortos), y también tasas de rechazo alto (cuando los pasos son muy grandes en MH)</li>
 <li>El algoritmo utiliza información adicional: además de calcular la posterior, como en metropolis, es necesario calcular también el gradiente de la posterior.</li>
 <li>Este algoritmo hace más trabajo para cada iteración (requiere la integración leapfrog), pero cada iteración es más informativa</li>
 <li>Bien afinado, funciona para problemas de dimensión alta (cientos o miles de parámetros), donde geométricamente la densidad está concentrada en un espacio geométricamente chico. Existen todavía dificultades que discutiremos en otros modelos más adelante.</li>
@@ -974,7 +975,7 @@ Tip
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.064   0.000   0.064 </code></pre>
+  0.065   0.000   0.065 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(metropolis_1 <span class="ot">&lt;-</span> <span class="fu">metropolis_mc</span>(<span class="dv">1000</span>, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), log_p, <span class="fl">0.2</span>, <span class="fl">0.2</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -982,7 +983,7 @@ Tip
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.015   0.000   0.014 </code></pre>
+  0.015   0.000   0.015 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(metropolis_2 <span class="ot">&lt;-</span> <span class="fu">metropolis_mc</span>(<span class="dv">1000</span>, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), log_p, <span class="dv">1</span>, <span class="dv">1</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -990,7 +991,7 @@ Tip
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.015   0.000   0.015 </code></pre>
+  0.016   0.000   0.015 </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1016,6 +1017,19 @@ Tip
 <p><img src="figuras/comparacion-normal.gif" class="img-fluid figure-img"></p>
 <figcaption>Comparación</figcaption>
 </figure>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Comparaciones de eficiencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Nótese que en general <strong>no tiene sentido</strong> comparar algoritmos usando el número de simulaciones que puede producir por unidad de tiempo. La comparación correcta involucra comparar cuánto <em>tiempo</em> requerimos para aproximar con cierto grado de precisión a la posterior (o más bien, resúmenes de la posterior). Algunos algoritmos son pueden ser rápidos porque producen rápidamente muchas simulaciones poco informativas, y otros son rápidos porque cada simulación que producen es muy informativa. Veremos más adelante el concepto de <em>muestra efectiva</em>.</p>
+</div>
 </div>
 </section>
 <section id="hmc-en-stan" class="level3 unnumbered">
@@ -1207,9 +1221,9 @@ Chain 4 Iteration: 2000 / 3000 [ 66%]  (Sampling)
 Chain 1 Iteration: 3000 / 3000 [100%]  (Sampling) 
 Chain 1 finished in 0.3 seconds.
 Chain 2 Iteration: 3000 / 3000 [100%]  (Sampling) 
-Chain 2 finished in 0.3 seconds.
 Chain 3 Iteration: 3000 / 3000 [100%]  (Sampling) 
 Chain 4 Iteration: 3000 / 3000 [100%]  (Sampling) 
+Chain 2 finished in 0.3 seconds.
 Chain 3 finished in 0.3 seconds.
 Chain 4 finished in 0.3 seconds.
 
@@ -2436,11 +2450,11 @@ Tamaño efectivo de muestra
 <ul>
 <li>Nótese que versiones más recientes de Stan reportan dos tamaños efectivos de muestra (ESS), uno para cantidades que dependen del centro de la distribución, como la media y mediana (bulk ESS, que es similar a la definición que vimos arriba, pero usando valores normalizados por rango), y otro para cantidades que dependen de las colas, como percentiles extremos (tail ESS, que estima el tamaño de muestra efectivo para los percentiles 5% y 95% ). En este caso, ambos son altos.</li>
 </ul>
-<p>Finalmente, podemos checar el error montecarlo, que es error de estimación usual</p>
+<p>Finalmente, podemos checar el error montecarlo, que es error de estimación usual (por ejemplo, para la estimación de la media de los parámetros según las cadenas):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>ajuste_vinos_1<span class="sc">$</span><span class="fu">summary</span>(<span class="fu">c</span>(<span class="st">"Q"</span>, <span class="st">"sigma"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(variable, mean, sd, q5, q95, rhat, <span class="fu">contains</span>(<span class="st">"ess"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(mean, sd, q5, q95, rhat, ess_bulk, ess_tail), <span class="sc">~</span><span class="fu">round</span>(., <span class="dv">3</span>))) <span class="sc">|&gt;</span> </span>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>ajuste_vinos_1<span class="sc">$</span><span class="fu">summary</span>(<span class="fu">c</span>(<span class="st">"Q"</span>, <span class="st">"sigma"</span>), <span class="st">"mean"</span>, <span class="st">"rhat"</span>, <span class="st">"ess_bulk"</span>, <span class="st">"mcse_mean"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(variable, mean,  rhat, <span class="fu">contains</span>(<span class="st">"ess"</span>), mcse_mean) <span class="sc">|&gt;</span></span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(mean, rhat, ess_bulk, mcse_mean), <span class="sc">~</span><span class="fu">round</span>(., <span class="dv">3</span>))) <span class="sc">|&gt;</span> </span>
 <span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(variable <span class="sc">!=</span> <span class="st">"lp__"</span>) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -2448,224 +2462,158 @@ Tamaño efectivo de muestra
 <tr class="header">
 <th style="text-align: left;">variable</th>
 <th style="text-align: right;">mean</th>
-<th style="text-align: right;">sd</th>
-<th style="text-align: right;">q5</th>
-<th style="text-align: right;">q95</th>
 <th style="text-align: right;">rhat</th>
 <th style="text-align: right;">ess_bulk</th>
-<th style="text-align: right;">ess_tail</th>
+<th style="text-align: right;">mcse_mean</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Q[1]</td>
 <td style="text-align: right;">0.139</td>
-<td style="text-align: right;">0.320</td>
-<td style="text-align: right;">-0.382</td>
-<td style="text-align: right;">0.662</td>
 <td style="text-align: right;">1.000</td>
 <td style="text-align: right;">17902.83</td>
-<td style="text-align: right;">5855.730</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Q[2]</td>
 <td style="text-align: right;">0.102</td>
-<td style="text-align: right;">0.319</td>
-<td style="text-align: right;">-0.426</td>
-<td style="text-align: right;">0.619</td>
 <td style="text-align: right;">1.001</td>
 <td style="text-align: right;">21604.99</td>
-<td style="text-align: right;">5800.131</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Q[3]</td>
 <td style="text-align: right;">0.270</td>
-<td style="text-align: right;">0.311</td>
-<td style="text-align: right;">-0.235</td>
-<td style="text-align: right;">0.776</td>
 <td style="text-align: right;">1.000</td>
 <td style="text-align: right;">19573.56</td>
-<td style="text-align: right;">6007.763</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Q[4]</td>
 <td style="text-align: right;">0.552</td>
-<td style="text-align: right;">0.320</td>
-<td style="text-align: right;">0.028</td>
-<td style="text-align: right;">1.071</td>
 <td style="text-align: right;">1.001</td>
 <td style="text-align: right;">17416.81</td>
-<td style="text-align: right;">5796.906</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Q[5]</td>
 <td style="text-align: right;">-0.123</td>
-<td style="text-align: right;">0.315</td>
-<td style="text-align: right;">-0.641</td>
-<td style="text-align: right;">0.384</td>
 <td style="text-align: right;">1.000</td>
 <td style="text-align: right;">16630.99</td>
-<td style="text-align: right;">5928.784</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Q[6]</td>
 <td style="text-align: right;">-0.365</td>
-<td style="text-align: right;">0.318</td>
-<td style="text-align: right;">-0.893</td>
-<td style="text-align: right;">0.167</td>
 <td style="text-align: right;">1.001</td>
 <td style="text-align: right;">19249.44</td>
-<td style="text-align: right;">6280.410</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Q[7]</td>
 <td style="text-align: right;">0.291</td>
-<td style="text-align: right;">0.310</td>
-<td style="text-align: right;">-0.216</td>
-<td style="text-align: right;">0.799</td>
 <td style="text-align: right;">1.002</td>
 <td style="text-align: right;">17612.31</td>
-<td style="text-align: right;">5819.676</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Q[8]</td>
 <td style="text-align: right;">0.272</td>
-<td style="text-align: right;">0.316</td>
-<td style="text-align: right;">-0.244</td>
-<td style="text-align: right;">0.790</td>
 <td style="text-align: right;">1.001</td>
 <td style="text-align: right;">19262.19</td>
-<td style="text-align: right;">5803.780</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Q[9]</td>
 <td style="text-align: right;">0.079</td>
-<td style="text-align: right;">0.323</td>
-<td style="text-align: right;">-0.453</td>
-<td style="text-align: right;">0.610</td>
 <td style="text-align: right;">1.002</td>
 <td style="text-align: right;">17524.38</td>
-<td style="text-align: right;">5548.291</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Q[10]</td>
 <td style="text-align: right;">0.120</td>
-<td style="text-align: right;">0.320</td>
-<td style="text-align: right;">-0.414</td>
-<td style="text-align: right;">0.644</td>
 <td style="text-align: right;">1.000</td>
 <td style="text-align: right;">18782.27</td>
-<td style="text-align: right;">5822.424</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Q[11]</td>
 <td style="text-align: right;">-0.008</td>
-<td style="text-align: right;">0.313</td>
-<td style="text-align: right;">-0.514</td>
-<td style="text-align: right;">0.511</td>
 <td style="text-align: right;">1.000</td>
 <td style="text-align: right;">18564.38</td>
-<td style="text-align: right;">5446.550</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Q[12]</td>
 <td style="text-align: right;">-0.029</td>
-<td style="text-align: right;">0.319</td>
-<td style="text-align: right;">-0.549</td>
-<td style="text-align: right;">0.489</td>
 <td style="text-align: right;">1.000</td>
 <td style="text-align: right;">17498.02</td>
-<td style="text-align: right;">6069.144</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Q[13]</td>
 <td style="text-align: right;">-0.102</td>
-<td style="text-align: right;">0.317</td>
-<td style="text-align: right;">-0.627</td>
-<td style="text-align: right;">0.418</td>
 <td style="text-align: right;">1.001</td>
 <td style="text-align: right;">16981.20</td>
-<td style="text-align: right;">6315.917</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Q[14]</td>
 <td style="text-align: right;">0.005</td>
-<td style="text-align: right;">0.319</td>
-<td style="text-align: right;">-0.522</td>
-<td style="text-align: right;">0.527</td>
 <td style="text-align: right;">1.000</td>
 <td style="text-align: right;">18420.52</td>
-<td style="text-align: right;">5600.778</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Q[15]</td>
 <td style="text-align: right;">-0.220</td>
-<td style="text-align: right;">0.315</td>
-<td style="text-align: right;">-0.736</td>
-<td style="text-align: right;">0.296</td>
 <td style="text-align: right;">1.000</td>
 <td style="text-align: right;">17599.63</td>
-<td style="text-align: right;">5609.862</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Q[16]</td>
 <td style="text-align: right;">-0.196</td>
-<td style="text-align: right;">0.320</td>
-<td style="text-align: right;">-0.726</td>
-<td style="text-align: right;">0.337</td>
 <td style="text-align: right;">1.001</td>
 <td style="text-align: right;">19785.29</td>
-<td style="text-align: right;">5920.591</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Q[17]</td>
 <td style="text-align: right;">-0.143</td>
-<td style="text-align: right;">0.318</td>
-<td style="text-align: right;">-0.668</td>
-<td style="text-align: right;">0.380</td>
 <td style="text-align: right;">1.001</td>
 <td style="text-align: right;">17013.66</td>
-<td style="text-align: right;">5337.378</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Q[18]</td>
 <td style="text-align: right;">-0.854</td>
-<td style="text-align: right;">0.323</td>
-<td style="text-align: right;">-1.382</td>
-<td style="text-align: right;">-0.323</td>
 <td style="text-align: right;">1.001</td>
 <td style="text-align: right;">17794.77</td>
-<td style="text-align: right;">5844.933</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Q[19]</td>
 <td style="text-align: right;">-0.161</td>
-<td style="text-align: right;">0.315</td>
-<td style="text-align: right;">-0.678</td>
-<td style="text-align: right;">0.349</td>
 <td style="text-align: right;">1.000</td>
 <td style="text-align: right;">19621.52</td>
-<td style="text-align: right;">6297.323</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Q[20]</td>
 <td style="text-align: right;">0.382</td>
-<td style="text-align: right;">0.321</td>
-<td style="text-align: right;">-0.140</td>
-<td style="text-align: right;">0.896</td>
 <td style="text-align: right;">1.001</td>
 <td style="text-align: right;">17177.78</td>
-<td style="text-align: right;">5375.556</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">sigma</td>
 <td style="text-align: right;">0.997</td>
-<td style="text-align: right;">0.054</td>
-<td style="text-align: right;">0.912</td>
-<td style="text-align: right;">1.090</td>
 <td style="text-align: right;">1.000</td>
 <td style="text-align: right;">12573.39</td>
-<td style="text-align: right;">6491.467</td>
+<td style="text-align: right;">0.000</td>
 </tr>
 </tbody>
 </table>
@@ -2772,19 +2720,19 @@ Chain 3 Iteration: 1000 / 3000 [ 33%]  (Warmup)
 Chain 3 Iteration: 1001 / 3000 [ 33%]  (Sampling) 
 Chain 4 Iteration:    1 / 3000 [  0%]  (Warmup) 
 Chain 1 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
-Chain 2 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
 Chain 4 Iteration: 1000 / 3000 [ 33%]  (Warmup) 
 Chain 4 Iteration: 1001 / 3000 [ 33%]  (Sampling) 
+Chain 2 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
 Chain 3 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
-Chain 1 Iteration: 3000 / 3000 [100%]  (Sampling) 
 Chain 4 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
-Chain 1 finished in 0.6 seconds.
+Chain 1 Iteration: 3000 / 3000 [100%]  (Sampling) 
 Chain 2 Iteration: 3000 / 3000 [100%]  (Sampling) 
 Chain 3 Iteration: 3000 / 3000 [100%]  (Sampling) 
 Chain 4 Iteration: 3000 / 3000 [100%]  (Sampling) 
+Chain 1 finished in 0.6 seconds.
 Chain 2 finished in 0.6 seconds.
 Chain 3 finished in 0.6 seconds.
-Chain 4 finished in 0.5 seconds.
+Chain 4 finished in 0.6 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.6 seconds.
@@ -3154,13 +3102,13 @@ Chain 2 Iteration: 2000 / 3000 [ 66%]  (Sampling)
 Chain 3 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
 Chain 4 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
 Chain 1 Iteration: 3000 / 3000 [100%]  (Sampling) 
-Chain 3 Iteration: 3000 / 3000 [100%]  (Sampling) 
 Chain 1 finished in 1.5 seconds.
-Chain 3 finished in 1.5 seconds.
 Chain 2 Iteration: 3000 / 3000 [100%]  (Sampling) 
-Chain 4 Iteration: 3000 / 3000 [100%]  (Sampling) 
+Chain 3 Iteration: 3000 / 3000 [100%]  (Sampling) 
 Chain 2 finished in 1.5 seconds.
-Chain 4 finished in 1.5 seconds.
+Chain 3 finished in 1.5 seconds.
+Chain 4 Iteration: 3000 / 3000 [100%]  (Sampling) 
+Chain 4 finished in 1.6 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 1.5 seconds.
@@ -3763,7 +3711,7 @@ Chain 1 Iteration:  1001 / 31000 [  3%]  (Sampling)
 Chain 1 Iteration: 11000 / 31000 [ 35%]  (Sampling) 
 Chain 1 Iteration: 21000 / 31000 [ 67%]  (Sampling) 
 Chain 1 Iteration: 31000 / 31000 [100%]  (Sampling) 
-Chain 1 finished in 1.2 seconds.</code></pre>
+Chain 1 finished in 1.1 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: 68 of 30000 (0.0%) transitions ended with a divergence.
