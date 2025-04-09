@@ -84,6 +84,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./13-exp-naturales.html" rel="next">
 <link href="./08-mcmc.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -252,6 +253,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Modelos jerárquicos</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-exp-naturales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Otros métodos para inferencia causal</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -387,7 +394,7 @@ Total execution time: 0.6 seconds.</code></pre>
 <pre><code># A tibble: 1 × 10
   variable  mean median     sd    mad    q5   q95  rhat ess_bulk ess_tail
   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1 lambda   0.941  0.940 0.0561 0.0577 0.852  1.04  1.00    1607.    2187.</code></pre>
+1 lambda   0.942  0.940 0.0560 0.0563 0.852  1.04  1.00    1488.    2061.</code></pre>
 </div>
 </div>
 <p>Los diagnósticos básicos parecen ser apropiados. Procedemos a hacer un chequeo predictivo posterior:</p>
@@ -458,7 +465,7 @@ Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup)
 Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 0.3 seconds.
+Chain 1 finished in 0.2 seconds.
 Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
@@ -468,7 +475,7 @@ Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup)
 Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 finished in 0.2 seconds.
+Chain 3 finished in 0.3 seconds.
 Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
@@ -1239,7 +1246,7 @@ Chain 2 Iteration:    1 / 4000 [  0%]  (Warmup) </code></pre>
 <pre><code>Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Chain 2 Exception: gamma_lpdf: Random variable[82] is 0, but must be positive finite! (in '/tmp/Rtmpv4zYMt/model-4ca17891fa0c.stan', line 24, column 2 to column 36)</code></pre>
+<pre><code>Chain 2 Exception: gamma_lpdf: Random variable[82] is 0, but must be positive finite! (in '/tmp/RtmpP7QJWJ/model-30b33e125560.stan', line 24, column 2 to column 36)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</code></pre>
@@ -1263,7 +1270,7 @@ Chain 3 Iteration:    1 / 4000 [  0%]  (Warmup) </code></pre>
 <pre><code>Chain 3 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Chain 3 Exception: gamma_lpdf: Inverse scale parameter is 0, but must be positive finite! (in '/tmp/Rtmpv4zYMt/model-4ca17891fa0c.stan', line 24, column 2 to column 36)</code></pre>
+<pre><code>Chain 3 Exception: gamma_lpdf: Inverse scale parameter is 0, but must be positive finite! (in '/tmp/RtmpP7QJWJ/model-30b33e125560.stan', line 24, column 2 to column 36)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 3 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</code></pre>
@@ -1291,7 +1298,7 @@ Chain 4 finished in 0.7 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.7 seconds.
-Total execution time: 3.4 seconds.</code></pre>
+Total execution time: 3.3 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> ajuste_jer<span class="sc">$</span><span class="fu">summary</span>(<span class="fu">c</span>(<span class="st">"alpha"</span>, <span class="st">"mu"</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(variable, mean, sd, rhat, ess_bulk)</span>
@@ -1389,7 +1396,8 @@ Modelos jerárquicos y estimación
 <h2 data-number="9.2" class="anchored" data-anchor-id="modelos-jerárquicos-para-estructuras-causales"><span class="header-section-number">9.2</span> Modelos jerárquicos para estructuras causales</h2>
 <p>Tomaremos ahora el ejemplo de <span class="citation" data-cites="rethinking">McElreath (<a href="#ref-rethinking" role="doc-biblioref">2020</a>)</span> de un estudio de fertilidad en Bangladesh. Nos interesa entender causas del uso de anticonceptivos en mujeres de Bangladesh, en particular:</p>
 <ul>
-<li>¿Cómo cambia con la edad y el tamaño de la familia el uso de anticonceptivos? Queremos ver si es posible contestar esta pregunta de forma causal con los datos disponibles.</li>
+<li>¿Cómo cambia con la edad y el tamaño de la familia el uso de anticonceptivos?</li>
+<li>¿Cómo afecta el nivel de urbanización al uso de anticonceptivos? Queremos ver si es posible contestar esta pregunta de forma causal con los datos disponibles.</li>
 </ul>
 <p>En nuestros datos tenemos muestras por distritos (zonas geográficas) que nos puede ayudar o controlar efectos relacionados con variables relacionadas con distrito (como acceso a servicios de salud, etc).</p>
 <p>Comenzamos con un diagrama que describe causas posibles de uso de anticonceptivos:</p>
@@ -1614,7 +1622,7 @@ Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup)
 Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 2 finished in 1.3 seconds.
+Chain 2 finished in 1.4 seconds.
 Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
@@ -1627,7 +1635,7 @@ Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 4 finished in 1.4 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 1.3 seconds.
+Mean chain execution time: 1.4 seconds.
 Total execution time: 5.8 seconds.</code></pre>
 </div>
 </div>
@@ -2540,7 +2548,7 @@ Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) </code></pre>
 <pre><code>Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Chain 1 Exception: normal_lpdf: Scale parameter is 0, but must be positive! (in '/tmp/Rtmpv4zYMt/model-4ca16f320a95.stan', line 25, column 2 to column 41)</code></pre>
+<pre><code>Chain 1 Exception: normal_lpdf: Scale parameter is 0, but must be positive! (in '/tmp/RtmpP7QJWJ/model-30b3688fee6e.stan', line 25, column 2 to column 41)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</code></pre>
@@ -2565,7 +2573,7 @@ Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup)
 Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 finished in 4.3 seconds.
+Chain 3 finished in 4.1 seconds.
 Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
@@ -2574,7 +2582,7 @@ Chain 4 finished in 3.1 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 3.7 seconds.
-Total execution time: 15.3 seconds.</code></pre>
+Total execution time: 15.1 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: 3 of 4 chains had an E-BFMI less than 0.3.
@@ -2785,7 +2793,7 @@ Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup)
 Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 finished in 3.5 seconds.
+Chain 3 finished in 3.4 seconds.
 Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
@@ -2925,7 +2933,7 @@ Total execution time: 14.1 seconds.</code></pre>
 </div>
 </div>
 </div>
-<p><strong>Observaciones</strong>: - Nótese que generalmente tenemos muestras más chicos en zonas urbanas, y por eso vemos que hay más incertidumbre en las estimaciones urbanas. - Sin embargo, vemos que en general la variable urbana influye en el uso de anticonceptivos, aunque tenemos incertidumbre considerable en las estimaciones de las zonas urbanas de los distritos (menos muestra).</p>
+<p><strong>Observaciones</strong>: - Nótese que generalmente tenemos muestras más chicos en zonas urbanas, y por eso vemos que hay más incertidumbre/variabilidad en las estimaciones urbanas. - Sin embargo, vemos que en general la variable urbana influye en el uso de anticonceptivos, aunque tenemos incertidumbre considerable en las estimaciones de las zonas urbanas de los distritos (menos muestra).</p>
 <p>Podemos también comparar más directamente cómo cambia la probabilidad de zonas urbanas a rurales dentro de cada distrito:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>probs_1 <span class="sc">|&gt;</span> </span>
@@ -2942,12 +2950,14 @@ Total execution time: 14.1 seconds.</code></pre>
 </div>
 </div>
 </div>
-<p>Nótese que vemos aquí también la diferencia dentro de distritos entre zonas urbanas y rurales. Las medias posteriores en general están por debajo de la identidad. Adicionalmente, y como es de esperarse, hay correlación dentro de distritos entre las tasas de uso de anticonceptivos en zonas urbanas y rurales. Esto se debe, desde el punto de vista del modelo, a correlación entre el coeficiente <span class="math inline">\(\beta_{1,i}\)</span> común al efecto de urbano y rural: urbano es <span class="math inline">\(beta_{1,i} + beta_{2,i}\)</span> y rural <span class="math inline">\(\beta_{1,i}\)</span>. Es natural entonces observar una correlación positiva entre los dos siguientes coeficientes:</p>
+<p>Nótese que vemos aquí también la diferencia dentro de distritos entre zonas urbanas y rurales. Las medias posteriores en general están por debajo de la identidad. Adicionalmente, hay correlación dentro de distritos entre las tasas de uso de anticonceptivos en zonas urbanas y rurales. Esto se debe, desde el punto de vista del modelo, a correlación entre el coeficiente <span class="math inline">\(\beta_{1,i}\)</span> común al efecto de urbano y rural: urbano es <span class="math inline">\(\beta_{1,i} + \beta_{2,i}\)</span> y rural <span class="math inline">\(\beta_{1,i}\)</span>, y esto se debe a que <span class="math inline">\(beta_{1,i}\)</span> y <span class="math inline">\(\beta_{2,i}\)</span> se extraen de iniciales independientes.</p>
+<p>Es natural entonces observar una correlación positiva entre los dos siguientes coeficientes, en donde simulamos de las distribuciones poblacionales “nuevos” distritos:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>ajuste_3_bangladesh<span class="sc">$</span><span class="fu">draws</span>(<span class="fu">c</span>(<span class="st">"beta_sim"</span>), <span class="at">format =</span> <span class="st">"df"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="st">`</span><span class="at">beta_sim[1]</span><span class="st">`</span>, <span class="at">x =</span> <span class="st">`</span><span class="at">beta_sim[1]</span><span class="st">`</span> <span class="sc">+</span> <span class="st">`</span><span class="at">beta_sim[2]</span><span class="st">`</span>)) <span class="sc">+</span></span>
 <span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"coef_urbano"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"coef_rural"</span>) <span class="sc">+</span></span>
-<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Correlación poblacional entre coeficientes"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2956,11 +2966,11 @@ Total execution time: 14.1 seconds.</code></pre>
 </div>
 </div>
 </div>
-<p>Esta última observación suguiere que todavía podemos mejorar nuestras estimaciones: el “encogimiento” en las dos dimensiones debe estar correlacionado dentro de los distritos. En este ejemplo, estamos dejando de utilizar información que está en los datos. Si observamos que el uso de anticonceptivos en una zona urbana de el distrito A tiene un valor dado, esto nos da información acerca del uso de anticonceptivos en la zona rural del distrito A. Veremos ahora cómo podemos aprovechar más eficientemente la información para hacer mejor estimaciones.</p>
+<p>Esta última observación sugiere que todavía podemos mejorar nuestras estimaciones: el “encogimiento” en las dos dimensiones debe estar correlacionado dentro de los distritos. En este ejemplo, estamos dejando de utilizar información que está en los datos. Si observamos que el uso de anticonceptivos en una zona urbana de el distrito A tiene un valor dado, esto nos da información acerca del uso de anticonceptivos en la zona rural del distrito A. Veremos ahora cómo podemos aprovechar más eficientemente la información para hacer mejor estimaciones.</p>
 </section>
 <section id="variables-correlacionadas" class="level2" data-number="9.6">
 <h2 data-number="9.6" class="anchored" data-anchor-id="variables-correlacionadas"><span class="header-section-number">9.6</span> Variables correlacionadas</h2>
-<p>En nuestro ejemplo anterior, observamos que existe correlación entre las tasas de uso de anticonceptivos en zonas urbanas y rurales a lo largo de los distritos. En términos de nuestro modelo, los coeficientes <span class="math inline">\(\alpha_j +\beta_j\)</span> están correlacionados con los coeficientes <span class="math inline">\(\alpha_j\)</span>. Nótese que la inicial (o hiper-inicial) poblacional no incluye esta correlación, pero efectivamente la posterior captura la correlación. Podemos hacer la estimación más eficiente modelando explícitamente la correlación en la inicial poblacional. Con dos coeficientes podríamos modelar la población con una distribución normal multivariada.</p>
+<p>En nuestro ejemplo anterior, observamos que existe correlación entre las tasas de uso de anticonceptivos en zonas urbanas y rurales a lo largo de los distritos. En términos de nuestro modelo, los coeficientes <span class="math inline">\(\alpha_j +\beta_j\)</span> están correlacionados con los coeficientes <span class="math inline">\(\alpha_j\)</span>. Podemos hacer la estimación más eficiente modelando explícitamente la correlación en la inicial poblacional. Con dos coeficientes podríamos modelar la población con una distribución normal biivariada.</p>
 <p>Cambiamos nuestra notación por conveniencia: ahora <span class="math inline">\(\beta\)</span> es un vector que incluye la ordenada al origen <span class="math inline">\(\beta_1\)</span> y la pendiente <span class="math inline">\(\beta_2\)</span>.</p>
 <p><span class="math display">\[\beta \sim NMV(\bar{\beta}, \Sigma)\]</span> adicionalmente a <span class="math inline">\(\bar{\beta} \sim N(0,I)\)</span> y <span class="math inline">\(\sigma_1, \sigma_2 \sim N^{+}(0,1)\)</span>.</p>
 <p>Podemos pensar en la matriz de covarianzas <span class="math inline">\(\Sigma\)</span> como dada en dos partes: <span class="math inline">\(\Omega\)</span>, una matriz de correlaciones, y dos deviaciones estándar <span class="math inline">\(\sigma\)</span>, de modo que</p>
@@ -3073,24 +3083,24 @@ Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup)
 Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
+Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
+Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
 Chain 1 finished in 23.7 seconds.
 Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 finished in 25.7 seconds.
+Chain 3 finished in 25.5 seconds.
 Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 2 finished in 26.7 seconds.
+Chain 2 finished in 26.8 seconds.
 Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 4 finished in 27.5 seconds.
+Chain 4 finished in 27.6 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 25.9 seconds.
-Total execution time: 27.7 seconds.</code></pre>
+Total execution time: 27.8 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: 3 of 4000 (0.0%) transitions ended with a divergence.
@@ -3317,26 +3327,26 @@ Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup)
 Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
+Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
+Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
 Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 18.2 seconds.
-Chain 2 finished in 18.1 seconds.
+Chain 1 finished in 17.9 seconds.
+Chain 2 finished in 17.9 seconds.
 Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
 Chain 3 finished in 18.2 seconds.
 Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 4 finished in 18.5 seconds.
+Chain 4 finished in 18.3 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 18.3 seconds.
-Total execution time: 18.8 seconds.</code></pre>
+Mean chain execution time: 18.1 seconds.
+Total execution time: 18.6 seconds.</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -3524,6 +3534,7 @@ Total execution time: 18.8 seconds.</code></pre>
 </div>
 </div>
 </div>
+<p>En el caso sin correlación, vimos que la asociación entre los coeficientes de urbano y rural se daban en parte por la forma del modelo, y el hecho de que utilizamos distribuciones poblacionales independientes a priori para cada coeficiente. Una vez que modelamos la correlación, vemos que este efecto estaba exagerado.</p>
 <p>Y veamos ahora cómo están correlacionados los coeficientes de urbano y rural:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>ajuste_5_bangladesh<span class="sc">$</span><span class="fu">draws</span>(<span class="fu">c</span>(<span class="st">"beta_sim"</span>), <span class="at">format =</span> <span class="st">"df"</span>) <span class="sc">|&gt;</span> </span>
@@ -4046,6 +4057,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./13-exp-naturales.html" class="pagination-link" aria-label="Otros métodos para inferencia causal">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Otros métodos para inferencia causal</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
