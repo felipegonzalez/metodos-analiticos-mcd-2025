@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.6.43">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -90,7 +90,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-c1027aa80c1db6949de3dd074af226ce.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -387,7 +387,7 @@ Total execution time: 0.6 seconds.</code></pre>
 <pre><code># A tibble: 1 × 10
   variable  mean median     sd    mad    q5   q95  rhat ess_bulk ess_tail
   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1 lambda   0.938  0.936 0.0560 0.0549 0.847  1.03  1.00    1486.    2357.</code></pre>
+1 lambda   0.941  0.940 0.0561 0.0577 0.852  1.04  1.00    1607.    2187.</code></pre>
 </div>
 </div>
 <p>Los diagnósticos básicos parecen ser apropiados. Procedemos a hacer un chequeo predictivo posterior:</p>
@@ -476,7 +476,7 @@ Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 4 finished in 0.2 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 0.2 seconds.
+Mean chain execution time: 0.3 seconds.
 Total execution time: 1.3 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> ajuste_ind<span class="sc">$</span><span class="fu">summary</span>(<span class="st">"lambda"</span>) <span class="sc">|&gt;</span> </span>
@@ -1156,7 +1156,6 @@ Total execution time: 1.3 seconds.</code></pre>
 </table>
 </div>
 </div>
-<p>El problema en este caso es que tenemos intervalos que simplemente no son creíbles, en particular con aquellos hospitales que tienen poca exposición.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">912</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>ajuste_ind<span class="sc">$</span><span class="fu">draws</span>(<span class="st">"lambda"</span>, <span class="at">format =</span> <span class="st">"df"</span>) <span class="sc">|&gt;</span> </span>
@@ -1179,7 +1178,7 @@ Total execution time: 1.3 seconds.</code></pre>
 </div>
 </div>
 </div>
-<p>En este caso, la variabilidad es muy alta para hospitales con poca exposición, tanto en los datos observados como en los intervalos. Los intervalos no aportan mucha información. En este punto utilizar iniciales fuertes para las <span class="math inline">\(\lambda_j\)</span> si tenemos la información disponible. Sin embargo, los resultados serán altamente sensible a esta información inicial.</p>
+<p>El problema en este caso es que tenemos intervalos que simplemente no son creíbles, en particular con aquellos hospitales que tienen poca exposición. Adicionalmente, la variabilidad es muy alta para hospitales con poca exposición, tanto en los datos observados como en los intervalos. Los intervalos no aportan mucha información. En este punto utilizar iniciales fuertes para las <span class="math inline">\(\lambda_j\)</span> si tenemos la información disponible. Sin embargo, los resultados serán altamente sensible a esta información inicial.</p>
 <p>Una alternativa intermedia es poner una distribución inicial sobre las tasas que pueda adaptarse a los datos. Esta es una estrategia intermedia, donde permitimos variación en las <span class="math inline">\(\lambda_j\)</span> que sea consistente con la variación que observamos a lo largo de los hospitales.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cmdstanr)</span>
@@ -1240,7 +1239,7 @@ Chain 2 Iteration:    1 / 4000 [  0%]  (Warmup) </code></pre>
 <pre><code>Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Chain 2 Exception: gamma_lpdf: Random variable[82] is 0, but must be positive finite! (in '/tmp/Rtmpwg6tsc/model-2cf03404c311.stan', line 24, column 2 to column 36)</code></pre>
+<pre><code>Chain 2 Exception: gamma_lpdf: Random variable[82] is 0, but must be positive finite! (in '/tmp/Rtmpv4zYMt/model-4ca17891fa0c.stan', line 24, column 2 to column 36)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</code></pre>
@@ -1264,7 +1263,7 @@ Chain 3 Iteration:    1 / 4000 [  0%]  (Warmup) </code></pre>
 <pre><code>Chain 3 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Chain 3 Exception: gamma_lpdf: Inverse scale parameter is 0, but must be positive finite! (in '/tmp/Rtmpwg6tsc/model-2cf03404c311.stan', line 24, column 2 to column 36)</code></pre>
+<pre><code>Chain 3 Exception: gamma_lpdf: Inverse scale parameter is 0, but must be positive finite! (in '/tmp/Rtmpv4zYMt/model-4ca17891fa0c.stan', line 24, column 2 to column 36)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 3 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</code></pre>
@@ -1292,7 +1291,7 @@ Chain 4 finished in 0.7 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.7 seconds.
-Total execution time: 3.3 seconds.</code></pre>
+Total execution time: 3.4 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> ajuste_jer<span class="sc">$</span><span class="fu">summary</span>(<span class="fu">c</span>(<span class="st">"alpha"</span>, <span class="st">"mu"</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(variable, mean, sd, rhat, ess_bulk)</span>
@@ -1327,7 +1326,6 @@ Total execution time: 3.3 seconds.</code></pre>
 </table>
 </div>
 </div>
-<p>El problema en este caso es que tenemos intervalos que simplemente no son creíbles, en particular con aquellos hospitales que tienen poca exposición.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">912</span>)</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>ajuste_jer<span class="sc">$</span><span class="fu">draws</span>(<span class="st">"lambda"</span>, <span class="at">format =</span> <span class="st">"df"</span>) <span class="sc">|&gt;</span> </span>
@@ -1383,7 +1381,7 @@ Modelos jerárquicos y estimación
 </div>
 <div class="callout-body-container callout-body">
 <p>Los modelos jerárquicos nos permiten ajustar modelos con <em>agregación parcial</em>: es decir, estimamos parámetros a nivel de grupo con mejor precisión que si ajustamos modelos individuales (varianza muy alta) o agregamos los datos e ignoramos el grupo (sesgo alto).</p>
-<p>La regularización que ocurre en estos modelos está relacionada a la inicial que estimamos sobre parámetros indiviiduales: cuando hay muchos datos en un grupo, la inicial es menos importante, y cuando hay más datos en un grupo, la inicial es menos importante. El grado de regularización es estimado de la evidencia de variación entre los grupos.</p>
+<p>La regularización que ocurre en estos modelos está relacionada a la inicial que estimamos sobre parámetros individuales: cuando hay muchos datos en un grupo, la inicial es menos importante, y cuando hay más datos en un grupo, la inicial es menos importante. El grado de regularización es estimado de la evidencia de variación entre los grupos.</p>
 </div>
 </div>
 </section>
@@ -2542,7 +2540,7 @@ Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) </code></pre>
 <pre><code>Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Chain 1 Exception: normal_lpdf: Scale parameter is 0, but must be positive! (in '/tmp/Rtmpwg6tsc/model-2cf0586e4509.stan', line 25, column 2 to column 41)</code></pre>
+<pre><code>Chain 1 Exception: normal_lpdf: Scale parameter is 0, but must be positive! (in '/tmp/Rtmpv4zYMt/model-4ca16f320a95.stan', line 25, column 2 to column 41)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</code></pre>
@@ -2567,7 +2565,7 @@ Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup)
 Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 finished in 4.0 seconds.
+Chain 3 finished in 4.3 seconds.
 Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
@@ -2576,7 +2574,7 @@ Chain 4 finished in 3.1 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 3.7 seconds.
-Total execution time: 15.1 seconds.</code></pre>
+Total execution time: 15.3 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: 3 of 4 chains had an E-BFMI less than 0.3.
@@ -2967,7 +2965,7 @@ Total execution time: 14.1 seconds.</code></pre>
 <p><span class="math display">\[\beta \sim NMV(\bar{\beta}, \Sigma)\]</span> adicionalmente a <span class="math inline">\(\bar{\beta} \sim N(0,I)\)</span> y <span class="math inline">\(\sigma_1, \sigma_2 \sim N^{+}(0,1)\)</span>.</p>
 <p>Podemos pensar en la matriz de covarianzas <span class="math inline">\(\Sigma\)</span> como dada en dos partes: <span class="math inline">\(\Omega\)</span>, una matriz de correlaciones, y dos deviaciones estándar <span class="math inline">\(\sigma\)</span>, de modo que</p>
 <p><span class="math display">\[\Sigma = \textrm{diag}(\sigma)\,\Omega\, \textrm{diag}(\sigma)\]</span></p>
-<p>En nuestro ejemplo anterior teníamos <span class="math inline">\(\Omega = I\)</span>. En general, si <span class="math inline">\(\Omega\)</span> es una matriz de correlaciones, entonces <span class="math inline">\(\Sigma\)</span> se escribe como:</p>
+<p>En nuestro ejemplo anterior teníamos <span class="math inline">\(\Omega = I\)</span>.</p>
 <p>La pregunta ahora es qué distribución inicial le podemos dar a la matriz <span class="math inline">\(\Omega\)</span> de correlaciones. Aún cuando en este caso bivariado sólo tenemos que dar una inicial a la correlación y es posible definir alguna distribución inicial para <span class="math inline">\(\rho\in(-1,1)\)</span>, en general el problema de poner una distribución sobre matrices de correlación no es simple. Usamos la llamada <a href="https://mc-stan.org/docs/functions-reference/correlation_matrix_distributions.html#lkj-correlation">distribución LKJ</a>, <span class="math display">\[\Omega \sim \textrm{LKJ}(\eta)\]</span> con <span class="math inline">\(\eta&gt;0\)</span>. <span class="math inline">\(\eta\)</span> indica qué tan concentrada está la distribución en correlaciones cercanas a 0, o cuánta dispersión esperamos:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>modelo_str <span class="ot">&lt;-</span> <span class="st">"</span></span>
@@ -3075,24 +3073,24 @@ Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup)
 Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
+Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
+Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 24.0 seconds.
+Chain 1 finished in 23.7 seconds.
 Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 finished in 25.8 seconds.
+Chain 3 finished in 25.7 seconds.
 Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
 Chain 2 finished in 26.7 seconds.
 Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 4 finished in 27.8 seconds.
+Chain 4 finished in 27.5 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 26.1 seconds.
-Total execution time: 28.0 seconds.</code></pre>
+Mean chain execution time: 25.9 seconds.
+Total execution time: 27.7 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: 3 of 4000 (0.0%) transitions ended with a divergence.
@@ -3319,26 +3317,26 @@ Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup)
 Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) 
-Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
+Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
+Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 2 finished in 18.0 seconds.
 Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 18.1 seconds.
+Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
+Chain 1 finished in 18.2 seconds.
+Chain 2 finished in 18.1 seconds.
 Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 finished in 18.3 seconds.
+Chain 3 finished in 18.2 seconds.
 Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
 Chain 4 finished in 18.5 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 18.2 seconds.
-Total execution time: 18.7 seconds.</code></pre>
+Mean chain execution time: 18.3 seconds.
+Total execution time: 18.8 seconds.</code></pre>
 </div>
 </div>
 <div class="cell">

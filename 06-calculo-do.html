@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.6.43">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -91,7 +91,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-c1027aa80c1db6949de3dd074af226ce.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -339,8 +339,8 @@ window.Quarto = {
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="st">  "</span>, <span class="at">width =</span> <span class="dv">200</span>, <span class="at">height =</span> <span class="dv">50</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="htmlwidget-576396526c385b17fe46" style="width:100%;height:162px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-576396526c385b17fe46">{"x":{"diagram":"\n  digraph {\n    node [shape = plaintext];\n    X [label = \"X\"];\n    Y [label = \"Y\"];\n    U [label = \"U\"];\n    X -> Y;\n    U-> X ;\n    U -> Y;\n  {rank = same; X; Y;}\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3daa313b0b7fe7b82642" style="width:100%;height:162px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3daa313b0b7fe7b82642">{"x":{"diagram":"\n  digraph {\n    node [shape = plaintext];\n    X [label = \"X\"];\n    Y [label = \"Y\"];\n    U [label = \"U\"];\n    X -> Y;\n    U-> X ;\n    U -> Y;\n  {rank = same; X; Y;}\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Nos interesa estimar el efecto causal de <span class="math inline">\(X\)</span> sobre <span class="math inline">\(Y\)</span>. Sucede que en muchas ocasiones existen variables como <span class="math inline">\(U\)</span> que son causas comunes de <span class="math inline">\(X\)</span> y <span class="math inline">\(Y\)</span>. Como vimos, esto implica que no podemos simplemente ver la correlación entre <span class="math inline">\(X\)</span> y <span class="math inline">\(Y\)</span> para entender el efecto de <span class="math inline">\(X\)</span> sobre <span class="math inline">\(Y\)</span>, pues una causa común de variación conjunta entre estas dos variables. Esta variable <span class="math inline">\(U\)</span> puede ser observada o no.</p>
@@ -363,8 +363,8 @@ window.Quarto = {
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="st">  "</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-f37473a32ec8f4b9b572" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-f37473a32ec8f4b9b572">{"x":{"diagram":"\n  digraph {\n    node [shape = plaintext];\n    X [label = \"X\"];\n    Y [label = \"Y\"];\n    R\n    U [label = \"U\"];\n    R -> X\n    X -> Y;\n    U -> Y;\n  {rank = same; R;X; Y;}\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-24351ed47be1d38a1f94" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-24351ed47be1d38a1f94">{"x":{"diagram":"\n  digraph {\n    node [shape = plaintext];\n    X [label = \"X\"];\n    Y [label = \"Y\"];\n    R\n    U [label = \"U\"];\n    R -> X\n    X -> Y;\n    U -> Y;\n  {rank = same; R;X; Y;}\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Nótese que:</p>
@@ -422,8 +422,8 @@ Experimentos
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>, <span class="at">width =</span> <span class="dv">100</span>, <span class="at">height =</span> <span class="dv">50</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="htmlwidget-e94cbb2ca13f94f05310" style="width:100%;height:325px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e94cbb2ca13f94f05310">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n  node [shape=plaintext]\n\n  edge [minlen = 3]\n   T -> A\n   T -> Z\n   \n   \n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e9e4f15bf3dc89019ef4" style="width:100%;height:325px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e9e4f15bf3dc89019ef4">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n  node [shape=plaintext]\n\n  edge [minlen = 3]\n   T -> A\n   T -> Z\n   \n   \n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>Gráfica de datos observacionales</p>
 </div>
 </div>
@@ -516,8 +516,8 @@ Experimentos
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>, <span class="at">width =</span> <span class="dv">100</span>, <span class="at">height =</span> <span class="dv">50</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="htmlwidget-cc525e5fd1d339ead2de" style="width:100%;height:325px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-cc525e5fd1d339ead2de">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n  node [shape=plaintext]\n   A\n  edge [minlen = 3]\n   T -> Z\n{ rank = same; A; Z }\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-40708d0e4eca9f2f9a30" style="width:100%;height:325px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-40708d0e4eca9f2f9a30">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n  node [shape=plaintext]\n   A\n  edge [minlen = 3]\n   T -> Z\n{ rank = same; A; Z }\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>Gráfica con intervención en A</p>
 </div>
 </div>
@@ -572,8 +572,8 @@ Experimentos
 <span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-fd1b9a64f4a8cc912815" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-fd1b9a64f4a8cc912815">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n  node [shape=plaintext]\n\n  edge [minlen = 3]\n   U_t -> T\n   T -> A\n   T -> D\n   D -> A\n   U_a -> A\n   U_d -> D\n\n{ rank = same; A; D }\n\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-32e0dd94c295680a6a03" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-32e0dd94c295680a6a03">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n  node [shape=plaintext]\n\n  edge [minlen = 3]\n   U_t -> T\n   T -> A\n   T -> D\n   D -> A\n   U_a -> A\n   U_d -> D\n\n{ rank = same; A; D }\n\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="cell">
@@ -623,8 +623,8 @@ Experimentos
 <span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-c2e93afa2e09358ef771" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-c2e93afa2e09358ef771">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n  node [shape=plaintext]\n\n  edge [minlen = 3]\n   U_t -> T\n   T -> A\n   D -> A\n   U_a -> A\n{ rank = same; A; D }\n\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-e36de3587ff5e5f712f4" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-e36de3587ff5e5f712f4">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n  node [shape=plaintext]\n\n  edge [minlen = 3]\n   U_t -> T\n   T -> A\n   D -> A\n   U_a -> A\n{ rank = same; A; D }\n\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Ahora queremos calcular <span class="math inline">\(p(a|do(d)) = p_m(a|d)\)</span> en función de los datos. Siguiendo el mismo argumento que en el ejemplo anterior, sabemos que tenemos que estratificar o condicionar a <span class="math inline">\(T\)</span> para poder usar nuestro proceso generador de observaciones, y obtenemos:</p>
@@ -834,8 +834,8 @@ Ajuste de puerta trasera (Pearl)
 <span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-6e4a945e4c91d1d6b0c6" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-6e4a945e4c91d1d6b0c6">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2, rankdir = LR]\n  node [shape=plaintext]\n    Trata\n    Res\n  node [shape = circle]\n    NSE\n    Peso\n    U\n  edge [minlen = 3]\n    NSE -> Peso\n    NSE -> Trata\n    Trata -> Res\n    Peso -> Res\n    U -> NSE\n    U -> Peso\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-185f09133c22fdf3c552" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-185f09133c22fdf3c552">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2, rankdir = LR]\n  node [shape=plaintext]\n    Trata\n    Res\n  node [shape = circle]\n    NSE\n    Peso\n    U\n  edge [minlen = 3]\n    NSE -> Peso\n    NSE -> Trata\n    Trata -> Res\n    Peso -> Res\n    U -> NSE\n    U -> Peso\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Observamos que no podemos directamente usar la fórmula de ajuste pues NSE no es una variable observada.</p>
@@ -864,8 +864,8 @@ Ajuste de puerta trasera (Pearl)
 <span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-ab4080caf538390eddfd" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-ab4080caf538390eddfd">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2, rankdir = LR]\n  node [shape=plaintext]\n    Trata\n    Res\n    Peso\n  node [shape = circle]\n    NSE\n    U\n  edge [minlen = 3]\n    NSE -> Peso\n    NSE -> Trata\n    Trata -> Res\n    Peso -> Res\n    U -> NSE\n    U -> Peso\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-94126c85c191bb2444ff" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-94126c85c191bb2444ff">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2, rankdir = LR]\n  node [shape=plaintext]\n    Trata\n    Res\n    Peso\n  node [shape = circle]\n    NSE\n    U\n  edge [minlen = 3]\n    NSE -> Peso\n    NSE -> Trata\n    Trata -> Res\n    Peso -> Res\n    U -> NSE\n    U -> Peso\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>En este caso, todavía no podemos aplicar la fórmula original de ajuste pues no conocemos <span class="math inline">\(NSE\)</span>. Sin embargo, podemos bloquear los caminos no causales estratificando por Peso, y entonces podemos usar el criterio de puerta trasera para identificar el efecto del tratamiento, aún cuando no tengamos NSE.</p>
@@ -1199,7 +1199,7 @@ Chain 4 finished in 10.6 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 10.6 seconds.
-Total execution time: 42.7 seconds.</code></pre>
+Total execution time: 42.8 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>sims <span class="ot">&lt;-</span> ajuste<span class="sc">$</span><span class="fu">draws</span>(<span class="fu">c</span>(<span class="st">"dif_trata"</span>), <span class="at">format =</span> <span class="st">"df"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1289,8 +1289,8 @@ Completitud (Shpitser, Pearl)
 <span id="cb61-15"><a href="#cb61-15" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-e9f9e90f48fb1a3d38ed" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-e9f9e90f48fb1a3d38ed">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n  node [shape=plaintext]\n    F\n    C\n  node [shape = circle]\n    U\n  edge [minlen = 3]\n    U -> F\n    U -> C\n    F -> C\n{rank= same; C; F}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-7bbc8cf509c9a82ee57b" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-7bbc8cf509c9a82ee57b">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n  node [shape=plaintext]\n    F\n    C\n  node [shape = circle]\n    U\n  edge [minlen = 3]\n    U -> F\n    U -> C\n    F -> C\n{rank= same; C; F}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>En este caso, el efecto de fumar (<span class="math inline">\(F\)</span>) sobre cáncer (<span class="math inline">\(C\)</span>) no es identificable pues no podemos condicionar a la variable de Genotipo (<span class="math inline">\(U\)</span>). Supongamos que tenemos una medida adicional, que es la cantidad de depósitos de alquitrán den los pulmones de los pacientes. Este es es afectado por <span class="math inline">\(F\)</span>, y a su vez, el alquitrán incrementa la probabilidad de cáncer:</p>
@@ -1316,8 +1316,8 @@ Completitud (Shpitser, Pearl)
 <span id="cb62-17"><a href="#cb62-17" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-42551f626bf4f2dc2825" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-42551f626bf4f2dc2825">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n  node [shape=plaintext]\n    F\n    C\n    A\n  node [shape = circle]\n    U\n  edge [minlen = 3]\n    U -> F\n    U -> C\n    F -> A\n    A -> C\n{rank= same; C; F; A}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-1b157caf4eb6f8914982" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-1b157caf4eb6f8914982">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n  node [shape=plaintext]\n    F\n    C\n    A\n  node [shape = circle]\n    U\n  edge [minlen = 3]\n    U -> F\n    U -> C\n    F -> A\n    A -> C\n{rank= same; C; F; A}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>La idea es primero estimar el efecto de <span class="math inline">\(F\)</span> sobre <span class="math inline">\(A\)</span>, y después estimar el efecto de <span class="math inline">\(A\)</span> sobre <span class="math inline">\(C\)</span>. La “composición” de estos dos efectos, dado el diagrama, debe darnos el estimador correcto. Primero consideramos el efecto de <span class="math inline">\(F\)</span> sobre <span class="math inline">\(A\)</span>, y tenemos que (regla 2)</p>
@@ -1543,15 +1543,15 @@ Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling)
 Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
 Chain 2 finished in 39.4 seconds.
 Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 finished in 40.2 seconds.
+Chain 3 finished in 40.3 seconds.
 Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
 Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 42.5 seconds.
-Chain 4 finished in 42.5 seconds.
+Chain 1 finished in 42.1 seconds.
+Chain 4 finished in 42.0 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 41.2 seconds.
-Total execution time: 42.6 seconds.</code></pre>
+Mean chain execution time: 40.9 seconds.
+Total execution time: 42.1 seconds.</code></pre>
 </div>
 </div>
 <div class="cell">
