@@ -644,18 +644,20 @@ probs_1 |>
 ```
 Nótese que vemos aquí también la diferencia dentro de distritos entre
 zonas urbanas y rurales. Las medias posteriores en general están por debajo
-de la identidad. Adicionalmente, y como es de esperarse, hay correlación
+de la identidad. Adicionalmente, hay correlación
 dentro de distritos entre las tasas de uso de anticonceptivos en zonas urbanas
 y rurales. Esto se debe, desde el punto de vista del modelo, 
 a correlación entre el coeficiente $\beta_{1,i}$ común al efecto de urbano y rural:
-urbano es $beta_{1,i} + beta_{2,i}$ y rural $\beta_{1,i}$. Es natural
-entonces observar una correlación positiva entre los dos siguientes coeficientes:
+urbano es $\beta_{1,i} + \beta_{2,i}$ y rural $\beta_{1,i}$. Es natural
+entonces observar una correlación positiva entre los dos siguientes coeficientes,
+en donde simulamos de las distribuciones poblacionales "nuevos" distritos:
 
 ```{r}
 ajuste_3_bangladesh$draws(c("beta_sim"), format = "df") |> 
   ggplot(aes(y = `beta_sim[1]`, x = `beta_sim[1]` + `beta_sim[2]`)) +
   geom_point(alpha = 0.2) + xlab("coef_urbano") + ylab("coef_rural") +
-  geom_abline(intercept = 0, slope = 1, linetype = 2)
+  geom_abline(intercept = 0, slope = 1, linetype = 2) +
+  labs(subtitle = "Correlación poblacional entre coeficientes")
 ```
 
 
@@ -678,7 +680,7 @@ están correlacionados con los coeficientes $\alpha_j$. Nótese que la inicial
 (o hiper-inicial) poblacional no incluye esta correlación, pero efectivamente
 la posterior captura la correlación. Podemos hacer la estimación más eficiente
 modelando explícitamente la correlación en la inicial poblacional. Con dos
-coeficientes podríamos modelar la población con una distribución normal multivariada.
+coeficientes podríamos modelar la población con una distribución normal biivariada.
 
 Cambiamos nuestra notación por conveniencia: ahora $\beta$ es un vector
 que incluye la ordenada al origen $\beta_1$ y la pendiente $\beta_2$.
