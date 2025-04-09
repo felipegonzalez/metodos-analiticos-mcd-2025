@@ -97,7 +97,7 @@ ajuste_agregado <- mod_agregado$sample(data = datos_agregado, chains = 4, refres
 ajuste_agregado$summary("lambda")
 ```
 
-Los diagnósticos básicos parecen ser apropiados. Procedemos a hacer un
+Los diagnósticos básicos parecen ser apropiados.  Procedemos a hacer un
 chequeo predictivo posterior:
 
 ```{r}
@@ -133,8 +133,7 @@ resumen <- ajuste_ind$summary("lambda") |>
 resumen |> kable()
 ```
 
-El problema en este caso es que tenemos intervalos que simplemente no
-son creíbles, en particular con aquellos hospitales que tienen poca exposición. 
+
 
 ```{r}
 #| message: false
@@ -154,7 +153,8 @@ ajuste_ind$draws("lambda", format = "df") |>
   scale_x_log10() + xlab("Número de expuestos e") + ylab("Muertes por mil expuestos")
 ```
 
-En este caso, la variabilidad es muy alta para hospitales con poca exposición, tanto
+El problema en este caso es que tenemos intervalos que simplemente no son creíbles, en particular con aquellos hospitales que tienen poca exposición. Adicionalmente, 
+la variabilidad es muy alta para hospitales con poca exposición, tanto
 en los datos observados como en los intervalos. Los intervalos no aportan
 mucha información. En este punto utilizar iniciales fuertes
 para las $\lambda_j$ si tenemos la información disponible. Sin embargo, los
@@ -179,8 +179,7 @@ resumen <- ajuste_jer$summary(c("alpha", "mu")) |>
 resumen |> kable()
 ```
 
-El problema en este caso es que tenemos intervalos que simplemente no
-son creíbles, en particular con aquellos hospitales que tienen poca exposición. 
+
 
 ```{r}
 #| message: false
@@ -229,7 +228,7 @@ si ajustamos modelos individuales (varianza muy alta)
 o agregamos los datos e ignoramos el grupo (sesgo alto). 
 
 La regularización que ocurre en estos modelos está relacionada a la inicial
-que estimamos sobre parámetros indiviiduales: cuando hay muchos datos en un grupo, 
+que estimamos sobre parámetros individuales: cuando hay muchos datos en un grupo, 
 la inicial es menos importante, y cuando hay más datos en un grupo, la inicial es
 menos importante. El grado de regularización es estimado de la evidencia de 
 variación entre los grupos.
@@ -693,8 +692,7 @@ de modo que
 
 $$\Sigma = \textrm{diag}(\sigma)\,\Omega\, \textrm{diag}(\sigma)$$
 
-En nuestro ejemplo anterior teníamos $\Omega = I$. En general, si $\Omega$ es
-una matriz de correlaciones, entonces $\Sigma$ se escribe como:
+En nuestro ejemplo anterior teníamos $\Omega = I$. 
 
 La pregunta ahora es qué distribución inicial le podemos dar a la matriz
 $\Omega$ de correlaciones. Aún cuando en este caso bivariado sólo tenemos
