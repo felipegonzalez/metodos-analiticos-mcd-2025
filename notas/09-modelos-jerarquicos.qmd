@@ -241,7 +241,8 @@ Tomaremos ahora el ejemplo de @rethinking de un estudio de fertilidad en
 Bangladesh. Nos interesa entender causas del uso de anticonceptivos en mujeres
 de Bangladesh, en particular:
 
-- ¿Cómo cambia con la edad y el tamaño de la familia el uso de anticonceptivos? Queremos
+- ¿Cómo cambia con la edad y el tamaño de la familia el uso de anticonceptivos? 
+- ¿Cómo afecta el nivel de urbanización al uso de anticonceptivos? Queremos
 ver si es posible contestar esta pregunta de forma causal con los datos disponibles.
 
 En nuestros datos tenemos muestras por distritos (zonas geográficas) que nos puede
@@ -626,7 +627,7 @@ graf_1
 
 **Observaciones**:
 - Nótese que generalmente tenemos muestras más chicos en zonas urbanas, y por
-eso vemos que hay más incertidumbre en las estimaciones urbanas. 
+eso vemos que hay más incertidumbre/variabilidad en las estimaciones urbanas. 
 - Sin embargo, vemos que en general la variable urbana influye en el uso
 de anticonceptivos, aunque tenemos incertidumbre considerable en las estimaciones
 de las zonas urbanas de los distritos (menos muestra).
@@ -648,7 +649,10 @@ de la identidad. Adicionalmente, hay correlación
 dentro de distritos entre las tasas de uso de anticonceptivos en zonas urbanas
 y rurales. Esto se debe, desde el punto de vista del modelo, 
 a correlación entre el coeficiente $\beta_{1,i}$ común al efecto de urbano y rural:
-urbano es $\beta_{1,i} + \beta_{2,i}$ y rural $\beta_{1,i}$. Es natural
+urbano es $\beta_{1,i} + \beta_{2,i}$ y rural $\beta_{1,i}$, y esto se debe
+a que $beta_{1,i}$ y $\beta_{2,i}$ se extraen de iniciales independientes.
+
+Es natural
 entonces observar una correlación positiva entre los dos siguientes coeficientes,
 en donde simulamos de las distribuciones poblacionales "nuevos" distritos:
 
@@ -661,7 +665,7 @@ ajuste_3_bangladesh$draws(c("beta_sim"), format = "df") |>
 ```
 
 
-Esta última observación suguiere que todavía podemos mejorar nuestras estimaciones:
+Esta última observación sugiere que todavía podemos mejorar nuestras estimaciones:
 el "encogimiento" en las dos dimensiones debe estar correlacionado dentro de los distritos.
 En este ejemplo, estamos
 dejando de utilizar información que está en los datos. Si observamos que el uso
@@ -676,9 +680,7 @@ mejor estimaciones.
 En nuestro ejemplo anterior, observamos que existe correlación entre
 las tasas de uso de anticonceptivos en zonas urbanas y rurales a lo largo
 de los distritos. En términos de nuestro modelo, los coeficientes $\alpha_j +\beta_j$
-están correlacionados con los coeficientes $\alpha_j$. Nótese que la inicial
-(o hiper-inicial) poblacional no incluye esta correlación, pero efectivamente
-la posterior captura la correlación. Podemos hacer la estimación más eficiente
+están correlacionados con los coeficientes $\alpha_j$. Podemos hacer la estimación más eficiente
 modelando explícitamente la correlación en la inicial poblacional. Con dos
 coeficientes podríamos modelar la población con una distribución normal biivariada.
 
@@ -850,6 +852,11 @@ probs |>
   geom_text() +
   facet_wrap(~modelo)
 ```
+
+En el caso sin correlación, vimos que la asociación entre los coeficientes de urbano y rural
+se daban en parte por la forma del modelo, y el hecho de que utilizamos distribuciones
+poblacionales independientes a priori para cada coeficiente. Una vez que modelamos la correlación,
+vemos que este efecto estaba exagerado.
 
 Y veamos ahora cómo están correlacionados los coeficientes de urbano y rural:
 
