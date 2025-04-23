@@ -394,7 +394,7 @@ Total execution time: 0.6 seconds.</code></pre>
 <pre><code># A tibble: 1 × 10
   variable  mean median     sd    mad    q5   q95  rhat ess_bulk ess_tail
   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1 lambda   0.942  0.940 0.0560 0.0563 0.852  1.04  1.00    1488.    2061.</code></pre>
+1 lambda   0.939  0.938 0.0542 0.0541 0.851  1.03  1.00    1535.    1823.</code></pre>
 </div>
 </div>
 <p>Los diagnósticos básicos parecen ser apropiados. Procedemos a hacer un chequeo predictivo posterior:</p>
@@ -465,7 +465,7 @@ Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup)
 Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 0.2 seconds.
+Chain 1 finished in 0.3 seconds.
 Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
@@ -475,7 +475,7 @@ Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup)
 Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 finished in 0.3 seconds.
+Chain 3 finished in 0.2 seconds.
 Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
@@ -1246,7 +1246,7 @@ Chain 2 Iteration:    1 / 4000 [  0%]  (Warmup) </code></pre>
 <pre><code>Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Chain 2 Exception: gamma_lpdf: Random variable[82] is 0, but must be positive finite! (in '/tmp/RtmpP7QJWJ/model-30b33e125560.stan', line 24, column 2 to column 36)</code></pre>
+<pre><code>Chain 2 Exception: gamma_lpdf: Random variable[82] is 0, but must be positive finite! (in '/tmp/RtmpeOREOx/model-48d74fab1736.stan', line 24, column 2 to column 36)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</code></pre>
@@ -1270,7 +1270,7 @@ Chain 3 Iteration:    1 / 4000 [  0%]  (Warmup) </code></pre>
 <pre><code>Chain 3 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Chain 3 Exception: gamma_lpdf: Inverse scale parameter is 0, but must be positive finite! (in '/tmp/RtmpP7QJWJ/model-30b33e125560.stan', line 24, column 2 to column 36)</code></pre>
+<pre><code>Chain 3 Exception: gamma_lpdf: Inverse scale parameter is 0, but must be positive finite! (in '/tmp/RtmpeOREOx/model-48d74fab1736.stan', line 24, column 2 to column 36)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 3 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</code></pre>
@@ -1622,7 +1622,7 @@ Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup)
 Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 2 finished in 1.4 seconds.
+Chain 2 finished in 1.3 seconds.
 Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
@@ -1635,7 +1635,7 @@ Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 4 finished in 1.4 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 1.4 seconds.
+Mean chain execution time: 1.3 seconds.
 Total execution time: 5.8 seconds.</code></pre>
 </div>
 </div>
@@ -2548,7 +2548,7 @@ Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) </code></pre>
 <pre><code>Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Chain 1 Exception: normal_lpdf: Scale parameter is 0, but must be positive! (in '/tmp/RtmpP7QJWJ/model-30b3688fee6e.stan', line 25, column 2 to column 41)</code></pre>
+<pre><code>Chain 1 Exception: normal_lpdf: Scale parameter is 0, but must be positive! (in '/tmp/RtmpeOREOx/model-48d717268920.stan', line 25, column 2 to column 41)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</code></pre>
@@ -2578,7 +2578,7 @@ Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup)
 Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 4 finished in 3.1 seconds.
+Chain 4 finished in 3.0 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 3.7 seconds.
@@ -2950,7 +2950,7 @@ Total execution time: 14.1 seconds.</code></pre>
 </div>
 </div>
 </div>
-<p>Nótese que vemos aquí también la diferencia dentro de distritos entre zonas urbanas y rurales. Las medias posteriores en general están por debajo de la identidad. Adicionalmente, hay correlación dentro de distritos entre las tasas de uso de anticonceptivos en zonas urbanas y rurales. Esto se debe, desde el punto de vista del modelo, a correlación entre el coeficiente <span class="math inline">\(\beta_{1,i}\)</span> común al efecto de urbano y rural: urbano es <span class="math inline">\(\beta_{1,i} + \beta_{2,i}\)</span> y rural <span class="math inline">\(\beta_{1,i}\)</span>, y esto se debe a que <span class="math inline">\(beta_{1,i}\)</span> y <span class="math inline">\(\beta_{2,i}\)</span> se extraen de iniciales independientes.</p>
+<p>Nótese que vemos aquí también la diferencia dentro de distritos entre zonas urbanas y rurales. Las medias posteriores en general están por debajo de la identidad. Adicionalmente, hay correlación dentro de distritos entre las tasas de uso de anticonceptivos en zonas urbanas y rurales. Esto se debe, desde el punto de vista del modelo, a correlación entre el coeficiente <span class="math inline">\(\beta_{1,i}\)</span> común al efecto de urbano y rural: urbano es <span class="math inline">\(\beta_{1,i} + \beta_{2,i}\)</span> y rural <span class="math inline">\(\beta_{1,i}\)</span>, y esto se debe a que <span class="math inline">\(\beta_{1,i}\)</span> y <span class="math inline">\(\beta_{2,i}\)</span> se extraen de iniciales independientes.</p>
 <p>Es natural entonces observar una correlación positiva entre los dos siguientes coeficientes, en donde simulamos de las distribuciones poblacionales “nuevos” distritos:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>ajuste_3_bangladesh<span class="sc">$</span><span class="fu">draws</span>(<span class="fu">c</span>(<span class="st">"beta_sim"</span>), <span class="at">format =</span> <span class="st">"df"</span>) <span class="sc">|&gt;</span> </span>
@@ -3092,15 +3092,15 @@ Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling)
 Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
 Chain 1 finished in 23.7 seconds.
 Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 finished in 25.5 seconds.
+Chain 3 finished in 25.8 seconds.
 Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 2 finished in 26.8 seconds.
+Chain 2 finished in 26.4 seconds.
 Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 4 finished in 27.6 seconds.
+Chain 4 finished in 27.5 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 25.9 seconds.
-Total execution time: 27.8 seconds.</code></pre>
+Mean chain execution time: 25.8 seconds.
+Total execution time: 27.7 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: 3 of 4000 (0.0%) transitions ended with a divergence.
@@ -3335,18 +3335,18 @@ Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup)
 Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
 Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 17.9 seconds.
-Chain 2 finished in 17.9 seconds.
 Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 finished in 18.2 seconds.
+Chain 2 finished in 18.2 seconds.
+Chain 3 finished in 18.1 seconds.
+Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
+Chain 1 finished in 18.3 seconds.
 Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 4 finished in 18.3 seconds.
+Chain 4 finished in 18.5 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 18.1 seconds.
-Total execution time: 18.6 seconds.</code></pre>
+Mean chain execution time: 18.3 seconds.
+Total execution time: 18.7 seconds.</code></pre>
 </div>
 </div>
 <div class="cell">
