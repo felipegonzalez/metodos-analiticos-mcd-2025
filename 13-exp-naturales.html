@@ -93,7 +93,7 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c1027aa80c1db6949de3dd074af226ce.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-3903daa117a50380362693581f38b3dc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -337,8 +337,8 @@ window.Quarto = {
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>, <span class="at">width =</span> <span class="dv">200</span>, <span class="at">height =</span> <span class="dv">100</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="htmlwidget-22bc95c00d55f32a3558" style="width:100%;height:325px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-22bc95c00d55f32a3558">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n \n  node [shape = circle]\n    MiasmaPobreza\n  node [shape=plaintext]\n\n  edge [minlen = 3]\n    PurezaAgua -> Colera\n    MiasmaPobreza -> Colera\n    MiasmaPobreza -> PurezaAgua\n  {rank = same; PurezaAgua; Colera}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-6776f74af4c7c52cf636" style="width:100%;height:325px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6776f74af4c7c52cf636">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n \n  node [shape = circle]\n    MiasmaPobreza\n  node [shape=plaintext]\n\n  edge [minlen = 3]\n    PurezaAgua -> Colera\n    MiasmaPobreza -> Colera\n    MiasmaPobreza -> PurezaAgua\n  {rank = same; PurezaAgua; Colera}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Dado este diagrama, como hemos discutido, no podemos identificar el efecto causal de la calidad de suministro de agua en las muertes o infecciones de cólera: podría ser la “miasma” que contamina el agua y enferma a las personas (correlación no causal), por ejemplo, y no hay relación causal entre tomar agua contaminada y cólera.</p>
@@ -369,8 +369,8 @@ window.Quarto = {
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-4f31a8067c007206c28d" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-4f31a8067c007206c28d">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n \n  node [shape = circle]\n    Miasma\n  node [shape=plaintext]\n\n  edge [minlen = 3]\n    Comp -> PurezaAgua -> Colera\n    Miasma -> PurezaAgua\n    Miasma -> Colera\n  {rank = same; Comp; PurezaAgua; Colera}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-95f3bbacab2945bdee55" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-95f3bbacab2945bdee55">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n \n  node [shape = circle]\n    Miasma\n  node [shape=plaintext]\n\n  edge [minlen = 3]\n    Comp -> PurezaAgua -> Colera\n    Miasma -> PurezaAgua\n    Miasma -> Colera\n  {rank = same; Comp; PurezaAgua; Colera}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Tenemos entonces:</p>
@@ -380,7 +380,7 @@ window.Quarto = {
 <li>No puede haber una arista de Miasma/Pobreza a Compañía, por la observación de Snow: la decisión de qué compañía suministraba a qué casa se había tomado mucho antes, y no tenía relación con pobreza, miasma actual ni cólera (que no existía cuando se tomaron esas decisiones)</li>
 </ul>
 <p>La conclusión de Snow es que desde el punto de vista de cólera y el sistema que nos interesa, la compañía de agua se comporta como si fuera asignada al azar: no hay ninguna variable relevente al problema que incida en qué compañía abastece a cada casa o zona. Como observó asociación entre compañía de agua y Cólera, concluyó correctamente que esto implicaba que la pureza del agua tenía un efecto causal en la propagación del cólera.</p>
-<p>La idea de Snow entonces podemas :</p>
+<p>La idea de Snow se resumen así:</p>
 <ul>
 <li>Por la gráfica, la asociación entre Compañía y Cólera es causal (no hay confusoras para Compañía y Cólera).</li>
 <li>Si esta relación existe, entonces por los supuestos, la Pureza de Agua tiene un efecto causal sobre Cólera.</li>
@@ -452,8 +452,8 @@ window.Quarto = {
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>, <span class="at">width=</span> <span class="dv">200</span>, <span class="at">height =</span> <span class="dv">70</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="htmlwidget-5facf2fe81c19421fb24" style="width:100%;height:227px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5facf2fe81c19421fb24">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n \n  node [shape = circle]\n    U\n  node [shape=plaintext]\n\n  edge [minlen = 3]\n    Z -> T -> Y\n    U-> T\n    U-> Y\n  {rank = same; Z;T; Y}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-bb8eff6c83972aa23902" style="width:100%;height:227px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-bb8eff6c83972aa23902">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2]\n \n  node [shape = circle]\n    U\n  node [shape=plaintext]\n\n  edge [minlen = 3]\n    Z -> T -> Y\n    U-> T\n    U-> Y\n  {rank = same; Z;T; Y}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -648,8 +648,8 @@ Chain 1 Iteration:    1 / 1500 [  0%]  (Warmup) </code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Chain 2 Iteration:  100 / 1500 [  6%]  (Warmup) 
 Chain 4 Iteration:  100 / 1500 [  6%]  (Warmup) 
-Chain 3 Iteration:  100 / 1500 [  6%]  (Warmup) 
 Chain 1 Iteration:  100 / 1500 [  6%]  (Warmup) 
+Chain 3 Iteration:  100 / 1500 [  6%]  (Warmup) 
 Chain 2 Iteration:  200 / 1500 [ 13%]  (Warmup) 
 Chain 4 Iteration:  200 / 1500 [ 13%]  (Warmup) 
 Chain 1 Iteration:  200 / 1500 [ 13%]  (Warmup) 
@@ -681,43 +681,43 @@ Chain 1 Iteration:  700 / 1500 [ 46%]  (Sampling)
 Chain 3 Iteration:  700 / 1500 [ 46%]  (Sampling) 
 Chain 2 Iteration:  900 / 1500 [ 60%]  (Sampling) 
 Chain 4 Iteration:  800 / 1500 [ 53%]  (Sampling) 
-Chain 3 Iteration:  800 / 1500 [ 53%]  (Sampling) 
 Chain 1 Iteration:  800 / 1500 [ 53%]  (Sampling) 
+Chain 3 Iteration:  800 / 1500 [ 53%]  (Sampling) 
 Chain 2 Iteration: 1000 / 1500 [ 66%]  (Sampling) 
-Chain 3 Iteration:  900 / 1500 [ 60%]  (Sampling) 
 Chain 1 Iteration:  900 / 1500 [ 60%]  (Sampling) 
+Chain 3 Iteration:  900 / 1500 [ 60%]  (Sampling) 
 Chain 4 Iteration:  900 / 1500 [ 60%]  (Sampling) 
 Chain 2 Iteration: 1100 / 1500 [ 73%]  (Sampling) 
-Chain 3 Iteration: 1000 / 1500 [ 66%]  (Sampling) 
 Chain 1 Iteration: 1000 / 1500 [ 66%]  (Sampling) 
+Chain 3 Iteration: 1000 / 1500 [ 66%]  (Sampling) 
 Chain 4 Iteration: 1000 / 1500 [ 66%]  (Sampling) 
-Chain 3 Iteration: 1100 / 1500 [ 73%]  (Sampling) 
 Chain 2 Iteration: 1200 / 1500 [ 80%]  (Sampling) 
+Chain 3 Iteration: 1100 / 1500 [ 73%]  (Sampling) 
 Chain 1 Iteration: 1100 / 1500 [ 73%]  (Sampling) 
 Chain 4 Iteration: 1100 / 1500 [ 73%]  (Sampling) 
 Chain 2 Iteration: 1300 / 1500 [ 86%]  (Sampling) 
 Chain 3 Iteration: 1200 / 1500 [ 80%]  (Sampling) 
 Chain 1 Iteration: 1200 / 1500 [ 80%]  (Sampling) 
 Chain 4 Iteration: 1200 / 1500 [ 80%]  (Sampling) 
-Chain 3 Iteration: 1300 / 1500 [ 86%]  (Sampling) 
 Chain 2 Iteration: 1400 / 1500 [ 93%]  (Sampling) 
+Chain 3 Iteration: 1300 / 1500 [ 86%]  (Sampling) 
 Chain 1 Iteration: 1300 / 1500 [ 86%]  (Sampling) 
-Chain 3 Iteration: 1400 / 1500 [ 93%]  (Sampling) 
-Chain 4 Iteration: 1300 / 1500 [ 86%]  (Sampling) 
 Chain 2 Iteration: 1500 / 1500 [100%]  (Sampling) 
-Chain 2 finished in 73.4 seconds.
-Chain 3 Iteration: 1500 / 1500 [100%]  (Sampling) 
-Chain 3 finished in 75.3 seconds.
+Chain 2 finished in 73.1 seconds.
+Chain 4 Iteration: 1300 / 1500 [ 86%]  (Sampling) 
+Chain 3 Iteration: 1400 / 1500 [ 93%]  (Sampling) 
 Chain 1 Iteration: 1400 / 1500 [ 93%]  (Sampling) 
 Chain 4 Iteration: 1400 / 1500 [ 93%]  (Sampling) 
-Chain 1 Iteration: 1500 / 1500 [100%]  (Sampling) 
-Chain 1 finished in 78.0 seconds.
+Chain 3 Iteration: 1500 / 1500 [100%]  (Sampling) 
+Chain 3 finished in 77.9 seconds.
 Chain 4 Iteration: 1500 / 1500 [100%]  (Sampling) 
-Chain 4 finished in 80.1 seconds.
+Chain 1 Iteration: 1500 / 1500 [100%]  (Sampling) 
+Chain 1 finished in 79.3 seconds.
+Chain 4 finished in 79.2 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 76.7 seconds.
-Total execution time: 80.3 seconds.</code></pre>
+Mean chain execution time: 77.4 seconds.
+Total execution time: 79.4 seconds.</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -787,8 +787,8 @@ Total execution time: 80.3 seconds.</code></pre>
 <span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>, <span class="at">width =</span> <span class="dv">200</span>, <span class="at">height =</span> <span class="dv">200</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="htmlwidget-221324a422fd8bc77adb" style="width:100%;height:650px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-221324a422fd8bc77adb">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2, rankdir=LR]\n  node [shape = circle]\n    U\n  node [shape=plaintext]\n    X\n  edge [minlen = 3]\n     U -> Y\n\n    X -> T\n    T -> Y\n    X -> Y\n    U -> X\n{rank = same; U; T}\n{rank = same;  Y}\n{rank = min;  X}\n\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-2477f24e9875475d8537" style="width:100%;height:650px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2477f24e9875475d8537">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2, rankdir=LR]\n  node [shape = circle]\n    U\n  node [shape=plaintext]\n    X\n  edge [minlen = 3]\n     U -> Y\n\n    X -> T\n    T -> Y\n    X -> Y\n    U -> X\n{rank = same; U; T}\n{rank = same;  Y}\n{rank = min;  X}\n\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Vemos que no podemos comparar simplemente las calificaciones <span class="math inline">\(Y\)</span> de los que asistieron contra los que no asistieron (corriendo una regresión por ejemplo), pues hay una puerta trasera abierta entre <span class="math inline">\(T\)</span> y <span class="math inline">\(Y\)</span> (el tratamiento no se asignó al azar). Es necesario entonces condicionar a <span class="math inline">\(X\)</span> para hacer nuestras estimaciones. Podríamos hacer supuestos acerca de modelos e intentar hacer nuestra estimación de esta manera.</p>
@@ -816,8 +816,8 @@ Total execution time: 80.3 seconds.</code></pre>
 <span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>,<span class="at">width =</span> <span class="dv">200</span>, <span class="at">height =</span> <span class="dv">200</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="htmlwidget-072f64dad4b5616fe07e" style="width:100%;height:650px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-072f64dad4b5616fe07e">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2, rankdir=LR]\n \n  node [shape = circle]\n    U\n  node [shape=plaintext]\n    \n  edge [minlen = 3]\n     U -> Y\n  \n    X_100 -> T\n    T -> Y\n{rank = same; U; Y}\n{rank = min; T; X_100}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-a4965a81eb8df936c788" style="width:100%;height:650px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a4965a81eb8df936c788">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.2, rankdir=LR]\n \n  node [shape = circle]\n    U\n  node [shape=plaintext]\n    \n  edge [minlen = 3]\n     U -> Y\n  \n    X_100 -> T\n    T -> Y\n{rank = same; U; Y}\n{rank = min; T; X_100}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>En este caso, el grupo X_100 son aquellos que obtuvieron, por ejemplo, calificaciones entre 95 y 105.La idea es comparar en el grupo X_100 aquellos que recibieron el tratamiento con los que no lo recibieron:</p>
@@ -975,11 +975,11 @@ Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup)
 Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
 Chain 3 finished in 2.7 seconds.
-Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 2 finished in 2.7 seconds.
 Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
+Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
 Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 2.9 seconds.
+Chain 1 finished in 2.8 seconds.
+Chain 2 finished in 2.8 seconds.
 Chain 4 finished in 2.8 seconds.
 
 All 4 chains finished successfully.
