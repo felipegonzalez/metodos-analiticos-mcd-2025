@@ -169,7 +169,9 @@ causal de $T$ sobre $Y$ cuando:
 - Generalmente las últimas dos de estas hipótesis tienen que postularse
 basadas en conocimiento experto, ya que no es posible checarlas con datos.
 - Con estrategias de condicionamiento es posible encontrar instrumentos potenciales en gráficas más complejas.
-- Esta estrategia funciona con modelos lineales. Más generalmente, pero
+- Esta estrategia, como la veremos implementada, funciona suponiendo que los efectos
+del tratamiento son homogéneos sobre los individuos (no hay heterogeneidad en los efectos del tratamiento).
+Por ejemplo, si modelos lineales simples son apropiados.. Más generalmente, y
 bajo ciertos supuestos, los estimadores de variables instrumentales son más propiamente
 estimadores de un cierto tipo de efecto causal (por ejemplo, para tratamientos 
 binarios, el efecto causal sobre los *compliers*, ver @morgan2015).
@@ -228,8 +230,9 @@ $U$. Si embargo, es más simple definir un modelo estadístico como
 sigue:
 
 - Las variables pureza y cólera son normales bivariadas con alguna correlación (producida por el confusor U).
-- La media de Pureza depende la compañía (modelo de primera etapa)
-- La media de Cólera depende de la pureza (modelo de segunda etapa)
+- La media de Pureza depende la Compañía, y el efecto es el mismo para
+todas las unidades.
+- La media de Cólera depende de la pureza, y el efecto es el mismo para todas las unidades.
 
 Con un modelo así podemos resolver el problema de estimar el efecto
 causal la variable instrumental.
@@ -283,7 +286,6 @@ no informativas pueden dar resultados malos
 - Sin supuestos lineales, hay más supuestos que se tienen que cumplir para
 que este enfoque funcione (ver @morgan2015), por ejemplo, ¿qué se identifica
 en el caso de efecto heterogéneo sobre los individuos?
-- El enfoque de contrafactuales esclarece cómo funciona este método.
 
 Ejemplos clásicos (que a veces funcionan pero no siempre) de potenciales instrumentos son:
 
@@ -307,19 +309,12 @@ Puedes encontrar más ejemplos en @morgan2015 y [aquí](https://mixtape.scunning
 Muchas veces, la decisión de aplicar un tratamiento o no depende de un
 límite administrativo en una variable dada. Por ejemplo, supongamos que 
 quisiéramos saber si una atracción particular de feria produce malestar
-en niños al salir del parque.  
+en niños al salir del parque.
 
-Todos los niños de una escuela se forman para subirse a la atracción.
-Si al director de la escuela le interesara hacer un experimento, podría
-seleccionar al azar a algunos niños para subirse y otros no. Sin embargo,
-el director de la escuela nota que hay un límite de estatura que hay que pasar
-para poder subirse al juego.
-
-Tienen la idea entonces de que esto presenta un experimento natural: entre
-todos los niños que están cerca de 1.20 de estatura, quién se sube o no
-prácticamente depende del azar.
-
-Nuestro diagrama es como sigue:
+En primer lugar, si los niños deciden por sí mismos subirse o no a la atracción,
+es posible que tengamos variables de confusión entre decisión de subirse y el resultado
+de malestar. Supondremos que tenemos disponible también la estatura de cada niño,
+que creemos que puede influenciar tanto en su decisión de subirse como en el resultado:
 
 ```{r}
 #| code-fold: true
@@ -328,7 +323,7 @@ digraph {
   graph [ranksep = 0.2, rankdir=LR]
   node [shape = circle]
     U
-    #V
+    V
   node [shape=plaintext]
     Estatura
   edge [minlen = 3]
@@ -339,7 +334,10 @@ digraph {
     T -> Y
     Estatura -> Y
     U -> Estatura
+    V -> T
+    V -> Y
 {rank = same; U; T}
+{rank = same; V; Y}
 {rank = min;  Estatura}
 
 }
@@ -347,14 +345,30 @@ digraph {
 
 ```
 
-Como vimos, hay una variable observable (la estatura)
+Si al director de la escuela le interesara hacer un experimento, podría
+seleccionar al azar a algunos niños para subirse y otros no. Esto no es factible.
+Sin embargo,
+el director de la escuela nota que hay un límite de estatura que hay que pasar
+para poder subirse al juego.
+
+Tienen la idea entonces de que esto presenta un experimento natural: entre
+todos los niños que están cerca de 1.20 de estatura, quién se sube o no
+prácticamente depende del azar.
+
+
+Entonces hay una variable observable (la estatura)
 que determina la aplicación del tratamiento, y que se asigna de la siguiente forma:
 
 - Si $Estatura >= 1.20$ entonces $T=1$
 - Si $Estatura < 1.20$ entonces $T=0$,
 
-entonces es posible restringir el análisis a un intervalo muy chico alrededor del
-punto de corte 1.20, y para fines prácticos el diagrama se convierte en:
+por lo que podemos restringir el análisis a un **intervalo chico** alrededor del
+punto de corte 1.20, y para fines prácticos:
+
+- Si restringimos, en el límite lo único que influye en recibir el tratamiento o no es la
+estatura (ligeramente por abajo o por arriba de 1.20), y no hay flechas de $U$ tratamiento.
+
+El diagrama se convierte en:
 
 
 ```{r}
@@ -364,12 +378,13 @@ digraph {
   graph [ranksep = 0.2, rankdir=LR]
  
   node [shape = circle]
-    U
+    U, V
   node [shape=plaintext]
-
+    
   edge [minlen = 3]
      U -> Y
-     
+     V -> Y
+     V -> T
     Estatura120 -> T
     T -> Y
 {rank = same; U; Y}
@@ -386,12 +401,16 @@ de la estatura en este grupo es mínimo.
 La idea es comparar en el grupo Estatura120 aquellos que recibieron el tratamiento
 con los que no lo recibieron, y la razón es:
 
-- Caminos no causales a través de Estatura están
+1. Diferencias mínimas en estatura determinan el tratamiento (el instrumento es perfecto)
+2. Caminos no causales a través de Estatura están
 prácticamente bloqueados, pues prácticamente estamos condicionando a un valor de Estatura fijo.
-- Por la regla administrativa, no existen otras variables no observadas que
-influyan en la asignación de tratamiento 
-$T$ (no hay puertas traseras).
 
+Adicionalmente, supondremos que el efecto del tratamiento es homogéneo en el grupo de niños
+
+Podemos entonces usar diferencias mínimas en la estatura como instrumento para estimar
+el efecto causal promedio para los niños del grupo. Como el instrumento
+es perfecto, entonces basta comparar los grupos de tratamiento y control directamente. 
+Suponiendo que el efecto es homogéneo en los niños, esto es suficiente para tener una estimación
 
 En la práctica, usualmente un grupo suficientemente angosto produciría un tamaño de muestra
 chico y sería difícil estimar el efecto del tratamiento (no tendríamos precisión).
@@ -435,7 +454,7 @@ ggplot(datos_tbl, aes(x = edad, y = asistencia_dias)) +
 ```
 
 Si nuestros modelos son apropiados, podemos estimar el efecto causal a los 9 años:
-el programa incrementa la asistencia en un promedio de larededor de 25 días
+el programa incrementa la asistencia en un promedio de alrededor de 25 días
 de 200 posibles. Para hacer inferencia apropiadamente, podemos ajustar modelos
 como veremos más adelante.
 
