@@ -110,7 +110,7 @@ La conclusión de Snow es que desde el punto de vista de cólera y el sistema qu
 entre compañía de agua y Cólera, concluyó correctamente que esto implicaba
 que la pureza del agua tenía un efecto causal en la propagación del cólera.
 
-La idea de Snow entonces podemas :
+La idea de Snow se resumen así:
 
 - Por la gráfica, la asociación entre Compañía y Cólera es causal (no hay confusoras para Compañía y Cólera).
 - Si esta relación existe, entonces por los supuestos, la Pureza de Agua tiene un efecto causal sobre Cólera.
