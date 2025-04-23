@@ -227,7 +227,7 @@ Podríamos construir un modelo generativo modelando una variable latente
 $U$. Si embargo, es más simple definir un modelo estadístico como 
 sigue:
 
-- Las variables pureza son normales bivariadas con alguna correlación (producida por el confusor U).
+- Las variables pureza y cólera son normales bivariadas con alguna correlación (producida por el confusor U).
 - La media de Pureza depende la compañía (modelo de primera etapa)
 - La media de Cólera depende de la pureza (modelo de segunda etapa)
 
@@ -285,7 +285,7 @@ que este enfoque funcione (ver @morgan2015), por ejemplo, ¿qué se identifica
 en el caso de efecto heterogéneo sobre los individuos?
 - El enfoque de contrafactuales esclarece cómo funciona este método.
 
-Ejemplos clásicos de potenciales instrumentos son:
+Ejemplos clásicos (que a veces funcionan pero no siempre) de potenciales instrumentos son:
 
 - Temporada en la que nace una persona (construye por ejemplo un diagrama para
 educación, salario en el futuro y mes en el que nació una persona), y por qué

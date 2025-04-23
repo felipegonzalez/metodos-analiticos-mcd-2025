@@ -650,7 +650,7 @@ dentro de distritos entre las tasas de uso de anticonceptivos en zonas urbanas
 y rurales. Esto se debe, desde el punto de vista del modelo, 
 a correlación entre el coeficiente $\beta_{1,i}$ común al efecto de urbano y rural:
 urbano es $\beta_{1,i} + \beta_{2,i}$ y rural $\beta_{1,i}$, y esto se debe
-a que $beta_{1,i}$ y $\beta_{2,i}$ se extraen de iniciales independientes.
+a que $\beta_{1,i}$ y $\beta_{2,i}$ se extraen de iniciales independientes.
 
 Es natural
 entonces observar una correlación positiva entre los dos siguientes coeficientes,
