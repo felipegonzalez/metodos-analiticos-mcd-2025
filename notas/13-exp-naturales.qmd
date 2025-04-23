@@ -170,9 +170,10 @@ causal de $T$ sobre $Y$ cuando:
 basadas en conocimiento experto, ya que no es posible checarlas con datos.
 - Con estrategias de condicionamiento es posible encontrar instrumentos potenciales en gráficas más complejas.
 - Esta estrategia, como la veremos implementada, funciona suponiendo que los efectos
-del tratamiento son homogéneos sobre los individuos (no hay heterogeneidad en los efectos del tratamiento).
-Por ejemplo, si modelos lineales simples son apropiados.. Más generalmente, y
-bajo ciertos supuestos, los estimadores de variables instrumentales son más propiamente
+del tratamiento y del instrumento 
+son homogéneos sobre los individuos (no hay heterogeneidad en los efectos).
+Por ejemplo, si modelos lineales simples son apropiados. Más generalmente, y
+bajo ciertos supuestos, los estimadores de variables instrumentales son 
 estimadores de un cierto tipo de efecto causal (por ejemplo, para tratamientos 
 binarios, el efecto causal sobre los *compliers*, ver @morgan2015).
 
@@ -188,7 +189,7 @@ tratamiento).
 Primero, hacemos una discusión para ver cómo esto puede funcionar. Lo más importante
 es notar que
 el efecto de $Z$ sobre $Y$ y el de $Z$ sobre $T$ son identificables y podemos calcularlos.
-El que nos interesa el efecto de $T$ sobre $Y$. Supongamos que todos los modelos son 
+El que nos interesa el efecto promedio de $T$ sobre $Y$. Supongamos que todos los modelos son 
 lineales:
 
 - Supongamos que cuando $Z$ aumenta una unidad,
@@ -230,9 +231,9 @@ $U$. Si embargo, es más simple definir un modelo estadístico como
 sigue:
 
 - Las variables pureza y cólera son normales bivariadas con alguna correlación (producida por el confusor U).
-- La media de Pureza depende la Compañía, y el efecto es el mismo para
+- La media de Pureza depende la Compañía, y el efecto promeido es el mismo para
 todas las unidades.
-- La media de Cólera depende de la pureza, y el efecto es el mismo para todas las unidades.
+- La media de Cólera depende de la pureza, y el efecto promedio es el mismo para todas las unidades.
 
 Con un modelo así podemos resolver el problema de estimar el efecto
 causal la variable instrumental.
@@ -307,14 +308,21 @@ Puedes encontrar más ejemplos en @morgan2015 y [aquí](https://mixtape.scunning
 ## Regresión discontinua
 
 Muchas veces, la decisión de aplicar un tratamiento o no depende de un
-límite administrativo en una variable dada. Por ejemplo, supongamos que 
-quisiéramos saber si una atracción particular de feria produce malestar
-en niños al salir del parque.
+límite administrativo en una variable dada, y en algunos casos esto nos
+da la posibilidad de explotar un experimento natural. 
 
-En primer lugar, si los niños deciden por sí mismos subirse o no a la atracción,
-es posible que tengamos variables de confusión entre decisión de subirse y el resultado
-de malestar. Supondremos que tenemos disponible también la estatura de cada niño,
-que creemos que puede influenciar tanto en su decisión de subirse como en el resultado:
+Por ejemplo, supongamos que 
+quisiéramos estimar el efecto de clases extras obligatorias para estudiantes
+que tienen calificaciones bajas. Para esto, se aplica un examen de evaluación
+a todos los estudiantes. Aquellos que tienen una calificación menor a 100 entren obligatoriamente
+a la clase, y aquellos que tienen una calificación mayor a 100 no. Al final de un semestre,
+se mide el desempeño de todos los estudiantes con otro examen .
+
+La pregunta entonces es cuál es el efecto de las clases extra sobre el desempeño de los alumnos.
+Comenzamos haciendo un diagrama, donde $X$ es la calificación del primer examen, $T$ es el tratamiento (asistir a clases extras) y $Y$ es el desempeño en el segundo examen. También es necesario agregar
+variables desconocidas $U$ (como habilidad) que afectan a las dos calificaciones.
+
+
 
 ```{r}
 #| code-fold: true
@@ -323,52 +331,35 @@ digraph {
   graph [ranksep = 0.2, rankdir=LR]
   node [shape = circle]
     U
-    V
   node [shape=plaintext]
-    Estatura
+    X
   edge [minlen = 3]
      U -> Y
-     #V -> Estatura
-     #V -> Y
-    Estatura -> T
+
+    X -> T
     T -> Y
-    Estatura -> Y
-    U -> Estatura
-    V -> T
-    V -> Y
+    X -> Y
+    U -> X
 {rank = same; U; T}
-{rank = same; V; Y}
-{rank = min;  Estatura}
+{rank = same;  Y}
+{rank = min;  X}
 
 }
 ", width = 200, height = 200)
 
 ```
+Vemos que no podemos comparar simplemente las calificaciones $Y$ de los que asistieron
+contra los que no asistieron (corriendo una regresión por ejemplo), pues hay una puerta
+trasera abierta entre $T$ y $Y$ (el tratamiento no se asignó al azar).
+Es necesario entonces condicionar a $X$ para hacer nuestras estimaciones.
+Podríamos hacer supuestos acerca de modelos e intentar hacer nuestra estimación de esta
+manera.
 
-Si al director de la escuela le interesara hacer un experimento, podría
-seleccionar al azar a algunos niños para subirse y otros no. Esto no es factible.
-Sin embargo,
-el director de la escuela nota que hay un límite de estatura que hay que pasar
-para poder subirse al juego.
+Sin embargo, podemos hacer algo más simple para comenzar. Si consideramos aquellos
+estudiantes que tienen calificación $X$ cercana a 100, podríamos considerar que esos
+alumnos fueron prácticamente asignados al azar a uno u otro grupo.
 
-Tienen la idea entonces de que esto presenta un experimento natural: entre
-todos los niños que están cerca de 1.20 de estatura, quién se sube o no
-prácticamente depende del azar.
-
-
-Entonces hay una variable observable (la estatura)
-que determina la aplicación del tratamiento, y que se asigna de la siguiente forma:
-
-- Si $Estatura >= 1.20$ entonces $T=1$
-- Si $Estatura < 1.20$ entonces $T=0$,
-
-por lo que podemos restringir el análisis a un **intervalo chico** alrededor del
-punto de corte 1.20, y para fines prácticos:
-
-- Si restringimos, en el límite lo único que influye en recibir el tratamiento o no es la
-estatura (ligeramente por abajo o por arriba de 1.20), y no hay flechas de $U$ tratamiento.
-
-El diagrama se convierte en:
+Si restringimos, el diagrama se convierte en:
 
 
 ```{r}
@@ -378,39 +369,33 @@ digraph {
   graph [ranksep = 0.2, rankdir=LR]
  
   node [shape = circle]
-    U, V
+    U
   node [shape=plaintext]
     
   edge [minlen = 3]
      U -> Y
-     V -> Y
-     V -> T
-    Estatura120 -> T
+  
+    X_100 -> T
     T -> Y
 {rank = same; U; Y}
-{rank = min; T; Estatura120}
+{rank = min; T; X_100}
 }
 ",width = 200, height = 200)
 
 ```
 
-En este caso, el grupo Estatura120 son aquellos que miden entre
-118 y 122, por ejemplo, y estamos suponiendo que el efecto de la variación
-de la estatura en este grupo es mínimo.
+En este caso, el grupo X_100 son aquellos que obtuvieron, por ejemplo, calificaciones
+entre 95 y 105.La idea es comparar en el grupo X_100 aquellos que recibieron el tratamiento
+con los que no lo recibieron:
 
-La idea es comparar en el grupo Estatura120 aquellos que recibieron el tratamiento
-con los que no lo recibieron, y la razón es:
+1. Diferencias mínimas en estatura determinan el tratamiento.
+2. Caminos no causales a través de $X$ están
+prácticamente bloqueados, pues prácticamente estamos condicionando a un valor de examen fijo
+($X$ no puede influir en nada más que en asignación del tratamiento).
 
-1. Diferencias mínimas en estatura determinan el tratamiento (el instrumento es perfecto)
-2. Caminos no causales a través de Estatura están
-prácticamente bloqueados, pues prácticamente estamos condicionando a un valor de Estatura fijo.
-
-Adicionalmente, supondremos que el efecto del tratamiento es homogéneo en el grupo de niños
-
-Podemos entonces usar diferencias mínimas en la estatura como instrumento para estimar
-el efecto causal promedio para los niños del grupo. Como el instrumento
-es perfecto, entonces basta comparar los grupos de tratamiento y control directamente. 
-Suponiendo que el efecto es homogéneo en los niños, esto es suficiente para tener una estimación
+Podemos entonces comparar directamente tratados y no tratados para obtener una estimación
+del efecto promedio del tratamiento, siempre y cuando el efecto del tratamiento sea homogéneo,
+o especifiquemos que el efecto sólo es condicional a $X=100$.
 
 En la práctica, usualmente un grupo suficientemente angosto produciría un tamaño de muestra
 chico y sería difícil estimar el efecto del tratamiento (no tendríamos precisión).
@@ -420,7 +405,7 @@ $$p(y|x)$$
 que tienen la particularidad de que permiten un cambio discontinuo en la
 distribución en el punto de corte $x = x_0$. Se puede tratar de dos modelos:
 uno del lado izquierdo y otro del lado derecho, aunque es posible que compartir
-parámetros.
+parámetros. Con esto podemos ganar **precisión** al aplicar el método en un intervalo más grande.
 
 ### Ejemplo simulado {-}
 
