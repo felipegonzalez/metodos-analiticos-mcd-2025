@@ -51,6 +51,7 @@ todos intentando medir la misma fuente fija, como un experimento de control de c
 En este caso, todos los detectores están
 midiendo la misma cantidad, pero hay cierto error en la medición, y podemos escribir el diagrama simple,
 que supone que dada la fuente las observaciones son observaciones independientes.
+$L$ representa la fuente seleccionada, y las $y_j$ son las observaciones de los sensores:
 
 ```{r}
 #| out-width: 100%
@@ -61,13 +62,9 @@ digraph {
   node [shape=circle]
     L
   node [shape=plaintext]
-    y_1
-    y_2
-    y_3
+    y_j
   edge [minlen = 3]
-    L -> y_1
-    L -> y_2
-    L -> y_3    
+    L -> y_j    
 }
 ")#, width = 200, height = 50)
 ```
@@ -388,7 +385,31 @@ Nuestros siguientes pasos dependen de que podamos entender cuál es la razón
 del exceso de ceros con respecto a nuestro modelo inicial. En este caso,
 tenemos que considerar que hay cierta probabilidad de que los detectores fallen.
 
-Proponemos entonces un modelo como sigue: $y_n = 0$ con probabilidad $\pi$, y $y_n\sim \text{Poisson}(\lambda)$ con probabilidad $1-\pi$. El modelo de datos se puede escribir 
+Consideramos entonces el siguiente diagrama, donde $F$ representa el origen de los sensores
+(o el lote de sensores):
+
+```{r}
+#| out-width: 100%
+#| code-fold: true
+grViz("
+digraph {
+  graph [ranksep = 0.3, rankdir = LR]
+  node [shape=circle]
+    L
+    F
+  node [shape=plaintext]
+    y_j
+  edge [minlen = 3]
+    L -> y_j
+    F_j ->  y_j
+    F -> F_j
+{rank = same; L;F}
+   
+}
+")#, width = 200, height = 50)
+```
+
+Proponemos entonces un modelo como sigue: $y_n = 0$ con probabilidad $\pi$ (si $F_n=1$), y $y_n\sim \text{Poisson}(\lambda)$ con probabilidad $1-\pi$ ($f_n=0$). El modelo de datos se puede escribir 
 como sigue:
 
 $$p(y|\lambda, \pi) = (1-\pi) \textrm{pois}(y|\lambda) + \pi I(y=0)$$
