@@ -836,11 +836,8 @@ de leer el manual de los sensores, nos damos cuenta de que tienen un punto de co
 devuelve un resultado nan. Sin embargo, para hacernos la vida "fácil", nos dicen que en esos
 casos repitieron la medición del sensor hasta obtener algún valor.
 
-Esto puede cambiar la inferencia, porque los datos están truncados por la derecha en 14.
-
-Los que hicieron el experimento de medición nos diceen
-
-Esto **no lo hacemos viendo los datos**, lo hacemos porque sabemos que el proceso
+Esto puede cambiar la inferencia, porque los datos están truncados por la derecha en 14. Podemos
+cambiar entonces el modelo para incluir un truncamiento a la derecha. Nótese que esto **no lo hacemos viendo los datos**, lo hacemos porque sabemos que el proceso
 generador contiene características no modeladas que pueden afectar la inferencia.
 
 En este punto, puedes consultar la fuente original de este caso de estudio
