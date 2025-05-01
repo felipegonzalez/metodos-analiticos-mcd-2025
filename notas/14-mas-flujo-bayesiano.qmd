@@ -482,7 +482,7 @@ ajustes_apriori <- purrr::map(1:40, function(rep){
   y <- obs_priori_tbl |> filter(.draw == rep) |> pull(valor)
   datos_sim_lst <- list(y = y, N = length(y))
   ajuste <- mod_2$sample(data = datos_sim_lst, 
-  iter_sampling = 1000, chains = 3, parallel_chains = 3, seed = 4838282, 
+  iter_sampling = 1000, chains = 3, parallel_chains = 3, seed = 483828251, 
     refresh = 0, show_messages = FALSE)
   list(ajuste = ajuste, lambda_sim = sims_tbl$lambda[rep], p_sim = sims_tbl$p[rep])
 })
@@ -518,8 +518,18 @@ tasa baja de Poisson.
 Este es un ejemplo donde vimos divergencias:
 
 ```{r}
-filter(obs_priori_tbl |> filter(.draw == 17)) |> 
+filter(obs_priori_tbl |> filter(.draw == div_sim[1])) |> 
   select(valor) |> summarise(num_ceros = sum(valor == 0), num_no_ceros = sum(valor > 0))
+```
+
+También podemos ver que los ajustes que parecen problemáticos también muestran
+valores malos de muestra efectiva: 
+
+```{r}
+ajustes_apriori |> map_df(~ .x$ajuste$summary("lambda")) |> 
+  ggplot(aes(x = ess_bulk)) + geom_histogram(bins = 30) 
+ajustes_apriori |> map_df(~ .x$ajuste$summary("p")) |> 
+  ggplot(aes(x = ess_bulk)) + geom_histogram(bins = 30) 
 ```
 
 
