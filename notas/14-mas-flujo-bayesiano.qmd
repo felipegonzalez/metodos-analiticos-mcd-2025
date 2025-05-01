@@ -470,7 +470,7 @@ obs_priori_tbl |> mutate(mayor_25 = valor > 25) |>
 
 Bajo los supuestos del modelo, ahora podemos proponer nuestro algoritmo de estimación,
 y checar en primer lugar que funciona apropiadamente. En este ejemplo, tomaremos
-solamente 40 simulaciones y ajustaremos en cada caso el siguiente consecuencia de nuestros supuestos. Usualmente podemos usar 100 o más.
+solamente 100 simulaciones y ajustaremos en cada caso el siguiente consecuencia de nuestros supuestos. Usualmente podemos usar 100 o más.
 
 En este paso podemos ajustar nuestro muestreador, número de cadenas y su longitud, etc.
 
@@ -478,7 +478,9 @@ En este paso podemos ajustar nuestro muestreador, número de cadenas y su longit
 #| message: false
 mod_2 <- cmdstan_model("src/flujo-mb/2-modelo-poisson-cero-inflado.stan")
 print(mod_2)
-ajustes_apriori <- purrr::map(1:40, function(rep){
+set.seed(4852)
+simulados_rep <- sample(1:1500, 100)
+ajustes_apriori <- purrr::map(simulados_rep, function(rep){
   y <- obs_priori_tbl |> filter(.draw == rep) |> pull(valor)
   datos_sim_lst <- list(y = y, N = length(y))
   ajuste <- mod_2$sample(data = datos_sim_lst, 
@@ -502,8 +504,8 @@ Veamos entonces que valores de $p$ y $lambda$ corresponden:
 
 ```{r}
 diag_tbl <- obs_priori_tbl |> as_tibble() |> select(lambda, p, .draw) |> unique() |> 
-  filter(.draw <= 40) |> 
-  mutate(problemas = .draw %in% div_sim) 
+  filter(.draw %in% simulados_rep) |> 
+  mutate(problemas = .draw %in% simulados_rep[div_sim]) 
 ggplot(diag_tbl, aes(x = lambda, y = p, color = problemas, size = problemas)) +
   geom_point() +
   labs(subtitle = "Problemas de divergencia")
@@ -522,7 +524,8 @@ filter(obs_priori_tbl |> filter(.draw == div_sim[1])) |>
   select(valor) |> summarise(num_ceros = sum(valor == 0), num_no_ceros = sum(valor > 0))
 ```
 
-También podemos ver que los ajustes que parecen problemáticos también muestran
+También podemos ver que, incluso si no hubiera divergencias fuertes,
+los ajustes que parecen problemáticos también muestran
 valores malos de muestra efectiva: 
 
 ```{r}
