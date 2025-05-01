@@ -989,7 +989,7 @@ Tip
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.063   0.000   0.063 </code></pre>
+  0.062   0.000   0.063 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(metropolis_1 <span class="ot">&lt;-</span> <span class="fu">metropolis_mc</span>(<span class="dv">1000</span>, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), log_p, <span class="fl">0.2</span>, <span class="fl">0.2</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -997,7 +997,7 @@ Tip
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.015   0.000   0.016 </code></pre>
+  0.016   0.000   0.015 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(metropolis_2 <span class="ot">&lt;-</span> <span class="fu">metropolis_mc</span>(<span class="dv">1000</span>, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), log_p, <span class="dv">1</span>, <span class="dv">1</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1005,7 +1005,7 @@ Tip
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.015   0.000   0.016 </code></pre>
+  0.016   0.000   0.015 </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1228,7 +1228,6 @@ Chain 3 Iteration:    1 / 3000 [  0%]  (Warmup)
 Chain 3 Iteration: 1000 / 3000 [ 33%]  (Warmup) 
 Chain 3 Iteration: 1001 / 3000 [ 33%]  (Sampling) 
 Chain 3 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
-Chain 3 Iteration: 3000 / 3000 [100%]  (Sampling) 
 Chain 4 Iteration:    1 / 3000 [  0%]  (Warmup) 
 Chain 4 Iteration: 1000 / 3000 [ 33%]  (Warmup) 
 Chain 4 Iteration: 1001 / 3000 [ 33%]  (Sampling) 
@@ -1237,8 +1236,9 @@ Chain 1 Iteration: 3000 / 3000 [100%]  (Sampling)
 Chain 1 finished in 0.3 seconds.
 Chain 2 Iteration: 3000 / 3000 [100%]  (Sampling) 
 Chain 2 finished in 0.3 seconds.
-Chain 3 finished in 0.3 seconds.
+Chain 3 Iteration: 3000 / 3000 [100%]  (Sampling) 
 Chain 4 Iteration: 3000 / 3000 [100%]  (Sampling) 
+Chain 3 finished in 0.3 seconds.
 Chain 4 finished in 0.3 seconds.
 
 All 4 chains finished successfully.
@@ -2734,18 +2734,18 @@ Chain 3 Iteration: 1000 / 3000 [ 33%]  (Warmup)
 Chain 3 Iteration: 1001 / 3000 [ 33%]  (Sampling) 
 Chain 4 Iteration:    1 / 3000 [  0%]  (Warmup) 
 Chain 1 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
-Chain 2 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
 Chain 4 Iteration: 1000 / 3000 [ 33%]  (Warmup) 
 Chain 4 Iteration: 1001 / 3000 [ 33%]  (Sampling) 
+Chain 2 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
 Chain 3 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
-Chain 1 Iteration: 3000 / 3000 [100%]  (Sampling) 
 Chain 4 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
-Chain 1 finished in 0.6 seconds.
+Chain 1 Iteration: 3000 / 3000 [100%]  (Sampling) 
 Chain 2 Iteration: 3000 / 3000 [100%]  (Sampling) 
-Chain 2 finished in 0.6 seconds.
 Chain 3 Iteration: 3000 / 3000 [100%]  (Sampling) 
 Chain 4 Iteration: 3000 / 3000 [100%]  (Sampling) 
-Chain 3 finished in 0.5 seconds.
+Chain 1 finished in 0.6 seconds.
+Chain 2 finished in 0.6 seconds.
+Chain 3 finished in 0.6 seconds.
 Chain 4 finished in 0.6 seconds.
 
 All 4 chains finished successfully.
@@ -3116,7 +3116,7 @@ Chain 2 Iteration: 2000 / 3000 [ 66%]  (Sampling)
 Chain 3 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
 Chain 4 Iteration: 2000 / 3000 [ 66%]  (Sampling) 
 Chain 1 Iteration: 3000 / 3000 [100%]  (Sampling) 
-Chain 1 finished in 1.4 seconds.
+Chain 1 finished in 1.5 seconds.
 Chain 2 Iteration: 3000 / 3000 [100%]  (Sampling) 
 Chain 3 Iteration: 3000 / 3000 [100%]  (Sampling) 
 Chain 2 finished in 1.5 seconds.
@@ -3725,7 +3725,7 @@ Chain 1 Iteration:  1001 / 31000 [  3%]  (Sampling)
 Chain 1 Iteration: 11000 / 31000 [ 35%]  (Sampling) 
 Chain 1 Iteration: 21000 / 31000 [ 67%]  (Sampling) 
 Chain 1 Iteration: 31000 / 31000 [100%]  (Sampling) 
-Chain 1 finished in 1.1 seconds.</code></pre>
+Chain 1 finished in 1.2 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: 68 of 30000 (0.0%) transitions ended with a divergence.
