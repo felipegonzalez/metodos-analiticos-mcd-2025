@@ -8,7 +8,6 @@ library(kableExtra)
 library(DiagrammeR)
 locale <- Sys.setlocale("LC_TIME", "es_ES.UTF-8")
 library(lubridate)
-#library(fpp3)
 ggplot2::theme_set(ggplot2::theme_light())
 ```
 
@@ -848,6 +847,7 @@ uk_drivers <- Seatbelts |> as_tsibble()
 head(uk_drivers)
 uk_rear <- uk_drivers |> filter(key == "rear")
 ```
+
 ```{r}
 #| message: false
 #|
