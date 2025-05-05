@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.7.30">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -65,6 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./15-series-de-tiempo.html" rel="next">
 <link href="./13-exp-naturales.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -72,7 +73,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-de070a7b0ab54f8780927367ac907214.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-31693cf926619640b88f6ab18d2dfd1f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -247,6 +248,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Más detalles y diagnósticos del flujo bayesiano</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-series-de-tiempo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modelos de espacio de estados</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -333,8 +340,8 @@ window.Quarto = {
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)<span class="co">#, width = 200, height = 50)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-4ab09282e5f1cdedeb9e" style="width:100%;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-4ab09282e5f1cdedeb9e">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    L\n  node [shape=plaintext]\n    y_j\n  edge [minlen = 3]\n    L -> y_j    \n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-fd5b2f70867bc09e1d20" style="width:100%;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-fd5b2f70867bc09e1d20">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    L\n  node [shape=plaintext]\n    y_j\n  edge [minlen = 3]\n    L -> y_j    \n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Comenzaremos con un modelo simple. Como las observaciones son enteros, supondremos que las observaciones son Poisson con media <span class="math inline">\(\lambda_F\)</span>. Nos interesa entonces estimar <span class="math inline">\(\lambda_F\)</span> que nos da la intensidad de la fuente.</p>
@@ -365,7 +372,7 @@ window.Quarto = {
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(<span class="fu">abs</span>(<span class="fu">rnorm</span>(<span class="dv">10000</span>, <span class="dv">0</span>, <span class="dv">6</span>)), <span class="at">probs =</span> <span class="fl">0.99</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     99% 
-15.63899 </code></pre>
+15.38953 </code></pre>
 </div>
 </div>
 <p>Ahora construimos nuestro modelo generativo y examinamos sus consecuencias. Simularemos 1500 repeticiones de las 100 observaciones que esperamos:</p>
@@ -664,9 +671,9 @@ Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup)
 Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 0.1 seconds.
+Chain 1 finished in 0.0 seconds.
 Chain 2 finished in 0.0 seconds.
-Chain 3 finished in 0.1 seconds.
+Chain 3 finished in 0.0 seconds.
 
 All 3 chains finished successfully.
 Mean chain execution time: 0.0 seconds.
@@ -756,8 +763,8 @@ Total execution time: 0.2 seconds.</code></pre>
 <span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)<span class="co">#, width = 200, height = 50)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-4f4e418e56ddcc07b78a" style="width:100%;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-4f4e418e56ddcc07b78a">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    L\n    F\n  node [shape=plaintext]\n    y_j\n  edge [minlen = 3]\n    L -> y_j\n    F_j ->  y_j\n    F -> F_j\n{rank = same; L;F}\n   \n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-83e78d3ee3e1d7e096d6" style="width:100%;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-83e78d3ee3e1d7e096d6">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    L\n    F\n  node [shape=plaintext]\n    y_j\n  edge [minlen = 3]\n    L -> y_j\n    F_j ->  y_j\n    F -> F_j\n{rank = same; L;F}\n   \n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Proponemos entonces un modelo como sigue: <span class="math inline">\(y_n = 0\)</span> con probabilidad <span class="math inline">\(\pi\)</span> (si <span class="math inline">\(F_n=1\)</span>), y <span class="math inline">\(y_n\sim \text{Poisson}(\lambda)\)</span> con probabilidad <span class="math inline">\(1-\pi\)</span> (<span class="math inline">\(f_n=0\)</span>). El modelo de datos se puede escribir como sigue:</p>
@@ -1335,7 +1342,7 @@ Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) </code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-Chain 1 Exception: gamma_lpdf: Random variable is inf, but must be positive finite! (in '/tmp/RtmpHba8sI/model-33666cd27318.stan', line 12, column 2 to column 25)
+Chain 1 Exception: gamma_lpdf: Random variable is inf, but must be positive finite! (in '/tmp/RtmpdaGbe8/model-53e048ab0581.stan', line 12, column 2 to column 25)
 Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
 Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
 Chain 1 </code></pre>
@@ -1348,12 +1355,12 @@ Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) </code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-Chain 2 Exception: gamma_lpdf: Random variable is inf, but must be positive finite! (in '/tmp/RtmpHba8sI/model-33666cd27318.stan', line 12, column 2 to column 25)
+Chain 2 Exception: gamma_lpdf: Random variable is inf, but must be positive finite! (in '/tmp/RtmpdaGbe8/model-53e048ab0581.stan', line 12, column 2 to column 25)
 Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
 Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
 Chain 2 
 Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-Chain 2 Exception: gamma_lpdf: Random variable is inf, but must be positive finite! (in '/tmp/RtmpHba8sI/model-33666cd27318.stan', line 12, column 2 to column 25)
+Chain 2 Exception: gamma_lpdf: Random variable is inf, but must be positive finite! (in '/tmp/RtmpdaGbe8/model-53e048ab0581.stan', line 12, column 2 to column 25)
 Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
 Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
 Chain 2 </code></pre>
@@ -1365,16 +1372,16 @@ Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) </code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 3 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-Chain 3 Exception: gamma_lpdf: Random variable is 0, but must be positive finite! (in '/tmp/RtmpHba8sI/model-33666cd27318.stan', line 12, column 2 to column 25)
+Chain 3 Exception: gamma_lpdf: Random variable is 0, but must be positive finite! (in '/tmp/RtmpdaGbe8/model-53e048ab0581.stan', line 12, column 2 to column 25)
 Chain 3 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
 Chain 3 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
 Chain 3 </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 0.2 seconds.
-Chain 2 finished in 0.1 seconds.
+<pre><code>Chain 2 finished in 0.1 seconds.
+Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
 Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
+Chain 1 finished in 0.2 seconds.
 Chain 3 finished in 0.2 seconds.
 
 All 3 chains finished successfully.
@@ -1496,12 +1503,12 @@ Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) </code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-Chain 1 Exception: gamma_lpdf: Random variable is 0, but must be positive finite! (in '/tmp/RtmpHba8sI/model-33665adb8d60.stan', line 12, column 2 to column 25)
+Chain 1 Exception: gamma_lpdf: Random variable is 0, but must be positive finite! (in '/tmp/RtmpdaGbe8/model-53e033e9b0ae.stan', line 12, column 2 to column 25)
 Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
 Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
 Chain 1 
 Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-Chain 1 Exception: gamma_lpdf: Random variable is 0, but must be positive finite! (in '/tmp/RtmpHba8sI/model-33665adb8d60.stan', line 12, column 2 to column 25)
+Chain 1 Exception: gamma_lpdf: Random variable is 0, but must be positive finite! (in '/tmp/RtmpdaGbe8/model-53e033e9b0ae.stan', line 12, column 2 to column 25)
 Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
 Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
 Chain 1 </code></pre>
@@ -1511,12 +1518,12 @@ Chain 1 </code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-Chain 2 Exception: gamma_lpdf: Random variable is inf, but must be positive finite! (in '/tmp/RtmpHba8sI/model-33665adb8d60.stan', line 12, column 2 to column 25)
+Chain 2 Exception: gamma_lpdf: Random variable is inf, but must be positive finite! (in '/tmp/RtmpdaGbe8/model-53e033e9b0ae.stan', line 12, column 2 to column 25)
 Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
 Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
 Chain 2 
 Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-Chain 2 Exception: gamma_lpdf: Random variable is inf, but must be positive finite! (in '/tmp/RtmpHba8sI/model-33665adb8d60.stan', line 12, column 2 to column 25)
+Chain 2 Exception: gamma_lpdf: Random variable is inf, but must be positive finite! (in '/tmp/RtmpdaGbe8/model-53e033e9b0ae.stan', line 12, column 2 to column 25)
 Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
 Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
 Chain 2 </code></pre>
@@ -1526,12 +1533,12 @@ Chain 2 </code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 3 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-Chain 3 Exception: gamma_lpdf: Random variable is 0, but must be positive finite! (in '/tmp/RtmpHba8sI/model-33665adb8d60.stan', line 12, column 2 to column 25)
+Chain 3 Exception: gamma_lpdf: Random variable is 0, but must be positive finite! (in '/tmp/RtmpdaGbe8/model-53e033e9b0ae.stan', line 12, column 2 to column 25)
 Chain 3 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
 Chain 3 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
 Chain 3 
 Chain 3 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:
-Chain 3 Exception: gamma_lpdf: Random variable is 0, but must be positive finite! (in '/tmp/RtmpHba8sI/model-33665adb8d60.stan', line 12, column 2 to column 25)
+Chain 3 Exception: gamma_lpdf: Random variable is 0, but must be positive finite! (in '/tmp/RtmpdaGbe8/model-53e033e9b0ae.stan', line 12, column 2 to column 25)
 Chain 3 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,
 Chain 3 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.
 Chain 3 </code></pre>
@@ -1977,6 +1984,9 @@ Total execution time: 1.4 seconds.</code></pre>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./15-series-de-tiempo.html" class="pagination-link" aria-label="Modelos de espacio de estados">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modelos de espacio de estados</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

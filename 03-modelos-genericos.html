@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.7.30">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -93,7 +93,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-de070a7b0ab54f8780927367ac907214.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-31693cf926619640b88f6ab18d2dfd1f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -268,6 +268,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Más detalles y diagnósticos del flujo bayesiano</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-series-de-tiempo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modelos de espacio de estados</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -360,8 +366,8 @@ window.Quarto = {
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)<span class="co">#, width = 200, height = 50)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-178f59dc9553f7fd2631" style="width:100%;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-178f59dc9553f7fd2631">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    U\n  node [shape=plaintext]\n    H\n    W\n  edge [minlen = 3]\n    H -> W\n    U -> W\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-2f213efd782b5d237134" style="width:100%;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-2f213efd782b5d237134">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    U\n  node [shape=plaintext]\n    H\n    W\n  edge [minlen = 3]\n    H -> W\n    U -> W\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Nótese que no consideramos <span class="math inline">\(W\to H\)</span>, porque podemos pensar en varias intervenciones que podrían cambiar el peso por no cambian la estatura. Por otro lado, es difícil pensar en alguna intervención que cambie la estatura pero no cambie el peso de una persona. Adicionalmente, hay otros factores desconocidos no observados <span class="math inline">\(U\)</span> que afectan el peso de cada persona adicionalmente a su estatura.</p>
@@ -952,8 +958,8 @@ Verificaciones de predictiva posterior
 <span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>, <span class="at">width =</span> <span class="dv">200</span>, <span class="at">height =</span> <span class="dv">50</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="htmlwidget-f61a583067744f141a17" style="width:100%;height:162px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f61a583067744f141a17">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    U\n    V\n    Z\n  node [shape=plaintext]\n    H\n    W\n    S\n  edge [minlen = 3]\n    H -> W\n    U -> W\n    S -> H\n    S -> W\n    V -> H\n    Z -> S\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-7eaeecedcdd7975a145c" style="width:100%;height:162px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7eaeecedcdd7975a145c">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    U\n    V\n    Z\n  node [shape=plaintext]\n    H\n    W\n    S\n  edge [minlen = 3]\n    H -> W\n    U -> W\n    S -> H\n    S -> W\n    V -> H\n    Z -> S\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Omitiendo del diagrama las variables no observadas que también son causas únicamente de <span class="math inline">\(S\)</span> y <span class="math inline">\(W, H\)</span>:</p>
@@ -978,8 +984,8 @@ Verificaciones de predictiva posterior
 <span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>, <span class="at">width =</span> <span class="dv">200</span>, <span class="at">height =</span> <span class="dv">50</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="htmlwidget-2ad5c83c433c665b3bbd" style="width:100%;height:162px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2ad5c83c433c665b3bbd">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n  \n  node [shape=plaintext]\n    H\n    W\n    S\n  edge [minlen = 3]\n    H -> W\n    S -> H\n    S -> W\n\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-643472f9e6f3f0a97aba" style="width:100%;height:162px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-643472f9e6f3f0a97aba">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n  \n  node [shape=plaintext]\n    H\n    W\n    S\n  edge [minlen = 3]\n    H -> W\n    S -> H\n    S -> W\n\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Si queremos saber cómo influye el sexo en el peso, este diagrama indica que hay dos tipos de preguntas que podemos hacer:</p>
@@ -1163,7 +1169,7 @@ Chain 2 finished in 0.0 seconds.</code></pre>
 <pre><code>Chain 3 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Chain 3 Exception: normal_lpdf: Scale parameter is 0, but must be positive! (in '/tmp/Rtmpqu4tS8/model-20a7240ffbe1.stan', line 18, column 2 to column 30)</code></pre>
+<pre><code>Chain 3 Exception: normal_lpdf: Scale parameter is 0, but must be positive! (in '/tmp/RtmpbwucPn/model-413e37797d1d.stan', line 18, column 2 to column 30)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 3 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</code></pre>
@@ -1178,7 +1184,7 @@ Chain 2 finished in 0.0 seconds.</code></pre>
 <pre><code>Chain 3 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Chain 3 Exception: normal_lpdf: Scale parameter is 0, but must be positive! (in '/tmp/Rtmpqu4tS8/model-20a7240ffbe1.stan', line 18, column 2 to column 30)</code></pre>
+<pre><code>Chain 3 Exception: normal_lpdf: Scale parameter is 0, but must be positive! (in '/tmp/RtmpbwucPn/model-413e37797d1d.stan', line 18, column 2 to column 30)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 3 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</code></pre>
@@ -1193,7 +1199,7 @@ Chain 2 finished in 0.0 seconds.</code></pre>
 <pre><code>Chain 3 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Chain 3 Exception: normal_lpdf: Scale parameter is 0, but must be positive! (in '/tmp/Rtmpqu4tS8/model-20a7240ffbe1.stan', line 18, column 2 to column 30)</code></pre>
+<pre><code>Chain 3 Exception: normal_lpdf: Scale parameter is 0, but must be positive! (in '/tmp/RtmpbwucPn/model-413e37797d1d.stan', line 18, column 2 to column 30)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 3 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</code></pre>
@@ -1526,8 +1532,8 @@ Tip
 <span id="cb80-21"><a href="#cb80-21" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)<span class="co">#, width = 200, height = 50)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-bb5ca7cab572dddc6b1a" style="width:100%;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-bb5ca7cab572dddc6b1a">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    V\n    Ang [label = <&theta;>]\n    U\n  node [shape=plaintext]\n    D\n    Y\n  edge [minlen = 3]\n    D -> V\n    D -> Y\n    V -> Y\n    Ang -> Y\n    U -> Y\n{rank = same; D; V}\n{rank = same; Ang; Y}\n{rank = max; U}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-5024a59d2f0fe92c249d" style="width:100%;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-5024a59d2f0fe92c249d">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    V\n    Ang [label = <&theta;>]\n    U\n  node [shape=plaintext]\n    D\n    Y\n  edge [minlen = 3]\n    D -> V\n    D -> Y\n    V -> Y\n    Ang -> Y\n    U -> Y\n{rank = same; D; V}\n{rank = same; Ang; Y}\n{rank = max; U}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>En este caso, el modelo causal es como sigue: conocemos la distancia <span class="math inline">\(D\)</span> al hoyo en cada tiro. El éxito (<span class="math inline">\(Y=1\)</span>) o fracaso (<span class="math inline">\(Y=0\)</span>) depende de la distancia, junto con la velocidad a la que sale la pelota (muy alto o muy bajo puede dar un tiro fallido), y el ángulo <span class="math inline">\(\theta\)</span> de salida. Adicionalmente, hay otros factores <span class="math inline">\(U\)</span> que pueden afectar la probabilidad de éxito. Nótese que no escribiríamos, por ejemplo <span class="math inline">\(Y \leftarrow D\)</span>, porque la distancia no cambia causalmente con el resultado del tiro, aunque es cierto que si intervenimos en la distancia, esperaríamos obtener tasas de éxito diferentes. Igualmente, podemos poner una flecha de <span class="math inline">\(V\)</span> a <span class="math inline">\(D\)</span> y <span class="math inline">\(V\)</span> a <span class="math inline">\(Y\)</span>: son factores no medidos que afectan la probabilidad de éxito, y que pueden variar por la distancia.</p>
@@ -1704,7 +1710,7 @@ Chain 4 finished in 0.1 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.1 seconds.
-Total execution time: 0.6 seconds.</code></pre>
+Total execution time: 0.5 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>sims <span class="ot">&lt;-</span> ajuste<span class="sc">$</span><span class="fu">draws</span>(<span class="fu">c</span>(<span class="st">"alpha"</span>, <span class="st">"beta"</span>), <span class="at">format =</span> <span class="st">"df"</span>)</span>
 <span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> ajuste<span class="sc">$</span><span class="fu">summary</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2276,12 +2282,12 @@ Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup)
 Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 3.8 seconds.
+Chain 1 finished in 3.7 seconds.
 Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 2 finished in 3.6 seconds.
+Chain 2 finished in 3.7 seconds.
 Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
@@ -2291,11 +2297,11 @@ Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup)
 Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 4 finished in 4.6 seconds.
+Chain 4 finished in 4.5 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 4.0 seconds.
-Total execution time: 16.3 seconds.</code></pre>
+Mean chain execution time: 3.9 seconds.
+Total execution time: 16.1 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: 457 of 4000 (11.0%) transitions hit the maximum treedepth limit of 10.

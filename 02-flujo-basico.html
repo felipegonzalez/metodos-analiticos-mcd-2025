@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.7.30">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -73,7 +73,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-de070a7b0ab54f8780927367ac907214.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-31693cf926619640b88f6ab18d2dfd1f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -249,6 +249,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Más detalles y diagnósticos del flujo bayesiano</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-series-de-tiempo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modelos de espacio de estados</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -353,8 +359,8 @@ window.Quarto = {
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>, <span class="at">width =</span> <span class="dv">300</span>, <span class="at">height =</span> <span class="dv">100</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="htmlwidget-132a79a24b2d2355aa25" style="width:100%;height:216px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-132a79a24b2d2355aa25">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    theta [label = <&theta;>]\n  node [shape=plaintext]\n    N\n    Npos [label = <N<SUB>+<\/SUB>>]\n    Nneg [label = <N<SUB>-<\/SUB>>]\n    #sens\n    #esp\n  edge [minlen = 3]\n    theta -> Npos\n    theta -> Nneg\n    N -> Npos\n    N -> Nneg\n    #esp -> Pos\n    #sens -> Pos\n    #esp -> Neg\n    #sens -> Neg\n{ rank = same; theta; N }\n{ rank = same; Npos; Nneg}\n#{ rank = max; sens; esp}\n\n  \n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b1b981cbf85747577045" style="width:100%;height:216px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b1b981cbf85747577045">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    theta [label = <&theta;>]\n  node [shape=plaintext]\n    N\n    Npos [label = <N<SUB>+<\/SUB>>]\n    Nneg [label = <N<SUB>-<\/SUB>>]\n    #sens\n    #esp\n  edge [minlen = 3]\n    theta -> Npos\n    theta -> Nneg\n    N -> Npos\n    N -> Nneg\n    #esp -> Pos\n    #sens -> Pos\n    #esp -> Neg\n    #sens -> Neg\n{ rank = same; theta; N }\n{ rank = same; Npos; Nneg}\n#{ rank = max; sens; esp}\n\n  \n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Que también podríamos simplificar (suponiendo la <span class="math inline">\(N\)</span> fija y conocida, pues <span class="math inline">\(N_+\)</span> y <span class="math inline">\(N\)</span> dan <span class="math inline">\(N_{-}\)</span>) como:</p>
@@ -387,8 +393,8 @@ window.Quarto = {
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>, <span class="at">width =</span> <span class="dv">300</span>, <span class="at">height =</span> <span class="dv">100</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="htmlwidget-e553be43277df547daff" style="width:100%;height:216px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e553be43277df547daff">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    theta [label = <&theta;>]\n  node [shape=plaintext]\n    N\n    Npos [label = <N<SUB>+<\/SUB>>]\n    #sens\n    #esp\n  edge [minlen = 3]\n    theta -> Npos\n    N -> Npos\n    #esp -> Pos\n    #sens -> Pos\n    #esp -> Neg\n    #sens -> Neg\n{ rank = same; theta; N }\n{ rank = same; Npos}\n#{ rank = max; sens; esp}\n\n  \n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-64d180cf50061d0f362b" style="width:100%;height:216px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-64d180cf50061d0f362b">{"x":{"diagram":"\ndigraph {\n  graph [ranksep = 0.3, rankdir = LR]\n  node [shape=circle]\n    theta [label = <&theta;>]\n  node [shape=plaintext]\n    N\n    Npos [label = <N<SUB>+<\/SUB>>]\n    #sens\n    #esp\n  edge [minlen = 3]\n    theta -> Npos\n    N -> Npos\n    #esp -> Pos\n    #sens -> Pos\n    #esp -> Neg\n    #sens -> Neg\n{ rank = same; theta; N }\n{ rank = same; Npos}\n#{ rank = max; sens; esp}\n\n  \n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Y ahora construimos el modelo generativo. Supondremos que la muestra de <span class="math inline">\(N\)</span> personas se toma de manera aleatoria de la población (una población grande, así que podemos ignorar el efectos de poblaciones finitas). Supondremos provisionalmente, además, que la prueba es perfecta, es decir, no hay falsos positivos o negativos.</p>
