@@ -273,6 +273,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Modelos de espacio de estados</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-aplicaciones-series.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Aplicaciones de modelos de espacio de estados</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -408,7 +414,7 @@ Total execution time: 0.7 seconds.</code></pre>
 <pre><code># A tibble: 1 × 10
   variable  mean median     sd    mad    q5   q95  rhat ess_bulk ess_tail
   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1 lambda   0.938  0.936 0.0587 0.0608 0.846  1.03  1.00    1519.    2130.</code></pre>
+1 lambda   0.942  0.941 0.0554 0.0547 0.853  1.03  1.01    1589.    1875.</code></pre>
 </div>
 </div>
 <p>Los diagnósticos básicos parecen ser apropiados. Procedemos a hacer un chequeo predictivo posterior:</p>
@@ -479,7 +485,7 @@ Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup)
 Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 0.2 seconds.
+Chain 1 finished in 0.3 seconds.
 Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
@@ -1260,7 +1266,7 @@ Chain 2 Iteration:    1 / 4000 [  0%]  (Warmup) </code></pre>
 <pre><code>Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Chain 2 Exception: gamma_lpdf: Random variable[82] is 0, but must be positive finite! (in '/tmp/RtmpuEQFxe/model-4d166eedfb7e.stan', line 24, column 2 to column 36)</code></pre>
+<pre><code>Chain 2 Exception: gamma_lpdf: Random variable[82] is 0, but must be positive finite! (in '/tmp/RtmpA71bSp/model-2ca317d61bee.stan', line 24, column 2 to column 36)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</code></pre>
@@ -1284,7 +1290,7 @@ Chain 3 Iteration:    1 / 4000 [  0%]  (Warmup) </code></pre>
 <pre><code>Chain 3 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Chain 3 Exception: gamma_lpdf: Inverse scale parameter is 0, but must be positive finite! (in '/tmp/RtmpuEQFxe/model-4d166eedfb7e.stan', line 24, column 2 to column 36)</code></pre>
+<pre><code>Chain 3 Exception: gamma_lpdf: Inverse scale parameter is 0, but must be positive finite! (in '/tmp/RtmpA71bSp/model-2ca317d61bee.stan', line 24, column 2 to column 36)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 3 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</code></pre>
@@ -1650,7 +1656,7 @@ Chain 4 finished in 1.4 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 1.3 seconds.
-Total execution time: 5.9 seconds.</code></pre>
+Total execution time: 5.8 seconds.</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -2562,7 +2568,7 @@ Chain 1 Iteration:    1 / 2000 [  0%]  (Warmup) </code></pre>
 <pre><code>Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Chain 1 Exception: normal_lpdf: Scale parameter is 0, but must be positive! (in '/tmp/RtmpuEQFxe/model-4d165d087a61.stan', line 25, column 2 to column 41)</code></pre>
+<pre><code>Chain 1 Exception: normal_lpdf: Scale parameter is 0, but must be positive! (in '/tmp/RtmpA71bSp/model-2ca39da8436.stan', line 25, column 2 to column 41)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</code></pre>
@@ -3106,9 +3112,9 @@ Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling)
 Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
 Chain 1 finished in 23.8 seconds.
 Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 finished in 25.9 seconds.
+Chain 3 finished in 25.8 seconds.
 Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 2 finished in 27.0 seconds.
+Chain 2 finished in 26.8 seconds.
 Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
 Chain 4 finished in 27.5 seconds.
 
@@ -3345,22 +3351,22 @@ Chain 1 Iteration: 1000 / 2000 [ 50%]  (Warmup)
 Chain 1 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 2 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 2 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
-Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
-Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 3 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
 Chain 3 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
+Chain 4 Iteration: 1000 / 2000 [ 50%]  (Warmup) 
+Chain 4 Iteration: 1001 / 2000 [ 50%]  (Sampling) 
 Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 18.1 seconds.
+Chain 1 finished in 17.9 seconds.
 Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 2 finished in 18.2 seconds.
-Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 4 finished in 18.4 seconds.
+Chain 2 finished in 18.0 seconds.
 Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 finished in 19.3 seconds.
+Chain 3 finished in 18.2 seconds.
+Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
+Chain 4 finished in 18.5 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 18.5 seconds.
-Total execution time: 19.5 seconds.</code></pre>
+Mean chain execution time: 18.1 seconds.
+Total execution time: 18.7 seconds.</code></pre>
 </div>
 </div>
 <div class="cell">
